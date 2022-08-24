@@ -12,6 +12,7 @@ import SearchField from '../Form/SearchField';
 import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
 import IconButtonUnstyled from '../Button/IconButtonStyled';
 
+import { ReactComponent as OrgLogo } from '../../static/svg/unilever-logo.svg';
 import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-thick.svg';
 import { ReactComponent as BellIcon } from '../../static/svg/notification-bell.svg';
 import { ReactComponent as CaretDownIcon } from '../../static/svg/caret-down.svg';
@@ -44,12 +45,16 @@ const AppBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBarStyled position="fixed" open={true}>
         <Toolbar>
-          <Box aria-label="menu" sx={{ mr: 2 }} flexGrow={1}>
-            <MHPrimaryLogo className="mx-0" />
+          <Box aria-label="menu" sx={{ ml: 5 }} flexGrow={1}>
+            {/* <MHPrimaryLogo className="mx-0" /> */}
+            <OrgLogo />
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={6}>
-            <SearchField icon={<ArrowRightIcon />} placeholder="Select an interest" />
+            <SearchField
+              icon={<ArrowRightIcon />}
+              placeholder="Select an interest"
+            />
 
             <BellIcon title="notification" width="1.3rem" />
 

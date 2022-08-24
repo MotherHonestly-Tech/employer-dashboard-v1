@@ -103,25 +103,28 @@ const InitialStep = React.forwardRef(
       valid: enteredNumberOfKidsIsValid,
       error: enteredNumberOfKidsHasError,
       onChange: numberOfKidsInputChangeHandler,
-      onBlur: numberOfKidsInputBlurHandler
-    } = useInput([]);
+      onBlur: numberOfKidsInputBlurHandler,
+      markAsTouched: markNumberOfKidsInputAsTouched
+    } = useInput([
+      {
+        validator: (value: string) => {
+          if (+enteredHouseholdSize < 3) {
+            return true;
+          }
 
-    let formIsValid = false;
+          return validators.required(value);
+        }
+      }
+    ]);
 
-    if (
+    let formIsValid =
       enteredFirstNameIsValid &&
       enteredLastNameIsValid &&
       enteredStateIsValid &&
       enteredZipCodeIsValid &&
       enteredStatusIsValid &&
-      enteredHouseholdSizeIsValid
-    ) {
-      if (+enteredHouseholdSize > 2 && !enteredNumberOfKidsIsValid) {
-        formIsValid = false;
-      } else {
-        formIsValid = true;
-      }
-    }
+      enteredHouseholdSizeIsValid &&
+      enteredNumberOfKidsIsValid;
 
     const { states, employee, updateEmployee } = onboardingCtx;
     const { activeIndex, onNext } = props;
@@ -135,8 +138,8 @@ const InitialStep = React.forwardRef(
       stateInputChangeHandler(employee.state || '');
       zipCodeInputChangeHandler(employee.zipCode || '');
       statusInputChangeHandler(employee.relationshipStatus || '');
-      numberOfKidsInputChangeHandler(employee.numberOfKids || '');
       householdSizeInputChangeHandler(employee.householdSize || '');
+      numberOfKidsInputChangeHandler(employee.numberOfKids || '');
     }, []);
 
     function renderKidsSelectValue(option: SelectOption<string> | null) {
@@ -169,7 +172,7 @@ const InitialStep = React.forwardRef(
       return content;
     }
 
-    let firstNameErrorTip = enteredFirstNameHasError
+    let firstNameErrorTip =  enteredFirstNameHasError
       ? 'Please enter your first name'
       : undefined;
 
@@ -186,11 +189,15 @@ const InitialStep = React.forwardRef(
       : undefined;
 
     let statusErrorTip = enteredStatusHasError
-      ? 'Please select relationship status'
+      ? 'Please select a value'
       : undefined;
 
     let householdSizeErrorTip = enteredHouseholdSizeHasError
       ? 'Please enter number of people in household'
+      : undefined;
+
+    let numberOfKidsErrorTip = enteredNumberOfKidsHasError
+      ? 'Please select a value'
       : undefined;
 
     const preventDefault = (e: React.SyntheticEvent) => {
@@ -205,8 +212,9 @@ const InitialStep = React.forwardRef(
         markLastNameInputAsTouched();
         markStateInputAsTouched();
         markZipCodeInputAsTouched();
-        markHouseholdSizeInputAsTouched();
         markStatusInputAsTouched();
+        markHouseholdSizeInputAsTouched();
+        markNumberOfKidsInputAsTouched();
         return;
       }
 
@@ -216,8 +224,8 @@ const InitialStep = React.forwardRef(
         state: enteredState,
         zipCode: enteredZipCode,
         relationshipStatus: enteredStatus,
+        householdSize: enteredHouseholdSize,
         numberOfKids: enteredNumberOfKids,
-        householdSize: enteredHouseholdSize
       });
       onNext();
     }
@@ -318,6 +326,7 @@ const InitialStep = React.forwardRef(
                   }
                   onBlur={numberOfKidsInputBlurHandler}
                   renderValue={renderKidsSelectValue}
+                  error={numberOfKidsErrorTip}
                 />
               </Grid>
             )}

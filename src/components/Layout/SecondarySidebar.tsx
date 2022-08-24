@@ -1,4 +1,6 @@
 import React from 'react';
+import { matchPath, useLocation } from 'react-router-dom';
+import { TransitionGroup } from 'react-transition-group';
 
 import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,9 +13,10 @@ import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
 import { MerchantList } from '../Dashboard/MerchantList';
+import { CategoryList } from '../Dashboard/CategoryList';
 
 import { ReactComponent as ArrowBtnIcon } from '../../static/svg/arrow-btn.svg';
-import { drawerWidth } from '../../utils/constants';
+import { DRAWER_WIDTH } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
 const SideDrawer = styled(MuiDrawer, {
@@ -21,7 +24,7 @@ const SideDrawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'sticky',
-    width: `${drawerWidth + 60}px`,
+    width: `${DRAWER_WIDTH + 60}px`,
     height: '100vh',
     padding: theme.spacing(2),
     background: '#F1F7F8',
@@ -41,7 +44,20 @@ const SideDrawer = styled(MuiDrawer, {
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9)
       }
-    })
+    }),
+    '&::-webkit-scrollbar': {
+      width: '8px',
+      borderRadius: '15px'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+      borderRadius: '15px'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#C8C8C8',
+      width: '8px',
+      borderRadius: '15px'
+    }
   }
 }));
 
@@ -61,32 +77,14 @@ const ListItemStyled = styled(ListItem)<{
   height: 52
 }));
 
-const merchantsList: Array<{
-  merchant: string;
-  categories: string;
-  iconUrl: string;
-}> = [
-  {
-    merchant: 'Sittercity',
-    categories: 'Petcare, Childcare, Eldercare',
-    iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg'
-  },
-  {
-    merchant: 'Care.com',
-    categories: 'Petcare, Childcare, Eldercare',
-    iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg'
-  },
-  {
-    merchant: 'SnapHealth',
-    categories: 'Petcare, Childcare, Eldercare',
-    iconUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg'
-  }
-];
-
 const SecondarySidebar: FnComponent = () => {
+  const location = useLocation(); // window.location
+  const walletMatch = matchPath(location.pathname, {
+    path: '/organization/wallet',
+    exact: true,
+    strict: false
+  });
+
   return (
     <SideDrawer variant="permanent" open={true}>
       <Toolbar
@@ -95,18 +93,14 @@ const SecondarySidebar: FnComponent = () => {
         }}
       />
       <Box display="flex" flexDirection={'column'} height="100%">
-        <Typography variant="h3" gutterBottom>
-          Merchants
-        </Typography>
-
-        <MerchantList merchantList={merchantsList} />
+        {walletMatch ? <CategoryList /> : <MerchantList />}
 
         <Divider
           variant="fullWidth"
           light
           sx={{
             borderColor: '#E8E8E8',
-            my: 4
+            my: 2
           }}
         />
 
@@ -134,7 +128,7 @@ const SecondarySidebar: FnComponent = () => {
           disableGutters
           secondaryAction={<ArrowBtnIcon />}>
           <ListItemText sx={{ color: '#28404A', verticalAlign: 'middle' }}>
-            <Typography variant="body2" color="#28404A" sx={{}}>
+            <Typography variant="body2" color="#28404A" fontFamily="Area-Normal-Bold">
               Talk to a Concierge Today!
             </Typography>
           </ListItemText>

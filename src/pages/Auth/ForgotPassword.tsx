@@ -64,15 +64,17 @@ const ForgotPassword: FnComponent<{
       process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/passwordreset',
       {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify({
           email: enteredEmail
         })
       },
-      (data: HttpResponse<unknown>) => {
-        history.push('/auth/forgot-password/reset-link');
+      (response: HttpResponse<unknown>) => {
+        history.push({
+          pathname: '/auth/forgot-password/reset-link',
+          state: {
+            email: enteredEmail
+          }
+        });
       }
     );
   };
@@ -111,7 +113,7 @@ const ForgotPassword: FnComponent<{
               sx={{
                 mb: 3
               }}>
-              {error}
+              {error.message}
             </Alert>
           )}
 
@@ -146,9 +148,11 @@ const ForgotPassword: FnComponent<{
               py: 3
             }}>
             <ListItemAvatar>
-              <Avatar alt="!" sx={{
-                bgcolor: 'transparent'
-              }}>
+              <Avatar
+                alt="!"
+                sx={{
+                  bgcolor: 'transparent'
+                }}>
                 <InfoRoundedIcon width="100%" />
               </Avatar>
             </ListItemAvatar>

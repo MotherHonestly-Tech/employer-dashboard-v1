@@ -209,7 +209,7 @@ const Wallet = (props: { title: string }) => {
         </Box>
       </div>
 
-      <UploadReceipt open={open} onClose={handleClose} />
+      {open && <UploadReceipt open={open} onClose={handleClose} />}
     </React.Fragment>
   );
 };

@@ -14,7 +14,7 @@ import { ReactComponent as WalletIcon } from '../../static/svg/wallet.svg';
 import { ReactComponent as MerchantIcon } from '../../static/svg/merchant.svg';
 import { ReactComponent as ResourcesIcon } from '../../static/svg/resources.svg';
 import { ReactComponent as CoachingIcon } from '../../static/svg/coaching.svg';
-import { drawerWidth } from '../../utils/constants';
+import { DRAWER_WIDTH } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
 interface RouterLinkProps {
@@ -29,7 +29,7 @@ const SideDrawer = styled(MuiDrawer, {
   '& .MuiDrawer-paper': {
     position: 'sticky',
     whiteSpace: 'nowrap',
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     height: '100vh',
     paddingTop: theme.spacing(5),
     background: theme.palette.common.white,

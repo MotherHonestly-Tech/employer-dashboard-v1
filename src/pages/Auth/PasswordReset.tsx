@@ -147,7 +147,7 @@ const PasswordReset: FnComponent<{
               sx={{
                 mb: 3
               }}>
-              {error}
+              {error.message}
             </Alert>
           )}
 

@@ -67,8 +67,10 @@ const IntermediateStep = (props: {
   const {
     value: enteredIdentity,
     valid: enteredIdentityIsValid,
+    error: enteredIdentityHasError,
     onChange: identityInputChangeHandler,
-    onBlur: identityInputBlurHandler
+    onBlur: identityInputBlurHandler,
+    markAsTouched: markIdentityInputAsTouched
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -78,8 +80,10 @@ const IntermediateStep = (props: {
   const {
     value: enteredDate,
     valid: enteredDateIsValid,
+    error: enteredDateHasError,
     onChange: dateInputChangeHandler,
-    onBlur: dateInputBlurHandler
+    onBlur: dateInputBlurHandler,
+    markAsTouched: markDateInputAsTouched
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -89,6 +93,7 @@ const IntermediateStep = (props: {
   const {
     value: enteredMonth,
     valid: enteredMonthIsValid,
+    error: enteredMonthHasError,
     onChange: monthInputChangeHandler,
     onBlur: monthInputBlurHandler
   } = useInput([{ validator: (value: string) => validators.required(value) }]);
@@ -96,6 +101,7 @@ const IntermediateStep = (props: {
   const {
     value: enteredYear,
     valid: enteredYearIsValid,
+    error: enteredYearHasError,
     onChange: yearInputChangeHandler,
     onBlur: yearInputBlurHandler
   } = useInput([
@@ -107,28 +113,24 @@ const IntermediateStep = (props: {
   const {
     value: enteredRace,
     valid: enteredRaceIsValid,
+    error: enteredRaceHasError,
     onChange: raceInputChangeHandler,
-    onBlur: raceInputBlurHandler
+    onBlur: raceInputBlurHandler,
+    markAsTouched: markRaceInputAsTouched
   } = useInput([{ validator: (value: string) => validators.required(value) }]);
 
-  let formIsValid = false;
-
-  if (
+  let formIsValid =
     enteredIdentityIsValid &&
     enteredDateIsValid &&
     enteredMonthIsValid &&
     enteredYearIsValid &&
-    enteredRaceIsValid
-  ) {
-    formIsValid = true;
-  }
+    enteredRaceIsValid;
 
   const { employee, updateEmployee } = onboardingCtx;
   const { onNext, onPrevious } = props;
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-
     if (!employee) return;
 
     identityInputChangeHandler(employee.identity || '');
@@ -158,14 +160,27 @@ const IntermediateStep = (props: {
         parseInt(enteredMonth) - 1,
         parseInt(enteredDate)
       ),
-      race: enteredRace,
+      race: enteredRace
     });
   }
+
+  let identityErrorTip = enteredIdentityHasError
+    ? 'Please select a value'
+    : undefined;
+
+  let dateErrorTip = enteredDateHasError ? 'Please select a date' : undefined;
+
+  let raceErrorTip = enteredRaceHasError ? 'Please select a value' : undefined;
 
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!formIsValid) return;
+    if (!formIsValid) {
+      markIdentityInputAsTouched();
+      markDateInputAsTouched();
+      markRaceInputAsTouched();
+      return;
+    }
 
     updateEmployeeData();
     onNext();
@@ -187,6 +202,7 @@ const IntermediateStep = (props: {
           value={enteredIdentity}
           onChange={(val) => identityInputChangeHandler(val as string)}
           onBlur={identityInputBlurHandler}
+          error={identityErrorTip}
         />
 
         <Label>Date of Birth</Label>
@@ -199,6 +215,7 @@ const IntermediateStep = (props: {
               onChange={(val) => dateInputChangeHandler(val as string)}
               onBlur={dateInputBlurHandler}
               popperWidth={'120px'}
+              error={dateErrorTip}
             />
           </Grid>
           <Grid item xs={4}>
@@ -232,6 +249,7 @@ const IntermediateStep = (props: {
             raceInputChangeHandler(val as string);
           }}
           onBlur={raceInputBlurHandler}
+          error={raceErrorTip}
         />
 
         <Stack spacing={2} mt={3}>

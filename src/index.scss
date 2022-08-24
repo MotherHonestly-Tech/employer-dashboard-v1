@@ -26,7 +26,7 @@ $primary-color: #28404a;
 }
 
 @font-face {
-  font-family: 'Area-Normal';
+  font-family: 'Area-Normal-Black';
   src: url('./static/fonts/area/Area\ Normal\ Black/AreaNormal-Black.woff2')
       format('woff2'),
     url('./static/fonts/area/Area\ Normal\ Black/AreaNormal-Black.woff')
@@ -61,13 +61,6 @@ $primary-color: #28404a;
   font-family: 'Area-Normal-Semibold', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#customized-dialog-title{
-  color: #28404A;
-  text-align: center;
-  font-size: 23px;
-  font-family: 'Gilroy-Medium', sans-serif;
 }
 
 code {

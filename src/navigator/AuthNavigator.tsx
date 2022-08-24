@@ -12,9 +12,12 @@ import PasswordReset from '../pages/Auth/PasswordReset';
 import ResetSuccess from '../pages/Auth/ResetSuccess';
 import MHLogoIcon from '../theme/icons/MHLogo';
 
+import { ReactComponent as OrgLogo } from '../static/svg/unilever-logo.svg';
+
 import { FnComponent } from '../models/component.model';
 import { theme } from '../theme/mui/dashboard.theme';
 import { BGImage } from '../models/background-image.model';
+import { Typography } from '@mui/material';
 
 const AuthNavigator: FnComponent = () => {
   const [image, setImage] = React.useState<BGImage>({} as BGImage);
@@ -52,7 +55,8 @@ const AuthNavigator: FnComponent = () => {
               alignItems="center"
               sx={{ minHeight: '100vh', px: 6 }}>
               <Box position="relative" top={-50}>
-                <MHLogoIcon />
+                {/* <MHLogoIcon /> */}
+                <OrgLogo />
               </Box>
               <Switch>
                 <Route path={`${path}/sign-in`}>
@@ -62,7 +66,10 @@ const AuthNavigator: FnComponent = () => {
                   />
                 </Route>
                 <Route path={`${path}/forgot-password`} exact>
-                  <ForgotPassword onRouteChange={changeImageHandler} title="Forgot Password" />
+                  <ForgotPassword
+                    onRouteChange={changeImageHandler}
+                    title="Forgot Password"
+                  />
                 </Route>
                 <Route path={`${path}/forgot-password/reset-link`} exact>
                   <ResetLinkSuccess onRouteChange={changeImageHandler} />
@@ -81,6 +88,14 @@ const AuthNavigator: FnComponent = () => {
                   <Redirect to={`${path}/sign-in`} />
                 </Route>
               </Switch>
+
+              <Typography variant="body2" color="#194049" align="center" mt={4}>
+                Powered by &nbsp; <MHLogoIcon style={{
+                  width: '1rem',
+                  display: 'inline',
+                  verticalAlign: 'middle',
+                }} />
+              </Typography>
             </Stack>
           </Grid>
 

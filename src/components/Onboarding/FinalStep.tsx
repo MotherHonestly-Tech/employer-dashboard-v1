@@ -11,7 +11,6 @@ import { MHMultiSelect } from '../Form/MHSelect';
 import useInput from '../../hooks/use-input';
 
 import * as validators from '../../utils/validators';
-import * as constants from '../../utils/constants';
 import OnboardingContext from '../../store/context/onboarding-context';
 
 const SelectTag = styled('span')(
@@ -34,8 +33,10 @@ const FinalStep = (props: {
   const {
     value: enteredJobTitle,
     valid: enteredJobTitleIsValid,
+    error: enteredJobTitleHasError,
     onChange: jobTitleInputChangeHandler,
-    onBlur: jobTitleInputBlurHandler
+    onBlur: jobTitleInputBlurHandler,
+    markAsTouched: markJobTitleInputAsTouched
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -45,15 +46,19 @@ const FinalStep = (props: {
   const {
     value: enteredPosition,
     valid: enteredPositionIsValid,
+    error: enteredPositionHasError,
     onChange: positionInputChangeHandler,
-    onBlur: positionInputBlurHandler
+    onBlur: positionInputBlurHandler,
+    markAsTouched: markPositionInputAsTouched
   } = useInput([{ validator: (value: string) => validators.required(value) }]);
 
   const {
     value: enteredDepartment,
     valid: enteredDepartmentIsValid,
+    error: enteredDepartmentHasError,
     onChange: departmentInputChangeHandler,
-    onBlur: departmentInputBlurHandler
+    onBlur: departmentInputBlurHandler,
+    markAsTouched: markDepartmentInputAsTouched
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -72,15 +77,14 @@ const FinalStep = (props: {
     enteredJobTitleIsValid &&
     enteredPositionIsValid &&
     enteredDepartmentIsValid;
-    // &&
-    // careResponsibilites?.length;
+  // &&
+  // careResponsibilites?.length;
 
   const { employee, updateEmployee } = onboardingCtx;
   const { activeIndex, onNext, onPrevious } = props;
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
-
     if (!employee) return;
 
     jobTitleInputChangeHandler(employee.jobTitle || '');
@@ -93,7 +97,7 @@ const FinalStep = (props: {
     updateEmployee({
       jobTitle: enteredJobTitle,
       position: enteredPosition,
-      department: enteredDepartment,
+      department: enteredDepartment
       // careResponsibilities: careResponsibilites as Array<string>
     });
   }
@@ -122,10 +126,27 @@ const FinalStep = (props: {
     );
   }
 
+  let jobTitleErrorTip = enteredJobTitleHasError
+    ? 'Please enter your job title'
+    : undefined;
+
+  let positionErrorTip = enteredPositionHasError
+    ? 'Please enter your position'
+    : undefined;
+
+  let departmentErrorTip = enteredDepartmentHasError
+    ? 'Please enter your department'
+    : undefined;
+
   function submitHandler(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!formIsValid) return;
+    if (!formIsValid) {
+      markJobTitleInputAsTouched();
+      markPositionInputAsTouched();
+      markDepartmentInputAsTouched();
+      return;
+    }
 
     updateEmployeeData();
     onNext();
@@ -149,7 +170,7 @@ const FinalStep = (props: {
           value={enteredJobTitle}
           onChange={jobTitleInputChangeHandler}
           onBlur={jobTitleInputBlurHandler}
-          required
+          error={jobTitleErrorTip}
         />
 
         <MHFormControl
@@ -160,7 +181,7 @@ const FinalStep = (props: {
           value={enteredPosition}
           onChange={positionInputChangeHandler}
           onBlur={positionInputBlurHandler}
-          required
+          error={positionErrorTip}
         />
 
         <MHFormControl
@@ -171,7 +192,7 @@ const FinalStep = (props: {
           value={enteredDepartment}
           onChange={departmentInputChangeHandler}
           onBlur={departmentInputBlurHandler}
-          required
+          error={departmentErrorTip}
         />
 
         {/* <MHMultiSelect

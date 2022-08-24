@@ -1,24 +1,28 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
-import Startup from '../components/Dashboard/Startup';
 
+import Startup from '../components/Dashboard/Startup';
 import Layout from '../components/Layout/Layout';
 import Coaching from '../pages/Dashboard/Coaching';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Merchants from '../pages/Dashboard/Merchants';
 import Resources from '../pages/Dashboard/Resources';
 import Wallet from '../pages/Dashboard/Wallet';
+
+import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
+import { User } from '../models/user.model';
 
 const DashboardNavigator = () => {
   const authCtx = React.useContext(AuthContext);
+
   const { path } = useRouteMatch();
 
   if (!authCtx.user) {
     return <Startup />;
   }
 
-  if (!authCtx.isOnboarded(authCtx.user)) {
+  if (!authCtx.isOnboarded(authCtx.user as User)) {
     return (
       <Redirect
         to={{
@@ -30,7 +34,7 @@ const DashboardNavigator = () => {
   }
 
   return (
-    <React.Fragment>
+    <DashboardContextProvider>
       <Layout>
         <Switch>
           <Route path={`${path}/dashboard`} exact>
@@ -50,7 +54,7 @@ const DashboardNavigator = () => {
           </Route>
         </Switch>
       </Layout>
-    </React.Fragment>
+    </DashboardContextProvider>
   );
 };
 

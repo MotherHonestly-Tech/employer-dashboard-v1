@@ -1,3 +1,4 @@
+import React from "react";
 import * as CryptoJS from 'crypto-js';
 
 export const isEmpty = (value: any) => {
@@ -64,3 +65,48 @@ export const formatAmount = (amount: number) => {
 export const constructDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
+
+export const convertFileSizeFromBytes = (size: number) => (
+  unit: 'kb' | 'mb'
+) => {
+  if (unit === 'kb') {
+    return (size / 1024).toFixed(2) + ' Kb';
+  }
+
+  return (size / 1024 / 1024).toFixed(2) + ' Mb';
+};
+
+export const resolveErrorMessage = (error: boolean) => (message: string) => {
+  if (error) {
+    return message;
+  }
+
+  return undefined;
+};
+
+export function getBrowserVisibilityProp() {
+  if (typeof document.hidden !== "undefined") {
+    // Opera 12.10 and Firefox 18 and later support
+    return "visibilitychange"
+  } else if (typeof (document as any).msHidden !== "undefined") {
+    return "msvisibilitychange"
+  } else if (typeof (document as any).webkitHidden !== "undefined") {
+    return "webkitvisibilitychange"
+  }
+}
+
+export function getBrowserDocumentHiddenProp() {
+  if (typeof document.hidden !== "undefined") {
+    return "hidden"
+  } else if (typeof (document as any).msHidden !== "undefined") {
+    return "msHidden"
+  } else if (typeof (document as any).webkitHidden !== "undefined") {
+    return "webkitHidden"
+  } else {
+    return "hidden"
+  }
+}
+
+export function getIsDocumentHidden() {
+  return !(document as any)[getBrowserDocumentHiddenProp()]
+}

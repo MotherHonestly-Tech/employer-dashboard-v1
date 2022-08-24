@@ -1,6 +1,8 @@
 import { SelectOption } from '@mui/base';
 
-export const drawerWidth: number = 220;
+export const DRAWER_WIDTH: number = 220;
+
+export const DEFAULT_NOTIFICATION_DURATION: number = 12000;
 
 export const RELATIONSHIP_STATUS_OPTIONS: SelectOption<string>[] = [
   {
@@ -144,21 +146,3 @@ export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
   }
 ];
 
-export const CATEGORY_OPTIONS: SelectOption<string>[] = [
-  {
-    value: 'food',
-    label: 'Food'
-  },
-  {
-    value: 'childcare',
-    label: 'Childcare'
-  },
-  {
-    value: 'petcare',
-    label: 'Petcare'
-  },
-  {
-    value: 'selfcare',
-    label: 'Selfcare'
-  }
-];

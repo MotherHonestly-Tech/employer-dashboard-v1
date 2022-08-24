@@ -21,8 +21,9 @@ const CustomizedDialog = styled(Dialog)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius
   },
   '& .MuiDialogActions-root': {
-    padding: theme.spacing(1)
-  }
+    padding: `${theme.spacing(0)} ${theme.spacing(2)} ${theme.spacing(2)}`
+  },
+  transition: 'all 0.3s ease-in-out'
 }));
 
 type ModalTitleProps = {
@@ -46,13 +47,14 @@ const CustomizedDialogTitle = (props: DialogTitleProps & ModalTitleProps) => {
             right: 10,
             top: 12
           }}>
-          <RoundedLogoIcon sx={{
-            border: 3,
-            borderColor: '#6C6C6C',
-            backgroundColor: 'transparent',
-            width: 35,
-            height: 35
-          }}>
+          <RoundedLogoIcon
+            sx={{
+              border: 3,
+              borderColor: '#6C6C6C',
+              backgroundColor: 'transparent',
+              width: 30,
+              height: 30
+            }}>
             <CloseIcon />
           </RoundedLogoIcon>
         </IconButtonStyled>
@@ -71,7 +73,7 @@ const MHDialog = ({
 }: DialogProps & {
   title: string;
   handleClose: () => void;
-  actions?: React.ReactElement;
+  actions?: React.ReactElement | null;
 }) => {
   return (
     <CustomizedDialog
@@ -79,12 +81,17 @@ const MHDialog = ({
       aria-labelledby="customized-dialog"
       onClose={handleClose}
       {...others}>
-      <CustomizedDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        {title}
-      </CustomizedDialogTitle>
-      <DialogContent sx={{
-        overflowX: 'hidden'
-      }}>
+      {title && (
+        <CustomizedDialogTitle
+          id="customized-dialog-title"
+          onClose={handleClose}>
+          {title}
+        </CustomizedDialogTitle>
+      )}
+      <DialogContent
+        sx={{
+          overflowX: 'hidden'
+        }}>
         <div>{children}</div>
       </DialogContent>
       <DialogActions>{actions}</DialogActions>

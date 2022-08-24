@@ -40,8 +40,8 @@ const Dashboard = () => {
       </Grid>
 
       <Box mt={5}>
-        <Typography variant="h3" gutterBottom mb={4}>
-          Connect 1:1 with Leaders at Indeed
+        <Typography variant="h3" gutterBottom align="center" mb={4}>
+        1:1 Work-Life Connect At Unilever
         </Typography>
 
         <Grid container spacing={7}>
@@ -56,6 +56,7 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Box>
+      
       <Box mt={5}>
         <Concierge />
       </Box>

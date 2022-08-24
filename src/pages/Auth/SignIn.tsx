@@ -25,6 +25,7 @@ import { HttpResponse } from '../../models/api.interface';
 import * as formReducer from '../../store/reducers/form';
 import * as validators from '../../utils/validators';
 import AuthContext from '../../store/context/auth-context';
+import NotificationContext from '../../store/context/notifications.context';
 
 const SignIn: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -35,20 +36,23 @@ const SignIn: FnComponent<{
   const history = useHistory();
   useTitle(props.title);
 
-  const [showAlert, setShowAlert] = React.useState(false);
+  const notificationCtx = React.useContext(NotificationContext);
+  const { pushNotification, popNotification } = notificationCtx;
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const verify = queryParams.get('verify');
 
   React.useEffect(() => {
-    if (verify) {
-      setShowAlert(true);
+    const notificationId =
+      queryParams.get('verify') &&
+      pushNotification({
+        message:
+          "You're all set up! Please login with your work email and password to continue",
+        type: 'success',
+        duration: 10000
+      });
 
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 8000);
-    }
+    return () => popNotification(notificationId || 0);
   }, []);
 
   const authCtx = React.useContext(AuthContext);
@@ -146,12 +150,6 @@ const SignIn: FnComponent<{
 
   return (
     <React.Fragment>
-      {showAlert && (
-        <Notification
-          type="success"
-          message="You're all set up! Please login with your work email and password to continue"
-        />
-      )}
       <Box
         sx={{
           px: 8,
@@ -179,7 +177,7 @@ const SignIn: FnComponent<{
             sx={{
               mb: 3
             }}>
-            {error}
+            {error.message}
           </Alert>
         )}
 

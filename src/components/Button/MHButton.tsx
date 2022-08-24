@@ -13,6 +13,7 @@ type MHButtonProps = {
   loading?: boolean;
   fullWidth?: boolean;
   onClick?: (e: React.MouseEvent) => void;
+  form?: string;
 };
 
 // not working, dashboard theme takes precedence over styling here
@@ -32,6 +33,7 @@ const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
   disabled,
   fullWidth,
   onClick,
+  form,
   ...props
 }) => {
   const buttonClickHandler = (e: React.MouseEvent) => {
@@ -52,6 +54,7 @@ const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
       onClick={buttonClickHandler}
       fullWidth={fullWidth}
       disableElevation
+      form={form}
       {...props}>
       {loading ? <LoadingIndicator /> : children}
     </Button>

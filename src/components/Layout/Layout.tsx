@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 
 import AppBar from './AppBar';
@@ -13,7 +14,8 @@ const Layout: FnComponent = (props) => {
   return (
     <Box>
       <AppBar />
-      <Box component={'main'} sx={{ display: 'flex' }}>
+
+      <Stack direction="row" component={'main'}>
         <Sidebar />
 
         <Box
@@ -28,7 +30,7 @@ const Layout: FnComponent = (props) => {
         </Box>
 
         <SecondarySidebar />
-      </Box>
+      </Stack>
     </Box>
   );
 };

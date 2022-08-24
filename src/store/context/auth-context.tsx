@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 
 import useHttp from '../../hooks/use-http';
+import { HttpResponse } from '../../models/api.interface';
 
 import { Employee, Token, User } from '../../models/user.model';
 import { decrypt, encrypt } from '../../utils/utils';
@@ -86,6 +87,8 @@ export const AuthContextProvider = ({
   const [userId, setUserId] = React.useState<number | null>(initialUserId);
   const [user, setUser] = React.useState<User | null>(null);
 
+  const history = useHistory();
+
   const { sendHttpRequest: logout } = useHttp();
   const { sendHttpRequest: resetToken } = useHttp();
 
@@ -97,6 +100,7 @@ export const AuthContextProvider = ({
       clearTimeout(expirationTimer);
     }
     localStorage.removeItem(AUTH_LOCATION);
+    history.replace('/auth/sign-in');
 
     logout(
       process.env.REACT_APP_API_BASE_URL + 'employee/dashboard/logout',
@@ -153,7 +157,7 @@ export const AuthContextProvider = ({
             Authorization: `Bearer ${token?.refreshToken}`
           }
         },
-        (responseData: Token) => {
+        (responseData: HttpResponse<Token>) => {
           console.log(responseData);
         }
       );
