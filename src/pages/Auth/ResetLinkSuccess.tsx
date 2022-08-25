@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+import MuiLink from '@mui/material/Link';
 
 import MHButton from '../../components/Button/MHButton';
 import useHttp from '../../hooks/use-http';
@@ -92,7 +92,7 @@ const ResetLinkSuccess: FnComponent<{
             Open email app
           </MHButton>
 
-          <Link
+          <MuiLink
             sx={{
               display: 'block',
               cursor: 'pointer',
@@ -100,7 +100,18 @@ const ResetLinkSuccess: FnComponent<{
             }}
             onClick={resendLinkHandler}>
             Didn't recieve the email? Click to resend
-          </Link>
+          </MuiLink>
+
+          <MuiLink
+            component={Link}
+            sx={{
+              display: 'block',
+              cursor: 'pointer',
+              my: 2
+            }}
+            to="/auth/sign-in">
+            Return to login
+          </MuiLink>
         </Box>
       </Paper>
     </React.Fragment>

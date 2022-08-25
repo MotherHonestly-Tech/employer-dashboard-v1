@@ -54,7 +54,7 @@ const AuthNavigator: FnComponent = () => {
               justifyContent="center"
               alignItems="center"
               sx={{ minHeight: '100vh', px: 6 }}>
-              <Box position="relative" top={-50}>
+              <Box position="relative" top={-25}>
                 {/* <MHLogoIcon /> */}
                 <OrgLogo />
               </Box>
@@ -90,16 +90,26 @@ const AuthNavigator: FnComponent = () => {
               </Switch>
 
               <Typography variant="body2" color="#194049" align="center" mt={4}>
-                Powered by &nbsp; <MHLogoIcon style={{
-                  width: '1rem',
-                  display: 'inline',
-                  verticalAlign: 'middle',
-                }} />
+                Powered by &nbsp;{' '}
+                <MHLogoIcon
+                  style={{
+                    width: '1rem',
+                    display: 'inline',
+                    verticalAlign: 'middle'
+                  }}
+                />
               </Typography>
             </Stack>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+            position="sticky"
+            height="100vh"
+            sx={{
+              top: 0
+            }}>
             <Box
               component="div"
               sx={{

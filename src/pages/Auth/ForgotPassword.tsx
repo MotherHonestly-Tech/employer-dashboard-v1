@@ -23,6 +23,7 @@ import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
 import { HttpResponse } from '../../models/api.interface';
+import { EMAIL_FROM } from '../../utils/constants';
 
 const ForgotPassword: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -159,7 +160,7 @@ const ForgotPassword: FnComponent<{
             <ListItemText>
               If you don't receive an email from us within a few minutes, Check
               your spam filter as sometimes they end up in there. The email will
-              be from help@motherhonestly.com
+              be from {EMAIL_FROM}
             </ListItemText>
           </ListItem>
         </Box>

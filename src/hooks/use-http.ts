@@ -30,7 +30,7 @@ const useHttp = () => {
             ...(requestConfig.headers || {
               'Content-Type': 'application/json',
             }),
-            ...(token ? { Authorization: `Bearer ${token}` } : {})
+            ...(token ? { Authorization: `Bearer ${token.accessToken}` } : {})
           },
           body: requestConfig.body || null
         });

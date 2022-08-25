@@ -4,6 +4,8 @@ export const DRAWER_WIDTH: number = 220;
 
 export const DEFAULT_NOTIFICATION_DURATION: number = 12000;
 
+export const EMAIL_FROM = 'noreply@motherhonestly.com';
+
 export const RELATIONSHIP_STATUS_OPTIONS: SelectOption<string>[] = [
   {
     value: 'single',
@@ -110,8 +112,8 @@ export const RACE_OPTIONS: SelectOption<string>[] = [
     label: 'Other/Prefer to self-describe'
   },
   {
-    value: 'Don\'t wish to answer',
-    label: 'Don\'t wish to answer'
+    value: "Don't wish to answer",
+    label: "Don't wish to answer"
   }
 ];
 
@@ -145,4 +147,3 @@ export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
     label: 'Pet'
   }
 ];
-
