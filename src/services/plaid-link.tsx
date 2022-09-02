@@ -8,7 +8,7 @@ export type PlaidLinkContextShape = {
   isOauth: boolean;
   linkToken: string | null;
   generateLinkToken: () => void;
-  fetchAccessToken: (publicToken: string, accountId: string) => void;
+  exchangePublicToken: (publicToken: string, accountId: string) => void;
   //   publicKey: string;
   //   env: 'sandbox' | 'development' | 'production';
   //   product: 'auth' | 'transactions';
@@ -21,7 +21,7 @@ const PlaidLinkContext = React.createContext<PlaidLinkContextShape>({
   isOauth: false,
   linkToken: null,
   generateLinkToken: () => {},
-  fetchAccessToken: (publicToken: string, accountId: string) => {}
+  exchangePublicToken: (publicToken: string, accountId: string) => {}
   //   publicKey: '',
   //   env: 'sandbox',
   //   product: 'auth',
@@ -64,12 +64,15 @@ export const PlaidLinkContextProvider = ({
     }
   }, [sendHttpRequest, queryParams]);
 
-  const fetchAccessToken = React.useCallback((publicToken: string, accountId: string) => {
+  const exchangePublicToken = React.useCallback((publicToken: string, accountId: string) => {
     sendHttpRequest(
       process.env.REACT_APP_PLAID_API_URL + 'plaid/access/token',
       {
         method: 'POST',
-        body: JSON.stringify({})
+        body: JSON.stringify({
+          publicToken,
+          accountId
+        })
       },
       (response: HttpResponse<string>) => {
         console.log(response);
@@ -81,7 +84,7 @@ export const PlaidLinkContextProvider = ({
     isOauth: isOauth.current,
     linkToken,
     generateLinkToken,
-    fetchAccessToken
+    exchangePublicToken
   };
 
   return (

@@ -9,13 +9,12 @@ import {
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import useHttp from '../../hooks/use-http';
 import MHButton from '../Button/MHButton';
 import MHDialog from '../Dialog/MHDialog';
-import Notification from '../UI/Notification';
 
 import { ReactComponent as CheckMarkRoundedLargeIcon } from '../../static/svg/check-mark-rounded-lg.svg';
 import PlaidLinkContext from '../../services/plaid-link';
+import { LinkSuccessMetadata } from '../../models/plaid.model';
 
 const LinkAccount = ({
   open,
@@ -26,20 +25,19 @@ const LinkAccount = ({
 }) => {
   const [completed, setCompleted] = React.useState(false);
 
-  const { loading, error, sendHttpRequest: uploadReceipt } = useHttp();
-
   const history = useHistory();
   const linkCtx = React.useContext(PlaidLinkContext);
-  const { linkToken, isOauth, generateLinkToken } = linkCtx;
+  const { linkToken, isOauth, generateLinkToken, exchangePublicToken } = linkCtx;
 
   const onSuccess = React.useCallback(
     (public_token: string, metadata: PlaidLinkOnSuccessMetadata) => {
       console.log(public_token, metadata);
       setCompleted(true);
       history.replace('/organization/wallet');
+      exchangePublicToken(public_token, (metadata as unknown as LinkSuccessMetadata).account_id);
       // window.history.pushState('', '', '/');
     },
-    [history]
+    [history, exchangePublicToken]
   );
 
   const onExit = React.useCallback(() => {
@@ -75,8 +73,6 @@ const LinkAccount = ({
 
   return (
     <React.Fragment>
-      {error && <Notification type="error" message={error.message} />}
-
       <MHDialog
         open={open}
         title={''}

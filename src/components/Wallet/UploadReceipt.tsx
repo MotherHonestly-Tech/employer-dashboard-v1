@@ -245,7 +245,12 @@ const UploadReceipt = ({
 
   const history = useHistory();
   const linkCtx = React.useContext(PlaidLinkContext);
-  const { linkToken, isOauth, generateLinkToken } = linkCtx;
+  const {
+    linkToken,
+    isOauth,
+    generateLinkToken,
+    exchangePublicToken
+  } = linkCtx;
 
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
   const [isDragActive, setIsDragActive] = React.useState('');
@@ -397,11 +402,12 @@ const UploadReceipt = ({
       console.log(public_token, metadata);
       setCompleted(true);
       history.replace('/organization/wallet');
+      exchangePublicToken(public_token, metadata.accounts[0].id);
       // window.history.pushState('', '', '/');
     },
-    [history]
+    [history, exchangePublicToken]
   );
-  
+
   const onExit = React.useCallback(() => {
     onClose();
   }, [onClose]);
