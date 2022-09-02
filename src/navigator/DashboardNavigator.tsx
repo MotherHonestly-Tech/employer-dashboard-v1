@@ -1,5 +1,13 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  useRouteMatch,
+  Redirect,
+  useLocation
+} from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import '../index.scss';
 
 import Startup from '../components/Dashboard/Startup';
 import Layout from '../components/Layout/Layout';
@@ -12,11 +20,19 @@ import Wallet from '../pages/Dashboard/Wallet';
 import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
 import { User } from '../models/user.model';
+import { styled } from '@mui/material/styles';
+
+const Wrapper = styled('div')(
+  ({ theme }) => `
+    padding: ${theme.spacing(3)};
+  `
+);
 
 const DashboardNavigator = () => {
   const authCtx = React.useContext(AuthContext);
 
   const { path } = useRouteMatch();
+  const location = useLocation();
 
   if (!authCtx.user) {
     return <Startup />;
@@ -36,23 +52,35 @@ const DashboardNavigator = () => {
   return (
     <DashboardContextProvider>
       <Layout>
-        <Switch>
-          <Route path={`${path}/dashboard`} exact>
-            <Dashboard />
-          </Route>
-          <Route path={`${path}/wallet`} exact>
-            <Wallet title="Wallet" />
-          </Route>
-          <Route path={`${path}/merchants`} exact>
-            <Merchants />
-          </Route>
-          <Route path={`${path}/resources`} exact>
-            <Resources />
-          </Route>
-          <Route path={`${path}/coaching`} exact>
-            <Coaching />
-          </Route>
-        </Switch>
+        <TransitionGroup>
+          <CSSTransition
+            unmountOnExit
+            key={location.pathname}
+            classNames="fade"
+            timeout={400}>
+            <Switch location={location}>
+              <Route path={`${path}/dashboard`} exact>
+                <Wrapper>
+                  <Dashboard />
+                </Wrapper>
+              </Route>
+              <Route path={`${path}/wallet`} exact>
+                <Wrapper>
+                  <Wallet title="Wallet" />
+                </Wrapper>
+              </Route>
+              <Route path={`${path}/merchants`} exact>
+                <Merchants />
+              </Route>
+              <Route path={`${path}/resources`} exact>
+                <Resources />
+              </Route>
+              <Route path={`${path}/coaching`} exact>
+                <Coaching />
+              </Route>
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
       </Layout>
     </DashboardContextProvider>
   );

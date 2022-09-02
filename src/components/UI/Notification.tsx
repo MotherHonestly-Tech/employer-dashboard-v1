@@ -74,7 +74,7 @@ export const ToastNotification = ({
   const isVisible = usePageVisibility();
   const toast = TOAST_TYPES.find((t) => t.type === type);
 
-  if (!toast || !isVisible) {
+  if (!toast) {
     return null;
   }
 

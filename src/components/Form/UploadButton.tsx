@@ -9,11 +9,16 @@ type UploadProps = {
   element: React.ReactElement;
   htmlFor?: string;
   file: File | null;
+  accept: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   fileThumb?: React.ReactElement;
   multiple?: boolean;
   onDrag?: (event: React.DragEvent<HTMLLabelElement>) => void;
   onDrop?: (event: React.DragEvent<HTMLLabelElement>) => void;
+};
+
+type UploadRef = {
+  uploadEl: React.RefObject<HTMLInputElement>;
 };
 
 const UploadInput = styled('input')(
@@ -22,26 +27,36 @@ const UploadInput = styled('input')(
   `
 );
 
-export default ({
+export default React.forwardRef(({
   element,
   htmlFor,
   file,
+  accept,
   fileThumb,
   onChange,
   onDrag,
   onDrop
-}: UploadProps) => {
-  const handleDrag = function (e: React.DragEvent<HTMLLabelElement>) {
+}: UploadProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+  const uploadInputRef = React.useRef<HTMLInputElement>(null);
+
+  const preventDefault = (e: React.SyntheticEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+
+  const handleDrag = function (e: React.DragEvent<HTMLLabelElement>) {
+    preventDefault(e);
     onDrag && onDrag(e);
   };
 
   const handleDrop = function (e: React.DragEvent<HTMLLabelElement>) {
-    e.preventDefault();
-    e.stopPropagation();
+    preventDefault(e);
     onDrop && onDrop(e);
   };
+
+  React.useImperativeHandle(ref, () => ({
+    uploadEl: uploadInputRef.current
+  } as any));
 
   return (
     <React.Fragment>
@@ -60,12 +75,13 @@ export default ({
           hidden
           type="file"
           id={htmlFor || 'file-upload'}
-          accept="image/*"
+          accept={accept}
           onChange={onChange}
+          ref={uploadInputRef}
         />
       </Box>
 
       {file && fileThumb && fileThumb}
     </React.Fragment>
   );
-};
+});

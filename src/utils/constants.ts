@@ -147,3 +147,16 @@ export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
     label: 'Pet'
   }
 ];
+
+const FILE_TYPES: Array<string> = [
+  'image/apng',
+  'image/bmp',
+  'image/gif',
+  'image/jpeg',
+  'image/pjpeg',
+  'image/png',
+  'image/svg+xml',
+  'image/tiff',
+  'image/webp',
+  'image/x-icon'
+];

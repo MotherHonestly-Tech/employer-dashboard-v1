@@ -1,5 +1,12 @@
 import React from 'react';
-import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  useRouteMatch,
+  useLocation
+} from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Startup from '../components/Dashboard/Startup';
 import Interests from '../pages/Onboarding/Interests';
@@ -10,10 +17,11 @@ import { OnboardingContextProvider } from '../store/context/onboarding-context';
 import { User } from '../models/user.model';
 
 const OnboardingNavigator = () => {
-  const { path } = useRouteMatch();
   const authCtx = React.useContext(AuthContext);
-
   const { user, isOnboarded } = authCtx;
+  
+  const { path } = useRouteMatch();
+  const location = useLocation();
 
   if (!authCtx.user) {
     // console.log('authCtx.user', authCtx.user);
@@ -30,20 +38,28 @@ const OnboardingNavigator = () => {
   // />;
 
   return (
-    <Switch>
-      <Route path={`${path}/employee`}>
-        <OnboardingContextProvider>
-          <Onboarding isOnboarded={userIsOnboarded} />
-        </OnboardingContextProvider>
-      </Route>
-      <Route path={`${path}/interests`}>
-        <Interests />
-      </Route>
+    <TransitionGroup>
+      <CSSTransition
+        unmountOnExit
+        key={location.pathname}
+        classNames="fade"
+        timeout={400}>
+        <Switch location={location}>
+          <Route path={`${path}/employee`}>
+            <OnboardingContextProvider>
+              <Onboarding isOnboarded={userIsOnboarded} />
+            </OnboardingContextProvider>
+          </Route>
+          <Route path={`${path}/interests`}>
+            <Interests />
+          </Route>
 
-      <Route path={`${path}`}>
-        <Redirect to={`${path}/employee`} />
-      </Route>
-    </Switch>
+          <Route path={`${path}`}>
+            <Redirect to={`${path}/employee`} />
+          </Route>
+        </Switch>
+      </CSSTransition>
+    </TransitionGroup>
   );
 };
 

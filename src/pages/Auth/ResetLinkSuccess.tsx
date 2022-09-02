@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -16,6 +16,7 @@ import { BGImage } from '../../models/background-image.model';
 import { HttpResponse } from '../../models/api.interface';
 import NotificationContext from '../../store/context/notifications.context';
 import BackdropLoader from '../../components/UI/BackdropLoader';
+import Notification from '../../components/UI/Notification';
 
 const ResetLinkSuccess: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -34,6 +35,17 @@ const ResetLinkSuccess: FnComponent<{
       imageAlt: 'Sai de Silva'
     });
   }, [onRouteChange]);
+
+  if (!location.state || !location.state.email) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/auth/sign-in',
+          state: { from: { pathname: 'forgot-password' } }
+        }}
+      />
+    );
+  }
 
   const resendLinkHandler = () => {
     sendResetLink(
@@ -57,6 +69,9 @@ const ResetLinkSuccess: FnComponent<{
   return (
     <React.Fragment>
       {loading && <BackdropLoader />}
+      {error && (
+        <Notification type="error" message={error.message} duration={10000} />
+      )}
       <Paper
         sx={{
           p: 8,

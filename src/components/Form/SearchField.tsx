@@ -11,7 +11,15 @@ import useInput from '../../hooks/use-input';
 import { ReactComponent as FilterIcon } from '../../static/svg/filter.svg';
 import * as validators from '../../utils/validators';
 
-const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement, placeholder: string, bgcolor?: string }) => {
+const SearchField = ({
+  icon,
+  placeholder,
+  bgcolor
+}: {
+  icon?: React.ReactElement;
+  placeholder: string;
+  bgcolor?: string;
+}) => {
   const {
     value: searchValue,
     valid: searchValid,
@@ -24,7 +32,11 @@ const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement
   ]);
 
   return (
-    <Box component={'form'} width={250} display="flex" bgcolor={bgcolor || '#F1F1F1'}>
+    <Box
+      component={'form'}
+      width={250}
+      display="flex"
+      bgcolor={bgcolor || '#F1F1F1'}>
       <MHTextInput
         id="search-interest"
         type="text"
@@ -34,7 +46,7 @@ const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement
         onBlur={searchOnBlur}
         className="flex-grow"
         endAdornment={
-          <InputAdornment>
+          <InputAdornment applyPadding>
             <IconButtonUnstyled onClick={() => {}}>
               <FilterIcon />
             </IconButtonUnstyled>
@@ -52,7 +64,7 @@ const SearchField = ({ icon, placeholder, bgcolor }: { icon?: React.ReactElement
             stroke: 'primary'
           }
         }}>
-          {icon && icon}
+        {icon && icon}
       </MHButton>
     </Box>
   );

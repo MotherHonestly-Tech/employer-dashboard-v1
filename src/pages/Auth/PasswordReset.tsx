@@ -114,11 +114,14 @@ const PasswordReset: FnComponent<{
         })
       },
       (data: any) => {
-        history.push(
-          getURLWithQueryParams('/auth/reset-password/jdd/success', {
+        history.push({
+          pathname: getURLWithQueryParams('/auth/reset-password/jdd/success', {
             verify: '1'
-          })
-        );
+          }),
+          state: {
+            token: token
+          }
+        });
       }
     );
   };
@@ -129,8 +132,7 @@ const PasswordReset: FnComponent<{
         sx={{
           px: 8,
           py: 5,
-          width: '100%',
-          maxWidth: 'sm'
+          width: '100%'
         }}>
         <Box sx={{}}>
           <RoundedLogoIcon>

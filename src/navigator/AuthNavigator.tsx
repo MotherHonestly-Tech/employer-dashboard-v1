@@ -1,5 +1,12 @@
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import {
+  Redirect,
+  Route,
+  Switch,
+  useRouteMatch,
+  useLocation
+} from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -24,6 +31,7 @@ const AuthNavigator: FnComponent = () => {
   const backgroundColor = React.useRef(theme.palette.background.default);
 
   const { path } = useRouteMatch();
+  const location = useLocation();
 
   const changeImageHandler = React.useCallback(
     ({ imageSrc, imageAlt, background }: BGImage) => {
@@ -58,36 +66,44 @@ const AuthNavigator: FnComponent = () => {
                 {/* <MHLogoIcon /> */}
                 <OrgLogo />
               </Box>
-              <Switch>
-                <Route path={`${path}/sign-in`}>
-                  <SignIn
-                    onRouteChange={changeImageHandler}
-                    title="Sign in to your account"
-                  />
-                </Route>
-                <Route path={`${path}/forgot-password`} exact>
-                  <ForgotPassword
-                    onRouteChange={changeImageHandler}
-                    title="Forgot Password"
-                  />
-                </Route>
-                <Route path={`${path}/forgot-password/reset-link`} exact>
-                  <ResetLinkSuccess onRouteChange={changeImageHandler} />
-                </Route>
-                <Route path={`${path}/reset-password`} exact>
-                  <PasswordReset onRouteChange={changeImageHandler} />
-                </Route>
-                <Route path={`${path}/reset-password/jdd/success`} exact>
-                  <ResetSuccess onRouteChange={changeImageHandler} />
-                </Route>
+              <TransitionGroup style={{ width: '100%' }}>
+                <CSSTransition
+                  unmountOnExit
+                  key={location.pathname}
+                  classNames="fade"
+                  timeout={400}>
+                  <Switch location={location}>
+                    <Route path={`${path}/sign-in`}>
+                      <SignIn
+                        onRouteChange={changeImageHandler}
+                        title="Sign in to your account"
+                      />
+                    </Route>
+                    <Route path={`${path}/forgot-password`} exact>
+                      <ForgotPassword
+                        onRouteChange={changeImageHandler}
+                        title="Forgot Password"
+                      />
+                    </Route>
+                    <Route path={`${path}/forgot-password/reset-link`} exact>
+                      <ResetLinkSuccess onRouteChange={changeImageHandler} />
+                    </Route>
+                    <Route path={`${path}/reset-password`} exact>
+                      <PasswordReset onRouteChange={changeImageHandler} />
+                    </Route>
+                    <Route path={`${path}/reset-password/jdd/success`} exact>
+                      <ResetSuccess onRouteChange={changeImageHandler} />
+                    </Route>
 
-                <Route path={`${path}`} exact>
-                  <Redirect to={`${path}/sign-in`} />
-                </Route>
-                <Route path="*">
-                  <Redirect to={`${path}/sign-in`} />
-                </Route>
-              </Switch>
+                    <Route path={`${path}`} exact>
+                      <Redirect to={`${path}/sign-in`} />
+                    </Route>
+                    <Route path="*">
+                      <Redirect to={`${path}/sign-in`} />
+                    </Route>
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
 
               <Typography variant="body2" color="#194049" align="center" mt={4}>
                 Powered by &nbsp;{' '}

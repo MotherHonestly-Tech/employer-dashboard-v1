@@ -19,9 +19,8 @@ const Layout: FnComponent = (props) => {
         <Sidebar />
 
         <Box
-          p={4}
           sx={{
-            backgroundColor: (theme) => theme.palette.background.paper,
+            backgroundColor: (theme) => '#fefefe',
             flexGrow: 1,
             overflow: 'auto'
           }}>

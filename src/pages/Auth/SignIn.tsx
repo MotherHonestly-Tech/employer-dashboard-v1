@@ -10,7 +10,6 @@ import MHFormControl from '../../components/Form/MHFormControl';
 import MHButton from '../../components/Button/MHButton';
 import InputAdornment from '../../components/Form/InputAdornment';
 import IconButton from '../../components/Button/IconButtonStyled';
-import Notification from '../../components/UI/Notification';
 import useHttp from '../../hooks/use-http';
 import useTitle from '../../hooks/use-title';
 
@@ -154,7 +153,6 @@ const SignIn: FnComponent<{
         sx={{
           px: 8,
           width: '100%',
-          maxWidth: 'sm',
           boxShadow: 'none'
         }}>
         <Box
@@ -191,7 +189,7 @@ const SignIn: FnComponent<{
             placeholder="Enter your email"
             onChange={inputChangeHandler}
             startAdornment={
-              <InputAdornment>
+              <InputAdornment applyPadding>
                 <MailIcon width="1rem" />
               </InputAdornment>
             }
@@ -206,12 +204,12 @@ const SignIn: FnComponent<{
             placeholder="Password"
             onChange={inputChangeHandler}
             startAdornment={
-              <InputAdornment>
+              <InputAdornment applyPadding>
                 <LockIcon width="1.2rem" />
               </InputAdornment>
             }
             endAdornment={
-              <InputAdornment>
+              <InputAdornment applyPadding>
                 <IconButton onClick={handleClickShowPassword}>
                   {showPassword ? (
                     <VisibilityOffIcon width="1rem" height="1rem" />

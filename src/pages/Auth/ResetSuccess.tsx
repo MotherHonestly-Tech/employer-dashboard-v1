@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -22,6 +22,8 @@ const ResetSuccess: FnComponent<{
   const { onRouteChange } = props;
   const history = useHistory();
 
+  const location = useLocation<{ token: string }>();
+
   React.useEffect(() => {
     onRouteChange({
       imageSrc:
@@ -29,6 +31,17 @@ const ResetSuccess: FnComponent<{
       imageAlt: 'Youssef Naddam'
     });
   }, [onRouteChange]);
+
+  if (!location.state || !location.state.token) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/auth/sign-in',
+          state: { from: { pathname: 'reset-password' } }
+        }}
+      />
+    );
+  }
 
   return (
     <React.Fragment>

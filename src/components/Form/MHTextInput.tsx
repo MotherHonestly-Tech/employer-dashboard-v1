@@ -6,6 +6,7 @@ import InputUnstyled, {
 } from '@mui/base/InputUnstyled';
 import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
+import { parseAmount } from '../../utils/utils';
 
 const grey = {
   50: '#F3F6F9',
@@ -28,7 +29,8 @@ const StyledInputRoot = styled('div')(
     align-items: center;
     justify-content: center;
     transition: all 0.4s ease-in;
-
+    position: relative;
+    
     .Mui-focused > &.MuiInput-root.MuiInput-formControl {
       border: 1px solid ${grey[500]};
     }
@@ -37,14 +39,13 @@ const StyledInputRoot = styled('div')(
       border: 1px solid ${grey[300]};
     }
 
-    &:hover {
+    &.MuiInput-root:hover {
       border-color: ${grey[300]};
     }
   `
 );
 
 const StyledInputElement = styled('input')`
-  display: block;
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.5;
@@ -55,11 +56,12 @@ const StyledInputElement = styled('input')`
   border-radius: inherit;
   padding: 12px 12px;
   outline: 0;
+  box-sizing: border-box;
 `;
 
 const StyledTextareaElement = styled('textarea', {
   shouldForwardProp: (prop) =>
-    !['ownerState', 'minRows', 'maxRows', 'rows'].includes(prop.toString())
+    !['ownerState', 'minRows', 'maxRows'].includes(prop.toString())
 })(
   ({ theme }) => `
   display: block;
@@ -88,13 +90,19 @@ const MHTextInput = React.forwardRef(
     // const { onChange, onFocus, onBlur, error } = formControlContext!;
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      props.onChange && props.onChange(event);
-      // onChange && onChange(event);
+      others.onChange && others.onChange(event);
     };
 
     const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-      props.onBlur && props.onBlur(event);
-      // onBlur && onBlur();
+      if (others.type === 'number' && event.target.value) {
+        let formattedValue = parseFloat(parseAmount(event.target.value))
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        event.target.value = formattedValue;
+        others.onChange &&
+          others.onChange(event as React.ChangeEvent<HTMLInputElement>);
+      }
+      others.onBlur && others.onBlur(event);
     };
 
     React.useImperativeHandle(ref, () => ({} as any));
@@ -108,15 +116,15 @@ const MHTextInput = React.forwardRef(
             Textarea: StyledTextareaElement,
             ...components
           }}
-          componentsProps={{
-            input: {
-              
-            }
-          }}
+          {...others}
           onChange={inputChangeHandler}
           onBlur={inputBlurHandler}
-          {...others}
           ref={ref}
+          componentsProps={{
+            input: {
+              type: others.type === 'number' ? 'text' : others.type
+            }
+          }}
         />
       </React.Fragment>
     );
@@ -124,3 +132,8 @@ const MHTextInput = React.forwardRef(
 );
 
 export default MHTextInput;
+// event.target.value.replace(/[^0-9]/g, '');
+// inputMode: 'decimal',
+// pattern: '[0-9]*',
+// precision: '2',
+// step: '1.00'

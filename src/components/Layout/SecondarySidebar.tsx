@@ -1,6 +1,5 @@
 import React from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
-import { TransitionGroup } from 'react-transition-group';
 
 import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,7 +26,8 @@ const SideDrawer = styled(MuiDrawer, {
     width: `${DRAWER_WIDTH + 60}px`,
     height: '100vh',
     padding: theme.spacing(2),
-    background: '#F1F7F8',
+    // background: '#F1F7F8'  #ebf6f7,
+    background: '#eaf6f7',
     boxShadow: '2px 4px 4px 0px #B7B7B740',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,

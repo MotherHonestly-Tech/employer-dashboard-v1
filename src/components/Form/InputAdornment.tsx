@@ -1,10 +1,12 @@
-import { styled } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
-const InputAdornment = styled('div')`
-  margin: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-`;
+const InputAdornment = styled('div')<{ applyPadding?: boolean }>(
+  ({ applyPadding }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...(applyPadding ? { padding: '0 .5rem' } : {})
+  })
+);
 
 export default InputAdornment;

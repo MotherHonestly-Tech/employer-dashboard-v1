@@ -34,6 +34,7 @@ const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
   fullWidth,
   onClick,
   form,
+  color,
   ...props
 }) => {
   const buttonClickHandler = (e: React.MouseEvent) => {
@@ -42,7 +43,7 @@ const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
 
   return (
     <Button
-      color={'primary'}
+      color={color || 'primary'}
       type={type || 'button'}
       variant={variant || 'contained'}
       sx={{

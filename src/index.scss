@@ -141,6 +141,39 @@ a:active {
   border-radius: 15px;
 }
 
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.fade-enter.fade-exit-active {
+  opacity: 0;
+  transition: opacity 250ms ease-in;
+  display: none;
+}
+
+.fade-exit {
+  opacity: 0;
+  z-index: 0;
+  display: none;
+}
+
+// react-transition classes below-
+// appear?: string | undefined;
+// appearActive?: string | undefined;
+// appearDone?: string | undefined;
+// enter?: string | undefined;
+// enterActive?: string | undefined;
+// enterDone?: string | undefined;
+// exit?: string | undefined;
+// exitActive?: string | undefined;
+// exitDone?: string | undefined;
+
 // @font-face {
 //   font-family: 'Avenir-Book';
 //   src: local('Avenir-Book'),

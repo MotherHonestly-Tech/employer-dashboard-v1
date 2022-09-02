@@ -61,7 +61,7 @@ const AppBar = () => {
             <IconButtonUnstyled>
               <Stack direction="row" alignItems="center" spacing={1.25}>
                 <Avatar
-                  alt="Remy Sharp"
+                  alt="Avatar"
                   src="https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash_dxhylh.png"
                   variant="rounded"
                   sx={{}}

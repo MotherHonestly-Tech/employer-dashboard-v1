@@ -86,8 +86,7 @@ const ForgotPassword: FnComponent<{
         sx={{
           px: 6,
           py: 5,
-          width: '100%',
-          maxWidth: 'sm'
+          width: '100%'
         }}>
         <Box sx={{}}>
           <Typography variant="h1" component="h1" gutterBottom mb={1}>
@@ -129,7 +128,7 @@ const ForgotPassword: FnComponent<{
               onBlur={emailInputBlurHandler}
               error={emailErrorTip}
               startAdornment={
-                <InputAdornment>
+                <InputAdornment applyPadding>
                   <MailIcon width="1rem" />
                 </InputAdornment>
               }

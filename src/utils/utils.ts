@@ -1,4 +1,3 @@
-import React from "react";
 import * as CryptoJS from 'crypto-js';
 
 export const isEmpty = (value: any) => {
@@ -55,16 +54,28 @@ export const formatAmount = (amount: number) => {
     return '0.00';
   }
 
-  return new Intl.NumberFormat('en-US', {
+  const options = {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2
-  }).format(amount);
+  };
+
+  return new Intl.NumberFormat('en-US', options).format(amount);
 };
 
 export const constructDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
+
+export function formatDate(date: Date): string {
+  date = date instanceof Date ? date : new Date(date);
+  const month =
+    date.getMonth() + 1 < 10
+      ? '0' + (date.getMonth() + 1)
+      : date.getMonth() + 1;
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  return `${month}/${day}/${date.getFullYear()}`;
+}
 
 export const convertFileSizeFromBytes = (size: number) => (
   unit: 'kb' | 'mb'
@@ -76,6 +87,31 @@ export const convertFileSizeFromBytes = (size: number) => (
   return (size / 1024 / 1024).toFixed(2) + ' Mb';
 };
 
+export function formatFileSize(size: number) {
+  if (size < 1024) {
+    return `${size} bytes`;
+  } else if (size >= 1024 && size < 1048576) {
+    return `${(size / 1024).toFixed(2)} KB`;
+  } else if (size >= 1048576) {
+    return `${(size / 1048576).toFixed(2)} MB`;
+  }
+}
+
+export const isValidFileType = (file: File, allowedTypes: string) => {
+  if (!file) return false;
+  const fileType = file.type;
+  const allowed = allowedTypes
+    .split(',')
+    .map((fileType) => fileType.trim())
+    .find((type) => fileType.includes(type));
+  return allowed !== undefined;
+};
+
+export const isValidFileSize = (file: File, maxSize: number) => {
+  if (!file) return false;
+  return file.size! / 1024 / 1024 <= maxSize;
+};
+
 export const resolveErrorMessage = (error: boolean) => (message: string) => {
   if (error) {
     return message;
@@ -85,28 +121,33 @@ export const resolveErrorMessage = (error: boolean) => (message: string) => {
 };
 
 export function getBrowserVisibilityProp() {
-  if (typeof document.hidden !== "undefined") {
+  if (typeof document.hidden !== 'undefined') {
     // Opera 12.10 and Firefox 18 and later support
-    return "visibilitychange"
-  } else if (typeof (document as any).msHidden !== "undefined") {
-    return "msvisibilitychange"
-  } else if (typeof (document as any).webkitHidden !== "undefined") {
-    return "webkitvisibilitychange"
+    return 'visibilitychange';
+  } else if (typeof (document as any).msHidden !== 'undefined') {
+    return 'msvisibilitychange';
+  } else if (typeof (document as any).webkitHidden !== 'undefined') {
+    return 'webkitvisibilitychange';
   }
 }
 
 export function getBrowserDocumentHiddenProp() {
-  if (typeof document.hidden !== "undefined") {
-    return "hidden"
-  } else if (typeof (document as any).msHidden !== "undefined") {
-    return "msHidden"
-  } else if (typeof (document as any).webkitHidden !== "undefined") {
-    return "webkitHidden"
+  if (typeof document.hidden !== 'undefined') {
+    return 'hidden';
+  } else if (typeof (document as any).msHidden !== 'undefined') {
+    return 'msHidden';
+  } else if (typeof (document as any).webkitHidden !== 'undefined') {
+    return 'webkitHidden';
   } else {
-    return "hidden"
+    return 'hidden';
   }
 }
 
 export function getIsDocumentHidden() {
-  return !(document as any)[getBrowserDocumentHiddenProp()]
+  return !(document as any)[getBrowserDocumentHiddenProp()];
 }
+
+export const parseAmount = (amount: string) => {
+  amount = amount.replace(/,/g, '').trim();
+  return amount;
+};

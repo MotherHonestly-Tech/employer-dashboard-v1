@@ -36,7 +36,11 @@ const CustomizedDialogTitle = (props: DialogTitleProps & ModalTitleProps) => {
   const { id, children, onClose, ...rest } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 1.8 }} id={id} {...rest}>
+    <DialogTitle
+      sx={{ m: 0, p: 1.8 }}
+      id={id}
+      fontFamily="Area-Normal-Bold"
+      {...rest}>
       {children}
       {onClose ? (
         <IconButtonStyled
@@ -75,11 +79,19 @@ const MHDialog = ({
   handleClose: () => void;
   actions?: React.ReactElement | null;
 }) => {
+  const onDialogClose = (
+    event: {},
+    reason: 'backdropClick' | 'escapeKeyDown'
+  ) => {
+    // disables backdrop click close, create function prop and call handleClose to close
+  };
+
   return (
     <CustomizedDialog
       open={open}
       aria-labelledby="customized-dialog"
-      onClose={handleClose}
+      onClose={onDialogClose}
+      disableEscapeKeyDown
       {...others}>
       {title && (
         <CustomizedDialogTitle

@@ -28,7 +28,7 @@ const AppNavigator: FnComponent<{}> = (props) => {
             ) : (
               <Redirect
                 to={{
-                  pathname: '/auth',
+                  pathname: '/auth/sign-in',
                   state: { from: routeProps.location }
                 }}
               />

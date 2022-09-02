@@ -78,6 +78,27 @@ export const theme = createTheme({
               backgroundColor: '#F1F1F1',
               borderColor: '#F1F1F1'
             }
+          },
+          ...{
+            [`&.${buttonClasses.outlinedSecondary}`]: {
+              backgroundColor: '#F2EC2C',
+              borderColor: '#F2EC2C',
+              color: primaryColor
+            }
+          },
+          ...{
+            [`&.${buttonClasses.outlinedSecondary}:hover`]: {
+              backgroundColor: 'transparent',
+              color: primaryColor,
+              borderColor: '#F2EC2C'
+            }
+          },
+          ...{
+            [`&.${buttonClasses.outlinedSecondary}:active`]: {
+              backgroundColor: 'transparent',
+              color: primaryColor,
+              borderColor: '#F2EC2C'
+            }
           }
         }
       },

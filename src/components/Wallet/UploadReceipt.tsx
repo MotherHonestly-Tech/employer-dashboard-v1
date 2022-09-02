@@ -1,5 +1,10 @@
 import React from 'react';
-import { usePlaidLink } from "react-plaid-link";
+import { useHistory } from 'react-router-dom';
+import {
+  PlaidLinkOnSuccessMetadata,
+  PlaidLinkOptions,
+  usePlaidLink
+} from 'react-plaid-link';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,25 +18,27 @@ import { MHSelect } from '../Form/MHSelect';
 import MHFormControl from '../Form/MHFormControl';
 import MHButton from '../Button/MHButton';
 import UploadButton from '../Form/UploadButton';
-import InputAdornment from '../Form/InputAdornment';
+import Notification from '../UI/Notification';
 import useInput from '../../hooks/use-input';
 import useHttp from '../../hooks/use-http';
 
-import DashboardContext from '../../store/context/dashboard.context';
 import { ReactComponent as ReceiptIcon } from '../../static/svg/receipt.svg';
-import { ReactComponent as DollarIcon } from '../../static/svg/dollar.svg';
 import { ReactComponent as JpgIcon } from '../../static/svg/jpg-file.svg';
 import { ReactComponent as CheckCircleFillIcon } from '../../static/svg/check-circle-fill.svg';
 import { ReactComponent as CheckMarkRoundedLargeIcon } from '../../static/svg/check-mark-rounded-lg.svg';
 import {
   resolveErrorMessage,
-  convertFileSizeFromBytes
+  formatFileSize,
+  isValidFileType,
+  isValidFileSize
 } from '../../utils/utils';
 import * as validators from '../../utils/validators';
 import { HttpResponse } from '../../models/api.interface';
 import AuthContext from '../../store/context/auth-context';
+import DashboardContext from '../../store/context/dashboard.context';
 import { Category, Merchant } from '../../models/wallet';
-import Notification from '../UI/Notification';
+import NotificationContext from '../../store/context/notifications.context';
+import PlaidLinkContext from '../../services/plaid-link';
 
 const UploadWrapper = styled('div')<{
   isdragactive: string;
@@ -101,7 +108,7 @@ const UploadThumb = ({ file }: { file: File | null }) =>
             {file!.name}
           </Typography>
           <Typography variant="body1" color="#A6A6A6" fontSize="10px">
-            {convertFileSizeFromBytes(file!.size)('kb')}
+            {formatFileSize(file!.size)}
           </Typography>
         </div>
       </Stack>
@@ -122,6 +129,10 @@ const UploadReceipt = ({
 
   const authCtx = React.useContext(AuthContext);
   const { userId } = authCtx;
+  const notificationCtx = React.useContext(NotificationContext);
+  const { pushNotification } = notificationCtx;
+
+  const uploadBtnRef = React.useRef<any>(null);
 
   const {
     value: enteredCategory,
@@ -232,9 +243,14 @@ const UploadReceipt = ({
     }
   ]);
 
+  const history = useHistory();
+  const linkCtx = React.useContext(PlaidLinkContext);
+  const { linkToken, isOauth, generateLinkToken } = linkCtx;
+
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
   const [isDragActive, setIsDragActive] = React.useState('');
   const [completed, setCompleted] = React.useState(false);
+  const [isUploaded, setIsUploaded] = React.useState(isOauth);
 
   const { loading, error, sendHttpRequest: uploadReceipt } = useHttp();
 
@@ -249,7 +265,7 @@ const UploadReceipt = ({
     uploadedFile;
 
   let amountErrorTip = resolveErrorMessage(enteredAmountHasError)(
-    'Please enter an amount'
+    'Please enter a valid amount'
   );
   let merchantNameErrorTip = resolveErrorMessage(enteredMerchantNameHasError)(
     'Please enter a merchant name'
@@ -263,7 +279,8 @@ const UploadReceipt = ({
 
   const uploadChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const [file] = Array.from(e.target.files as FileList);
-    setUploadedFile(file as File);
+    const valid = isValidFile(file);
+    valid && setUploadedFile(file);
     // if (file) {
     //   const reader = new FileReader();
     //   reader.onload = (e: ProgressEvent) => {
@@ -282,14 +299,48 @@ const UploadReceipt = ({
 
   const dropFileHandler = (e: React.DragEvent<HTMLLabelElement>) => {
     const [file] = Array.from(e.dataTransfer.files as FileList);
-    setUploadedFile(file as File);
+    isValidFile(file) && setUploadedFile(file);
     setIsDragActive('');
+  };
+
+  const isValidFile = (file: File) => {
+    const fileRef = uploadBtnRef.current;
+
+    if (!file) {
+      pushNotification({
+        type: 'error',
+        message: 'Please upload an image of your receipt',
+        duration: 14000
+      });
+      return;
+    }
+
+    const isFileSizeValid = isValidFileSize(file, 2);
+    const isMimeTypeValid = isValidFileType(
+      file,
+      fileRef.uploadEl.getAttribute('accept')
+    );
+
+    !isMimeTypeValid &&
+      pushNotification({
+        type: 'error',
+        message: 'Please upload jpeg, png or pdf files',
+        duration: 14000
+      });
+    !isFileSizeValid &&
+      pushNotification({
+        type: 'error',
+        message: 'File size should be less than 2MB',
+        duration: 14000
+      });
+
+    return isFileSizeValid && isMimeTypeValid;
   };
 
   function submitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    if (!formIsValid) {
+    if (!formIsValid || !isValidFile(uploadedFile as File)) {
       markAmountInputAsTouched();
       markMerchantNameInputAsTouched();
       markMerchantWebsiteInputAsTouched();
@@ -336,77 +387,71 @@ const UploadReceipt = ({
         body: formData
       },
       (response: HttpResponse<unknown>) => {
-        console.log(response);
-        setCompleted(true);
-        openLink();
+        setIsUploaded(true);
       }
     );
   }
 
   const onSuccess = React.useCallback(
-    (public_token: string) => {
-      // send public_token to server
-      const setToken = async () => {
-        const response = await fetch("http://localhost:8000/api/set_access_token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-          },
-          body: `public_token=${public_token}`,
-        });
-        if (!response.ok) {
-          return;
-        }
-        const data = await response.json();
-      };
-      window.history.pushState("", "", "/");
+    (public_token: string, metadata: PlaidLinkOnSuccessMetadata) => {
+      console.log(public_token, metadata);
+      setCompleted(true);
+      history.replace('/organization/wallet');
+      // window.history.pushState('', '', '/');
     },
-    []
+    [history]
   );
+  
+  const onExit = React.useCallback(() => {
+    onClose();
+  }, [onClose]);
 
-  const config: Parameters<typeof usePlaidLink>[0] = {
-    token: localStorage.getItem('link_token'),
-    onSuccess
+  const config: PlaidLinkOptions = {
+    token: linkToken,
+    onSuccess,
+    onExit,
+    ...(isOauth && {
+      receivedRedirectUri: window.location.href
+    })
   };
 
   const { open: openLink, ready } = usePlaidLink(config);
 
   React.useEffect(() => {
-    setCompleted(false);
+    generateLinkToken();
+  }, [generateLinkToken]);
 
-    const fetchToken = async () => {
-      const path = 'http://localhost:8000/api/create_link_token';
-      const response = await fetch(path, {
-        method: 'POST'
-      });
+  React.useEffect(() => {
+    if (ready && isUploaded) {
+      openLink();
+    }
+  }, [isUploaded, ready, openLink]);
 
-      if (!response.ok) {
-        return;
-      }
-      const data = await response.json();
-      localStorage.setItem("link_token", data.link_token); //to use later for Oauth
-    };
-    
-    fetchToken();
-  }, [open]);
+  React.useEffect(() => {
+    if (isOauth && ready) {
+      openLink();
+    }
+  }, [isOauth, ready, openLink]);
 
   return (
     <React.Fragment>
       {error && <Notification type="error" message={error.message} />}
       <MHDialog
         open={open}
-        title={!completed ? 'Upload your receipt' : ''}
+        title={!completed && !isUploaded ? 'Upload your receipt' : ''}
         handleClose={onClose}
         scroll="paper"
         actions={
           !completed ? (
-            <MHButton
-              type="submit"
-              form="upload-receipt-form"
-              loading={loading}
-              fullWidth>
-              Proceed
-            </MHButton>
+            !isUploaded ? (
+              <MHButton
+                type="submit"
+                form="upload-receipt-form"
+                loading={loading}
+                fullWidth>
+                Proceed
+              </MHButton>
+            ) : null
           ) : (
             <MHButton type="button" fullWidth onClick={onClose}>
               Close modal
@@ -419,123 +464,156 @@ const UploadReceipt = ({
       Upload Your Receipt
     </Typography> */}
         {!completed ? (
-          <Box
-            component={'form'}
-            onSubmit={submitHandler}
-            id="upload-receipt-form">
-            <MHSelect
-              label="Select a Category"
-              placeholder="Pick a category"
-              options={
-                (staticDataCacheMap.get('categories') as SelectOption<
-                  string
-                >[]) || []
-              }
-              value={enteredCategory}
-              onChange={(val) => categoryInputChangeHandler(val as string)}
-              onBlur={categoryInputBlurHandler}
-              popperWidth="80%"
-            />
+          !isUploaded ? (
+            <Box
+              component={'form'}
+              onSubmit={submitHandler}
+              id="upload-receipt-form">
+              <MHSelect
+                label="Select a Category"
+                placeholder="Pick a category"
+                options={
+                  (staticDataCacheMap.get('categories') as SelectOption<
+                    string
+                  >[]) || []
+                }
+                value={enteredCategory}
+                onChange={(val) => categoryInputChangeHandler(val as string)}
+                onBlur={categoryInputBlurHandler}
+                popperWidth="80%"
+              />
 
-            <Grid container spacing={2}>
-              <Grid item xs={8}>
-                <MHSelect
-                  label="Select a Merchant"
-                  placeholder="Pick a merchant"
-                  options={
-                    (staticDataCacheMap.get('merchants') as SelectOption<
-                      string
-                    >[]) || []
-                  }
-                  value={enteredMerchant}
-                  onChange={(val) => merchantInputChangeHandler(val as string)}
-                  onBlur={merchantInputBlurHandler}
-                />
+              <Grid container spacing={2}>
+                <Grid item xs={8}>
+                  <MHSelect
+                    label="Select a Merchant"
+                    placeholder="Pick a merchant"
+                    options={
+                      (staticDataCacheMap.get('merchants') as SelectOption<
+                        string
+                      >[]) || []
+                    }
+                    value={enteredMerchant}
+                    onChange={(val) =>
+                      merchantInputChangeHandler(val as string)
+                    }
+                    onBlur={merchantInputBlurHandler}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <MHFormControl
+                    id="amount"
+                    type="number"
+                    placeholder="0.00"
+                    label="Amount ($)"
+                    value={enteredAmount}
+                    onChange={amountInputChangeHandler}
+                    onBlur={amountInputBlurHandler}
+                    error={amountErrorTip}
+                    min={0}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <MHFormControl
-                  id="amount"
-                  type="number"
-                  placeholder="0.00"
-                  label="Amount"
-                  value={enteredAmount}
-                  onChange={amountInputChangeHandler}
-                  onBlur={amountInputBlurHandler}
-                  error={amountErrorTip}
-                  startAdornment={
-                    <InputAdornment
-                      style={{
-                        position: 'relative',
-                        left: '10px'
-                      }}>
-                      <DollarIcon width="1rem" height="1rem" />
-                    </InputAdornment>
-                  }
-                />
-              </Grid>
-            </Grid>
 
-            {enteredMerchant === '-1' && (
-              <>
-                <MHFormControl
-                  id="merchantName"
-                  type="text"
-                  label="Enter Merchant Name"
-                  placeholder="Enter merchant name"
-                  value={enteredMerchantName}
-                  onChange={merchantNameInputChangeHandler}
-                  onBlur={merchantNameInputBlurHandler}
-                  error={merchantNameErrorTip}
-                />
+              {enteredMerchant === '-1' && (
+                <>
+                  <MHFormControl
+                    id="merchantName"
+                    type="text"
+                    label="Enter Merchant Name"
+                    placeholder="Enter merchant name"
+                    value={enteredMerchantName}
+                    onChange={merchantNameInputChangeHandler}
+                    onBlur={merchantNameInputBlurHandler}
+                    error={merchantNameErrorTip}
+                  />
 
-                <MHFormControl
-                  id="merchantWebsite"
-                  type="text"
-                  label="Merchant url/website"
-                  placeholder="Enter website address"
-                  value={enteredMerchantWebsite}
-                  onChange={merchantWebsiteInputChangeHandler}
-                  onBlur={merchantWebsiteInputBlurHandler}
-                  error={merchantWebsiteErrorTip}
-                />
+                  <MHFormControl
+                    id="merchantWebsite"
+                    type="text"
+                    label="Merchant url/website"
+                    placeholder="Enter website address"
+                    value={enteredMerchantWebsite}
+                    onChange={merchantWebsiteInputChangeHandler}
+                    onBlur={merchantWebsiteInputBlurHandler}
+                    error={merchantWebsiteErrorTip}
+                  />
 
-                <MHFormControl
-                  id="merchantAddress"
-                  type="text"
-                  label="Merchant address"
-                  placeholder="Enter merchant address"
-                  value={enteredMerchantAddress}
-                  onChange={merchantAddressInputChangeHandler}
-                  onBlur={merchantAddressInputBlurHandler}
-                  error={merchantAddressErrorTip}
-                  multiline
-                  rows={3}
-                />
-              </>
-            )}
+                  <MHFormControl
+                    id="merchantAddress"
+                    type="text"
+                    label="Merchant address"
+                    placeholder="Enter merchant address"
+                    value={enteredMerchantAddress}
+                    onChange={merchantAddressInputChangeHandler}
+                    onBlur={merchantAddressInputBlurHandler}
+                    error={merchantAddressErrorTip}
+                    multiline
+                    rows={3}
+                  />
+                </>
+              )}
 
-            <MHFormControl
-              id="desc"
-              label="Expense Description"
-              placeholder="A short description of expense"
-              type="text"
-              value={enteredDesc}
-              onChange={descInputChangeHandler}
-              onBlur={descInputBlurHandler}
-              multiline
-              rows={3}
-            />
+              <MHFormControl
+                id="desc"
+                label="Expense Description"
+                placeholder="A short description of expense"
+                type="text"
+                value={enteredDesc}
+                onChange={descInputChangeHandler}
+                onBlur={descInputBlurHandler}
+                multiline
+                rows={8}
+              />
 
-            <UploadButton
-              htmlFor="receipt-upload"
-              file={uploadedFile}
-              onChange={uploadChangeHandler}
-              element={<UploadWidget isDragActive={isDragActive} />}
-              fileThumb={<UploadThumb file={uploadedFile} />}
-              onDrag={dragFileHandler}
-              onDrop={dropFileHandler}
-            />
-          </Box>
+              <UploadButton
+                htmlFor="receipt-upload"
+                file={uploadedFile}
+                onChange={uploadChangeHandler}
+                element={<UploadWidget isDragActive={isDragActive} />}
+                fileThumb={<UploadThumb file={uploadedFile} />}
+                onDrag={dragFileHandler}
+                onDrop={dropFileHandler}
+                accept="image/*, application/pdf, .jpg, image/jpeg, image/png"
+                ref={uploadBtnRef}
+              />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                px: 2,
+                '& svg': {
+                  display: 'block'
+                }
+              }}>
+              <Typography
+                variant="h2"
+                align="center"
+                color="primary.main"
+                gutterBottom
+                paragraph>
+                Add your Payout Account
+              </Typography>
+              <Typography
+                variant="body1"
+                align="center"
+                color="primary.main"
+                paragraph
+                gutterBottom>
+                In order to proceed with your application for reimbursement, we
+                will need to verify your Payout account.
+              </Typography>
+              <Typography
+                variant="body1"
+                align="center"
+                color="primary.main"
+                paragraph
+                gutterBottom>
+                You will be redirected to Plaid to add your Payout account
+                shortly.
+              </Typography>
+            </Box>
+          )
         ) : (
           <Box
             sx={{

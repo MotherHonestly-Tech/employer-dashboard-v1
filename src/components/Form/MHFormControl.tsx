@@ -147,6 +147,8 @@ const MHFormControl = (props: InputProps) => {
     error,
     multiline,
     rows,
+    min,
+    max,
     onChange,
     onBlur
   } = props;
@@ -171,6 +173,12 @@ const MHFormControl = (props: InputProps) => {
         autoFocus={autoFocus}
         multiline={multiline}
         rows={rows}
+        componentsProps={{
+          input: {
+            min: min,
+            max: max,
+          }
+        }}
         style={{
           marginBottom: '0.5rem',
           borderColor: error ? theme.palette.error.main : ''
