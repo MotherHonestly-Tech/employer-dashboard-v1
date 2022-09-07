@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 import WalletBalance from "../../components/Dashboard/WalletBalance";
 import Consultant from "../../components/Dashboard/Consultant";
 import Concierge from "../../components/Dashboard/Concierge";
-import RecentTransactions from '../../components/Dashboard/RecentTransactions';
-import AuthContext from '../../store/context/auth-context';
+import RecentTransactions from "../../components/Dashboard/RecentTransactions";
+import AuthContext from "../../store/context/auth-context";
 
 const Dashboard = () => {
   const authCtx = React.useContext(AuthContext);
@@ -26,11 +26,7 @@ const Dashboard = () => {
         </Typography>
       </Box>
 
-      <Grid
-        container
-        columnSpacing={2}
-        direction="row"
-        alignItems="stretch">
+      <Grid container columnSpacing={2} direction="row" alignItems="stretch">
         <Grid item xs={4} lg={5}>
           <WalletBalance />
         </Grid>

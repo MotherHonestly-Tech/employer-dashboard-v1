@@ -35,6 +35,7 @@ import ReceiptStatus, {
 import PlaidLinkContext from '../../services/plaid-link';
 import MHTextInput from '../../components/Form/MHTextInput';
 import MHDatePicker from '../../components/Form/MHDatePicker';
+import Transactions from '../../components/Wallet/Transactions';
 
 const GridItem = styled(Box)(({ theme }) => ({
   // ...theme.typography.body2,
@@ -397,25 +398,36 @@ const Wallet = (props: { title: string }) => {
                 </StyledActionButton>
               </Stack>
 
-              <MHButton
-                type="button"
-                variant="outlined"
-                sx={{ p: '5px 12px' }}
-                color="secondary">
-                32 eligible transactions
-              </MHButton>
+              <div className="relative">
+                <MHButton
+                  type="button"
+                  variant="outlined"
+                  sx={{ p: '5px 12px', position: 'relative' }}
+                  color="secondary">
+                  32 eligible transactions
+                </MHButton>
+
+                <span className="absolute flex h-3 w-3 -top-1 -right-1">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400"></span>
+                </span>
+              </div>
             </Stack>
 
             <Divider light />
 
             <Grid container mt={2} spacing={1}>
-              <Grid item xs={3}>
+              <Grid item xs={3} position="relative">
                 <MHSelect
                   placeholder="Status"
-                  options={[]}
+                  options={Object.keys(RECEIPT_STATUS).map((statusKey) => ({
+                    value: statusKey,
+                    label: RECEIPT_STATUS[statusKey as any].text
+                  }))}
                   value={enteredStatus}
                   onChange={(val) => statusInputChangeHandler(val as string)}
                   onBlur={statusInputBlurHandler}
+                  popperWidth="100%"
                 />
               </Grid>
               <Grid item xs={3} position="relative">
@@ -435,6 +447,8 @@ const Wallet = (props: { title: string }) => {
       {linkAccountOpen && (
         <LinkAccount open={linkAccountOpen} onClose={handleLinkAccountClose} />
       )}
+
+      {/* {<Transactions />} */}
     </React.Fragment>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { matchPath } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,6 +12,12 @@ import SecondarySidebar from './SecondarySidebar';
 import { FnComponent } from '../../models/component.model';
 
 const Layout: FnComponent = (props) => {
+  const resourcePathMatch = matchPath(window.location.pathname, {
+    path: '/organization/resources',
+    exact: true,
+    strict: false
+  });
+
   return (
     <Box>
       <AppBar />
@@ -28,7 +35,7 @@ const Layout: FnComponent = (props) => {
           {props.children}
         </Box>
 
-        <SecondarySidebar />
+        {!resourcePathMatch && <SecondarySidebar />}
       </Stack>
     </Box>
   );

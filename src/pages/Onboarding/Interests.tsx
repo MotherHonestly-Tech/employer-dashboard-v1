@@ -85,7 +85,7 @@ const Interests = () => {
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
 
-    if(setOfCheckedInterests.length === 0) return;
+    if (setOfCheckedInterests.length === 0) return;
 
     const reqPayload: CheckedInterest[] = setOfCheckedInterests.map((item) => ({
       interest: item.interest,
