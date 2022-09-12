@@ -22,6 +22,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        ash: {
+          100: "#D6D7E0",
+        },
         lilac: {
           100: "#FBF8F5",
           200: "#F6F8F5",

@@ -2,12 +2,14 @@ import { Box, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as SortIcon } from "../../../static/svg/chevron-down.svg";
-import { ReactComponent as CancelIcon } from "../../../static/svg/cancel.svg";
+import { ReactComponent as SortIcon } from "../../static/svg/chevron-down.svg";
+import { ReactComponent as ArrowRightIcon } from "../../static/svg/arrow-right-thick.svg";
+import MHButton from "../Button/MHButton";
+import MHTextInput from "../Form/MHTextInput";
 
 type Props = {};
 
-const EventSort = (props: Props) => {
+const CoachingSort = (props: Props) => {
   const [resources, setResources] = useState([]);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
@@ -32,7 +34,7 @@ const EventSort = (props: Props) => {
   }, []);
   return (
     <Fragment>
-      <Box className="bg-white h-12 flex px-4 relative ">
+      <Box className="bg-white h-12 flex px-2 relative ">
         <Typography
           color="primary"
           className="uppercase p-4"
@@ -50,7 +52,7 @@ const EventSort = (props: Props) => {
             color="primary"
             className="capitalize p-4 flex font-areaSemi text-[10px]"
           >
-            Location
+            Category
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
           </Typography>
         </Link>
@@ -59,53 +61,55 @@ const EventSort = (props: Props) => {
             color="primary"
             className="capitalize p-4 flex font-areaSemi text-[10px]"
           >
-            Event Date
+            Expertise
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
-          </Typography>
-        </Link>
-        <Link to={"/"} className="cursor-pointer no-underline">
-          <Typography
-            color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
-          >
-            Rating
-            <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
-          </Typography>
-        </Link>
-        <Link
-          to={"/"}
-          className="cursor-pointer no-underline bg-pink-600 h-10 rounded-md my-1"
-        >
-          <Typography
-            color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px] "
-          >
-            Digital Only
-            <CancelIcon className="mt-[2px] ml-1" height="10px" width="10px" />
           </Typography>
         </Link>
 
-        <Box className="absolute right-2 flex">
+        <Box
+          component={"form"}
+          height={30}
+          width={250}
+          display="flex"
+          className="my-2 ml-16 shadow-sm"
+        >
+          <MHTextInput
+            id="search-interest"
+            type="text"
+            placeholder="Search coach"
+            className="flex-grow shadow-inner"
+          />
+          <MHButton
+            sx={{
+              minWidth: "auto",
+              "& svg": {
+                stroke: "grey.500",
+                width: "1rem",
+              },
+              "&.MuiButton-root:hover svg": {
+                stroke: "primary",
+              },
+            }}
+            onClick={() => {
+              window.open("/");
+            }}
+          >
+            <ArrowRightIcon />
+          </MHButton>
+        </Box>
+
+        <Box className="absolute right-1 flex">
           <Typography
             color="primary"
             className="capitalize p-4 flex opacity-50  text-[10px] font-areaSemi"
           >
             {resources.length} Results
           </Typography>
-          <Link to={"/"} className="cursor-pointer no-underline">
-            <Typography
-              color="primary"
-              className="capitalize p-4 flex font-areaSemi text-[10px]"
-            >
-              Sort by
-              <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
-            </Typography>
-          </Link>
         </Box>
       </Box>
-      <Box className="bg-gray-300 h-[1px] w-[84.6%] opacity-50 overflow-hidden mx-auto absolute"></Box>
+      <Box className="bg-black-300 h-[1px] w-[65.4%] opacity-50 overflow-hidden mx-auto absolute"></Box>
     </Fragment>
   );
 };
 
-export default EventSort;
+export default CoachingSort;

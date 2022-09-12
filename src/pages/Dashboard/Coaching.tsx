@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Fragment } from "react";
+import CoachingHeader from "../../components/Coaching/CoachingHeader";
+import CoachPager from "../../components/Coaching/CoachPager";
 
 const Coaching = () => {
   return (
-    <div>Coaching</div>
-  )
-}
+    <Fragment>
+      <CoachingHeader />
+      <CoachPager />
+    </Fragment>
+  );
+};
 
-export default Coaching
+export default Coaching;

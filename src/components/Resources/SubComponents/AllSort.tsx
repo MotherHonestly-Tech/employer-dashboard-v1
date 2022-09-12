@@ -111,7 +111,7 @@ const AllSort = (props: AllSortProps) => {
           </Link>
         </Box>
       </Box>
-      <Box className="bg-gray-300 h-[1px] w-[100%] opacity-50 overflow-hidden mx-auto absolute"></Box>
+      <Box className="bg-gray-300 h-[1px] w-[84.6%] opacity-50 overflow-hidden mx-auto absolute"></Box>
     </Fragment>
   );
 };

@@ -1,7 +1,5 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { Fragment } from "react";
-
-import { ReactComponent as DownloadIcon } from "../../../static/svg/download.svg";
 
 type HeaderProps = {
   title?: string;
