@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import ViewHeader from "../SubComponents/ViewHeader";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useLocation, useParams } from "react-router-dom";
-import moment from "moment";
+import { useLocation } from "react-router-dom";
+import VideoHeader from "./VideoHeader";
 
 type ComponentProps = {
   image?: string;
@@ -16,18 +15,14 @@ type ComponentProps = {
   slugs?: string;
   createdAt?: string;
   updatedAt?: string;
-  title?: string | undefined;
 };
 
-const ViewToolkit = (props: ComponentProps) => {
+const ViewVideo = (props: ComponentProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ComponentProps[]>([]);
 
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
-
-  // const params = useParams<any>();
-  // console.log(params.slug!);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
@@ -43,9 +38,10 @@ const ViewToolkit = (props: ComponentProps) => {
       console.error("Cannot find Data");
     }
   };
+
   const [data, setData] = useState<any>("");
 
-  var viewUrl = `https://mocki.io/v1/03a58836-bfe9-4d5d-ac55-11cd5c00f367`;
+  var viewUrl = `https://mocki.io/v1/cbbfc96e-eec5-4867-8f69-6186cf2a7973`;
 
   const getData = async () => {
     try {
@@ -63,45 +59,63 @@ const ViewToolkit = (props: ComponentProps) => {
     getResource();
     getData();
   }, []);
-
   return (
     <Fragment>
-      <ViewHeader
-        titles={data.title}
+      <VideoHeader
+        title={data.title}
         description={data.titleDetails}
-        imageUrl={data.bgImageUrl}
+        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639776/image_2_lqcgpe.png"
         categoryTwo={data.category}
-        downloadLink={data.downloadUrl}
-        downloadClassName="flex -ml-4 my-8"
-        date={moment(data.date).format("DD/MM/YYYY HH:mm")}
-        dateTwo={moment(data.date).format("MMMM D YYYY")}
-        ticketClassName="py-6 hidden"
-        podClassName="mt-10 flex gap-32 hidden"
-        dateClassName="hidden text-left pb-2 w-3/4 text-base font-areaSemi"
-        episodeClassName="hidden"
+        downloadClassName="hidden flex -ml-4 my-6"
       />
 
       <Box className="px-40 py-10 bg-white">
+        {/* <img
+          src="https://res.cloudinary.com/mother-honestly/image/upload/v1661950701/image_unnc52.png"
+          alt=""
+          className="mx-auto my-6 w-full h-[600px]"
+        /> */}
+
+        <Box>
+          <iframe
+            src={data.videoUrl}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full md:h-[400px] lg:h-[700px]"
+            title="MH Mother: The Summit 2019"
+          ></iframe>
+        </Box>
+
         <Typography
           variant="h3"
           color="primary"
-          className="text-3xl font-columbia font-[500]"
+          className="text-xl pt-6 font-areaSemi"
         >
-          {data.description}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="primary"
-          className="text-[13px] mt-6 leading-[200%] font-areaSemi"
-        >
-          {data.importantInfo}
+          Key Takeaway:
         </Typography>
 
-        <img
-          src={data.imageUrl}
-          alt=""
-          className="mx-auto my-6 w-full h-[600px]"
-        />
+        <Box className="mt-8">
+          <Box className="flex mb-4">
+            {/* <Box className="font-areaExt bg-yellow-100 px-2 pt-1 text-sm rounded-full">
+              2
+            </Box> */}
+            <Typography
+              variant="h3"
+              color="primary"
+              className="text-base px-24 uppercase font-areaNorm"
+            >
+              {data.keypoint}
+            </Typography>
+          </Box>
+          <Typography
+            variant="body2"
+            color="primary"
+            className="text-[13px] px-24 my-4 leading-[200%] font-areaSemi"
+          >
+            {data.keynote}
+          </Typography>
+        </Box>
       </Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
@@ -110,14 +124,14 @@ const ViewToolkit = (props: ComponentProps) => {
           color="primary"
           className="font-areaSemi text-xl text-center py-4"
         >
-          Toolkits You Might like
+          Videos You Might like
         </Typography>
         <Grid container spacing={2}>
           {slice.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[270px] h-[400px] object-cover bg-cream-100 rounded-md"
-                iconClass="hidden"
+                cardClass="relative mb-10 w-[270px] h-[420px] object-cover bg-cream-100 rounded-md"
+                iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
                 imageSrc={res.image}
@@ -135,4 +149,4 @@ const ViewToolkit = (props: ComponentProps) => {
   );
 };
 
-export default ViewToolkit;
+export default ViewVideo;

@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 export type CardProps = {
   cardClass: string;
   iconClass: string;
+  createdAt?: string | undefined;
   imageSrc: string | undefined;
   top?: string | undefined;
   title: string | undefined;

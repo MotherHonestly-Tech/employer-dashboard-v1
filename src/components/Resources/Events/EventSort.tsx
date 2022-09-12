@@ -32,7 +32,7 @@ const EventSort = (props: Props) => {
   }, []);
   return (
     <Fragment>
-      <Box className="bg-white h-12 flex px-6 relative ">
+      <Box className="bg-white h-12 flex px-4 relative ">
         <Typography
           color="primary"
           className="uppercase p-4"
@@ -85,7 +85,7 @@ const EventSort = (props: Props) => {
           </Typography>
         </Link>
 
-        <Box className="absolute right-0 flex">
+        <Box className="absolute right-2 flex">
           <Typography
             color="primary"
             className="capitalize p-4 flex opacity-50  text-[10px] font-areaSemi"

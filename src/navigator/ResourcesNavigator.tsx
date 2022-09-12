@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Switch,
   Route,
-  Redirect,
   useRouteMatch,
   useLocation
 } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
+import Resources from '../pages/Dashboard/Resources';
 import ArticlesPage from '../components/Resources/Articles/ArticlesPage';
 import EventsPage from '../components/Resources/Events/EventsPage';
 import PodcastsPage from '../components/Resources/Podcasts/PodcastsPage';
@@ -19,7 +19,7 @@ const ResourcesNavigator = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
 
-  console.log(path);
+  console.warn(path);
 
   return (
     <TransitionGroup>
@@ -29,22 +29,25 @@ const ResourcesNavigator = () => {
         classNames="fade"
         timeout={400}>
         <Switch location={location}>
-          <Route path={`${path}/resources/toolkits`} exact>
+          <Route path={`${path}`} exact>
+            <Resources />
+          </Route>
+          <Route path={`${path}/toolkits`} exact>
             <ToolkitsPage />
           </Route>
-          <Route path={`${path}/resources/toolkits/:slug`} exact>
+          <Route path={`${path}/toolkits/:slug`} exact>
             <ViewToolkit />
           </Route>
-          <Route path={`${path}/resources/videos`} exact>
+          <Route path={`${path}/videos`} exact>
             <VideosPage />
           </Route>
-          <Route path={`${path}/resources/events`} exact>
+          <Route path={`${path}/events`} exact>
             <EventsPage />
           </Route>
-          <Route path={`${path}/resources/articles`} exact>
+          <Route path={`${path}/articles`} exact>
             <ArticlesPage />
           </Route>
-          <Route path={`${path}/resources/podcasts`} exact>
+          <Route path={`${path}/podcasts`} exact>
             <PodcastsPage />
           </Route>
         </Switch>

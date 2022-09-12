@@ -128,7 +128,7 @@ const ForgotPassword: FnComponent<{
               onBlur={emailInputBlurHandler}
               error={emailErrorTip}
               startAdornment={
-                <InputAdornment applyPadding>
+                <InputAdornment>
                   <MailIcon width="1rem" />
                 </InputAdornment>
               }

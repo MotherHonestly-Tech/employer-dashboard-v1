@@ -1,12 +1,17 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import MHButton from "../../Button/MHButton";
 import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { ReactComponent as ResEventIcon } from "../../../static/svg/resevent.svg";
+import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+
+import moment from "moment";
 
 type ResProps = {
   image?: string;
@@ -20,12 +25,46 @@ type ResProps = {
   updatedAt?: string;
 };
 
+type ArrowProps = {
+  onClick?: (e: React.MouseEvent) => void;
+};
+
+function SampleNextArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -right-6">
+      <RightBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
+function SamplePrevArrow(props: ArrowProps) {
+  return (
+    <Box className="absolute top-[30%] z-10 -left-6">
+      <LeftBtn className="cursor-pointer" onClick={props.onClick} />
+    </Box>
+  );
+}
+
 const ResEvent = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(3);
+  const [noOfElement, setnoOfElement] = useState(4);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
+
+  const settings = {
+    centerMode: true,
+    centerPadding: "0px",
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1300,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   let history = useHistory();
 
@@ -87,24 +126,28 @@ const ResEvent = (props: ResProps) => {
           Events & Conferences
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-6 pb-4">
-          <Grid container spacing={2}>
-            {slice.map((res, index) => (
-              <Grid item xs={12} md={6} lg={4} key={index}>
-                <ResCard
-                  cardClass="relative w-[280px] h-auto object-cover bg-cream-100 rounded-md"
-                  iconClass="hidden"
-                  imgBg="bg-cream-200 "
-                  bodyBg="bg-cream-100"
-                  imageSrc={res.image}
-                  top={res.tops}
-                  title={res.titles}
-                  category={res.categ}
-                  titleUrl={`${location.pathname}/${res.slugs}`}
-                  playUrl={`${location.pathname}/${res.slugs}`}
-                />
-              </Grid>
-            ))}
+        <Box className="mx-auto pt-10 bg-white px-0 relative">
+          <Grid container spacing={1}>
+            <Box className="w-[95%] bg-white mx-auto ">
+              <Slider {...settings}>
+                {resources.map((res, index) => (
+                  <Grid item xs={12} md={6} lg={3} key={index}>
+                    <ResCard
+                      cardClass="relative w-[280px] h-[420px] shadow-none object-cover bg-cream-100 rounded-md"
+                      iconClass="hidden"
+                      imgBg="bg-cream-200 "
+                      bodyBg="bg-cream-100"
+                      imageSrc={res.image}
+                      top={moment(res.createdAt!).format("MMMM Do ")}
+                      title={res.titles}
+                      category={res.categ}
+                      titleUrl={`${location.pathname}/events/${res.slugs}`}
+                      playUrl={`${location.pathname}/events/${res.slugs}`}
+                    />
+                  </Grid>
+                ))}
+              </Slider>
+            </Box>
           </Grid>
           <div className="flex justify-center py-12">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>

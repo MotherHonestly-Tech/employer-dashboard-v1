@@ -75,28 +75,12 @@ const BackgroundOverlay = styled((props) => (
         />
       </svg>
     </Box>
-    <Box
-      component="div"
-      sx={{
-        position: 'absolute',
-        top: -60,
-        left: 500,
-        right: 0,
-        bottom: 0,
-        width: '260px',
-        height: '300px'
-      }}>
-      <img
-        src="https://res.cloudinary.com/mother-honestly/image/upload/v1658521647/image_bjlqcn.png"
-        alt="Consultant"
-        style={{
-          width: '100%',
-          height: 'auto',
-          objectFit: 'cover',
-          objectPosition: 'center'
-        }}
-      />
-    </Box>
+
+    <img
+      src="https://res.cloudinary.com/mother-honestly/image/upload/v1662201263/image_1_qvv1u8.png"
+      alt="Consultant"
+      className="w-64 h-auto bottom-0 right-24 overflow-visible absolute object-cover object-center"
+    />
   </>
 ))(({ theme }) => ({}));
 
@@ -124,7 +108,7 @@ const Concierge = () => {
             width: '260px',
             height: '300px'
           }}>
-          <img
+          {/* <img
             src="https://res.cloudinary.com/mother-honestly/image/upload/v1658521647/image_bjlqcn.png"
             alt="Consultant"
             style={{
@@ -133,7 +117,7 @@ const Concierge = () => {
               objectFit: 'cover',
               objectPosition: 'center'
             }}
-          />
+          /> */}
         </Box>
         <Box
           bgcolor={'#F4EE46'}
@@ -143,11 +127,13 @@ const Concierge = () => {
           height={250}
           borderRadius={(theme) => theme.shape.borderRadius}
           position="relative"
-          overflow={'hidden'}
-          zIndex={1}>
+          overflow={"hidden"}
+          zIndex={1}
+          className="overflow-visible"
+        >
           <BackgroundOverlay />
 
-          <Box position="relative">
+          <Box position="relative" className="overflow-visible">
             <Typography
               align="center"
               variant="body1"

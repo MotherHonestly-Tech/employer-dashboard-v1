@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+import moment from "moment";
+
 import { ReactComponent as BgOverlay } from "../../../static/svg/event.svg";
 import {
   Box,
@@ -40,7 +42,7 @@ const EventsPage = (props: ResProps) => {
   // console.log(location.pathname);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(7);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -85,14 +87,14 @@ const EventsPage = (props: ResProps) => {
       </AllresHeader>
       <EventSort />
 
-      <Box className="mx-auto pt-10 bg-white px-6 pb-4">
+      <Box className="mx-auto pt-10 bg-white px-8 pb-4">
         <Grid container spacing={2}>
           {currentPosts.map((res, index) => (
             <>
               <p className="hidden"> {(count = count + 1)}</p>
 
               {count === 1 ? (
-                <Grid item xs={12} md={12} lg={8}>
+                <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
                       className={`relative w-auto h-auto object-cover bg-sky-400 rounded-md`}
@@ -116,7 +118,7 @@ const EventsPage = (props: ResProps) => {
                           {res.titles}
                         </Typography>
                         <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
-                          {res.createdAt}
+                          {moment(res.createdAt!).format("MMMM Do ")}
                         </Typography>
                         <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
                           {res.texts}
@@ -149,14 +151,14 @@ const EventsPage = (props: ResProps) => {
                   </Zoom>
                 </Grid>
               ) : count >= 2 ? (
-                <Grid item xs={12} md={6} lg={4} key={index}>
+                <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
                     cardClass="relative w-[280px] mb-10 h-auto object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
                     imgBg="bg-pink-700"
                     bodyBg="bg-cream-100"
                     imageSrc={res.image}
-                    top={res.tops}
+                    top={moment(res.createdAt!).format("MMMM Do ")}
                     title={res.titles}
                     text=""
                     category={res.categ}

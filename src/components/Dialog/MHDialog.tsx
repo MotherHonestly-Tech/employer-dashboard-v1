@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 
 import IconButtonStyled from '../Button/IconButtonStyled';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
-import { ReactComponent as CloseIcon } from '../../static/svg/close.svg';
+import { ReactComponent as CloseIcon } from '../../static/svg/cancel.svg';
 
 const CustomizedDialog = styled(Dialog)(({ theme }) => ({
   zIndex: theme.zIndex.modal + 1000,
@@ -51,16 +51,7 @@ const CustomizedDialogTitle = (props: DialogTitleProps & ModalTitleProps) => {
             right: 10,
             top: 12
           }}>
-          <RoundedLogoIcon
-            sx={{
-              border: 3,
-              borderColor: '#6C6C6C',
-              backgroundColor: 'transparent',
-              width: 30,
-              height: 30
-            }}>
-            <CloseIcon />
-          </RoundedLogoIcon>
+          <CloseIcon width="1.6em" />
         </IconButtonStyled>
       ) : null}
     </DialogTitle>

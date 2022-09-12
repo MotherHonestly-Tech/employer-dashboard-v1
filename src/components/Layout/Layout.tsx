@@ -14,7 +14,7 @@ import { FnComponent } from '../../models/component.model';
 const Layout: FnComponent = (props) => {
   const resourcePathMatch = matchPath(window.location.pathname, {
     path: '/organization/resources',
-    exact: true,
+    exact: false,
     strict: false
   });
 

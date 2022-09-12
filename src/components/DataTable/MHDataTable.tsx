@@ -77,34 +77,42 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
-const StyledTableContainer = styled(TableContainer)({
+const StyledTableContainer = styled(TableContainer)<{
+  containerstyles?: object;
+}>(({ theme, containerstyles }) => ({
   width: '100%',
   overflowX: 'auto',
   overflowY: 'auto',
   maxHeight: '100%',
   border: '1px solid #E0E0E0',
   borderRadius: '12px',
-  backgroundColor: '#fff'
+  backgroundColor: '#fff',
+  ...(containerstyles && containerstyles)
   // '&:last-child': {
   //     borderBottom: 'none'
   // }
-});
+}));
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)<{
+  headerstyles?: object;
+  bodystyles?: object;
+}>(({ theme, headerstyles, bodystyles }) => ({
   fontFamily: theme.typography.fontFamily,
   padding: 10,
   borderBottom: '1px solid rgb(241 245 249)',
   //   mb: 3,
   [`&.${tableCellClasses.head}`]: {
-    borderTop: '13px solid #fbf78d',
+    borderTop: '10px solid #fbf78d',
     background: '#fff',
     color: '#A1A1A1',
-    fontSize: '0.8rem'
+    fontSize: '0.8rem',
+    ...(headerstyles && headerstyles)
   },
   [`&.${tableCellClasses.body}`]: {
     background: theme.palette.common.white,
     fontSize: '0.75rem',
-    color: '#637075'
+    color: '#637075',
+    ...(bodystyles && bodystyles)
   }
 }));
 
@@ -126,20 +134,36 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
+  const pageLimit = 5;
   const pages: Array<number> =
     count / rowsPerPage > 1
       ? Array.from(Array(Math.ceil(count / rowsPerPage)).keys())
       : [0];
 
+  const getPaginationGroup = () => {
+    let start = Math.floor(page / pageLimit) * pageLimit;
+    return new Array(pageLimit).fill(0).map((_, idx) => start + idx);
+  };
+
   return (
-    <Stack direction="row" justifyContent={'center'} spacing={4} my={3} mr={4}>
-      {pages.map((pageNumber) => (
+    <Stack
+      direction="row"
+      justifyContent={'center'}
+      spacing={3}
+      whiteSpace="nowrap"
+      mx="auto"
+      my={3}>
+      {getPaginationGroup().map((pageNumber) => (
         <IconButtonStyled
+          key={pageNumber}
           onClick={($event: React.MouseEvent<HTMLButtonElement>) =>
             onPageChange($event, pageNumber)
           }>
           <PaginationItem
             sx={{
+              height: '30px',
+              width: '30px',
+              position: 'relative',
               ...(page === pageNumber
                 ? {
                     backgroundColor: '#fbf78d',
@@ -152,7 +176,16 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
                     borderColor: '#E0E0E0'
                   })
             }}>
-            {pageNumber + 1}
+            <span
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: 'inherit'
+              }}>
+              {pageNumber + 1}
+            </span>
           </PaginationItem>
         </IconButtonStyled>
       ))}
@@ -172,10 +205,14 @@ const PaginationItem = styled('li')(({ theme }) => ({
 
 export default function MHDataTable({
   rows,
-  columns
+  columns,
+  ...props
 }: {
   rows: any[];
   columns: GridColDef[];
+  containerStyles?: object;
+  headerStyles?: object;
+  bodyStyles?: object;
 }) {
   const [page, setPage] = React.useState(0);
   const rowsPerPage = 10;
@@ -193,7 +230,7 @@ export default function MHDataTable({
 
   return (
     <React.Fragment>
-      <StyledTableContainer>
+      <StyledTableContainer containerstyles={props.containerStyles}>
         <Table
           aria-label="transactions table"
           padding="none"
@@ -201,7 +238,11 @@ export default function MHDataTable({
           <TableHead>
             <TableRow>
               {columns.map(({ headerName, width, align }) => (
-                <StyledTableCell key={headerName} width={width} align={align || 'left'}>
+                <StyledTableCell
+                  key={headerName}
+                  width={width}
+                  align={align || 'left'}
+                  headerstyles={props.headerStyles}>
                   {headerName}
                 </StyledTableCell>
               ))}
@@ -213,8 +254,9 @@ export default function MHDataTable({
               .map((row) => (
                 <StyledTableRow
                   key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  {columns.map((col) => {
+                  // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                  {columns.map((col, i) => {
                     const {
                       field,
                       headerName,
@@ -230,9 +272,10 @@ export default function MHDataTable({
                       <StyledTableCell
                         //   component="th"
                         scope="row"
-                        key={field}
+                        key={i}
                         width={width}
-                        align={align || 'left'}>
+                        align={align || 'left'}
+                        bodystyles={props.bodyStyles}>
                         {cellRenderer ? cellRenderer(row) : value}
                         {/* {description && <Typography variant="body2">{description}</Typography>} */}
                       </StyledTableCell>

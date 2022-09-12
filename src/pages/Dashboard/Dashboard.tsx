@@ -1,14 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
-import WalletBalance from "../../components/Dashboard/WalletBalance";
-import Consultant from "../../components/Dashboard/Consultant";
-import Concierge from "../../components/Dashboard/Concierge";
-import RecentTransactions from "../../components/Dashboard/RecentTransactions";
-import AuthContext from "../../store/context/auth-context";
+import WalletBalance from '../../components/Dashboard/WalletBalance';
+import Consultant from '../../components/Dashboard/Consultant';
+import Concierge from '../../components/Dashboard/Concierge';
+import RecentTransactions from '../../components/Dashboard/RecentTransactions';
+import AuthContext from '../../store/context/auth-context';
+import Footer from '../../components/Layout/Footer';
+import DashToolkit from '../../components/Dashboard/DashToolkit';
+import DashVideo from '../../components/Dashboard/DashVideo';
+import DashEvent from '../../components/Dashboard/DashEvent';
+import DashArticle from '../../components/Dashboard/DashArticle';
+import DashPodcast from '../../components/Dashboard/DashPodcast';
 
 const Dashboard = () => {
   const authCtx = React.useContext(AuthContext);
@@ -37,7 +43,7 @@ const Dashboard = () => {
 
       <Box mt={5}>
         <Typography variant="h3" gutterBottom align="center" mb={4}>
-        1:1 Work-Life Connect At Unilever
+          1:1 Work-Life Connect At Unilever
         </Typography>
 
         <Grid container spacing={7}>
@@ -52,10 +58,17 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Box>
-      
+
       <Box mt={5}>
         <Concierge />
       </Box>
+
+      <DashToolkit />
+      <DashVideo />
+      <DashEvent />
+      <DashArticle />
+      <DashPodcast />
+      <Footer />
     </React.Fragment>
   );
 };

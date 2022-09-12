@@ -44,6 +44,9 @@ module.exports = {
         green: {
           100: "#D2E0CB",
         },
+        yellow: {
+          100: "#F8F246",
+        },
       },
       fontFamily: {
         columbia: ["Columbia-Sans"],

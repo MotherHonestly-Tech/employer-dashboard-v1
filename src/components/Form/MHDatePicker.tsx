@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Box from '@mui/material/Box';
-
 import { styled } from '@mui/system';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

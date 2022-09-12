@@ -189,7 +189,7 @@ const SignIn: FnComponent<{
             placeholder="Enter your email"
             onChange={inputChangeHandler}
             startAdornment={
-              <InputAdornment applyPadding>
+              <InputAdornment>
                 <MailIcon width="1rem" />
               </InputAdornment>
             }
@@ -204,12 +204,12 @@ const SignIn: FnComponent<{
             placeholder="Password"
             onChange={inputChangeHandler}
             startAdornment={
-              <InputAdornment applyPadding>
+              <InputAdornment>
                 <LockIcon width="1.2rem" />
               </InputAdornment>
             }
             endAdornment={
-              <InputAdornment applyPadding>
+              <InputAdornment>
                 <IconButton onClick={handleClickShowPassword}>
                   {showPassword ? (
                     <VisibilityOffIcon width="1rem" height="1rem" />

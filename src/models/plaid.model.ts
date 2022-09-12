@@ -23,3 +23,28 @@ export interface Institution {
     name:           string;
     institution_id: string;
 }
+
+export interface Transaction {
+    id:                      number;
+    fullName:                string;
+    address:                 string;
+    paymentMethod:           string;
+    paymentChannel:          string;
+    paymentProcessor:        string;
+    longitude:               number;
+    latitude:                number;
+    AccountId:               string;
+    customerId:              number;
+    transactionRefId:        string;
+    currencyCode:            string;
+    amount:                  number;
+    merchantName:            string;
+    processed:               boolean;
+    financeCategoryDetailed: string;
+    financeCategoryPrimary:  string;
+    TransactionDate:         Date;
+    createdDate:             Date;
+    createdBy:               string;
+    lastActivityDate:        Date;
+    lastActivityBy:          string;
+}

@@ -41,7 +41,7 @@ const ArticlesPage = (props: ResProps) => {
   // console.log(location.pathname);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(7);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -93,7 +93,7 @@ const ArticlesPage = (props: ResProps) => {
               <p className="hidden"> {(count = count + 1)}</p>
 
               {count === 1 ? (
-                <Grid item xs={12} md={12} lg={8}>
+                <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
                       className={`relative w-auto h-auto object-cover bg-pink-700 rounded-md`}
@@ -150,7 +150,7 @@ const ArticlesPage = (props: ResProps) => {
                   </Zoom>
                 </Grid>
               ) : count >= 2 ? (
-                <Grid item xs={12} md={6} lg={4} key={index}>
+                <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
                     cardClass="relative w-[280px] mb-10 h-auto object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20

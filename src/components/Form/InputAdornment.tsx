@@ -1,11 +1,11 @@
 import { styled } from '@mui/material/styles';
 
-const InputAdornment = styled('div')<{ applyPadding?: boolean }>(
-  ({ applyPadding }) => ({
+const InputAdornment = styled('div')(
+  () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    ...(applyPadding ? { padding: '0 .5rem' } : {})
+     padding: '0 .5rem'
   })
 );
 

@@ -55,9 +55,10 @@ const MHButton: FnComponent<MHButtonProps & ButtonProps> = ({
       onClick={buttonClickHandler}
       fullWidth={fullWidth}
       disableElevation
+      startIcon={props.startIcon}
       form={form}
       {...props}>
-      {loading ? <LoadingIndicator /> : children}
+      {loading ? <LoadingIndicator /> :children}
     </Button>
   );
 };

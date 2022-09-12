@@ -5,11 +5,11 @@ import { useLocation } from "react-router-dom";
 import ResCard from "../SubComponents/ResCard";
 
 import { ReactComponent as BgOverlay } from "../../../static/svg/podcast.svg";
-import { ReactComponent as PodLogo } from "../../../static/svg/podplay-logo.svg";
 
 import AllresHeader from "../SubComponents/AllresHeader";
 import { Box, Grid, Typography } from "@mui/material";
 import Footer from "../../Layout/Footer";
+import PodcastPlayer from "./PodcastPlayer";
 import Pagination from "../../UI/Pagination";
 
 type ResProps = {
@@ -31,7 +31,7 @@ const PodcastsPage = (props: ResProps) => {
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(3);
+  const [postsPerPage, setPostsPerPage] = useState(8);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -86,7 +86,11 @@ const PodcastsPage = (props: ResProps) => {
         >
           Latest Episode
         </Typography>
-        <PodLogo width="150px" height="150px" />
+
+        <PodcastPlayer
+          // appleUrl="https://embed.podcasts.apple.com/us/podcast/finding-flexibility-and-confidence-as-a-working/id1439395271?i=1000567545032"
+          spotifyUrl="https://open.spotify.com/embed/episode/2e8huJzMCJKNweADw1A0Kt?utm_source=generator"
+        />
       </Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
@@ -99,7 +103,7 @@ const PodcastsPage = (props: ResProps) => {
         </Typography>
         <Grid container spacing={2}>
           {currentPosts.map((res, index) => (
-            <Grid item xs={12} md={6} lg={4} key={index}>
+            <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
                 cardClass="relative mb-10 w-[250px] h-auto object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"

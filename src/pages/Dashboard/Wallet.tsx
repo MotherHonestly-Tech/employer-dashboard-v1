@@ -17,6 +17,13 @@ import BorderLinearProgress from '../../components/UI/LinearProgress';
 import LinkAccount from '../../components/Wallet/LinkAccount';
 import MHButton from '../../components/Button/MHButton';
 import { MHSelect } from '../../components/Form/MHSelect';
+import MHTextInput from '../../components/Form/MHTextInput';
+import MHDatePicker from '../../components/Form/MHDatePicker';
+import Transactions from '../../components/Wallet/Transactions';
+import ReceiptStatus, {
+  RECEIPT_STATUS
+} from '../../components/Wallet/ReceiptStatus';
+import StyledActionButton from '../../components/Button/StyledActionButton';
 import useInput from '../../hooks/use-input';
 import useTitle from '../../hooks/use-title';
 import useHttp from '../../hooks/use-http';
@@ -29,13 +36,23 @@ import { HttpResponse } from '../../models/api.interface';
 import { Receipt } from '../../models/receipt.model';
 import { formatAmount, formatDate } from '../../utils/utils';
 import * as validators from '../../utils/validators';
-import ReceiptStatus, {
-  RECEIPT_STATUS
-} from '../../components/Wallet/ReceiptStatus';
+import * as walletReducer from '../../store/reducers/wallet';
 import PlaidLinkContext from '../../services/plaid-link';
-import MHTextInput from '../../components/Form/MHTextInput';
-import MHDatePicker from '../../components/Form/MHDatePicker';
-import Transactions from '../../components/Wallet/Transactions';
+
+type WalletReducer = (
+  state: {
+    uploadReceiptOpen: boolean;
+    linkAccountOpen: boolean;
+    transactionsOpen: boolean;
+  },
+  action: {
+    type: string;
+    id: ModalID;
+    open: boolean;
+  }
+) => any;
+
+type ModalID = 'uploadReceiptOpen' | 'linkAccountOpen' | 'transactionsOpen';
 
 const GridItem = styled(Box)(({ theme }) => ({
   // ...theme.typography.body2,
@@ -58,26 +75,32 @@ const Container = styled(Box)(({ theme }) => ({
 }));
 
 const Wallet = (props: { title: string }) => {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [linkAccountOpen, setLinkAccountOpen] = React.useState<boolean>(false);
+  const [walletState, dispatch] = React.useReducer<WalletReducer>(
+    walletReducer.walletReducer,
+    {
+      uploadReceiptOpen: false,
+      linkAccountOpen: false,
+      transactionsOpen: false
+    }
+  );
 
   const [receipts, setReceipts] = React.useState<Receipt[]>([]);
   useTitle(props.title);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = (id: ModalID) => {
+    dispatch({
+      type: walletReducer.OPEN_MODAL,
+      id,
+      open: true
+    });
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleLinkAccountOpen = () => {
-    setLinkAccountOpen(true);
-  };
-
-  const handleLinkAccountClose = () => {
-    setLinkAccountOpen(false);
+  const handleClose = (id: ModalID) => {
+    dispatch({
+      type: walletReducer.OPEN_MODAL,
+      id,
+      open: false
+    });
   };
 
   const {
@@ -97,7 +120,12 @@ const Wallet = (props: { title: string }) => {
   const { isOauth } = plaidLinkCtx;
 
   React.useEffect(() => {
-    isOauth && setOpen(true);
+    isOauth &&
+      dispatch({
+        type: walletReducer.OPEN_MODAL,
+        id: 'uploadReceiptOpen',
+        open: true
+      });
   }, []);
 
   function createData(
@@ -117,17 +145,6 @@ const Wallet = (props: { title: string }) => {
       balanceAfterExpense
     };
   }
-
-  const rows = [
-    createData(
-      'Merchant 1',
-      'https://www.google.com',
-      'Food',
-      'Expense Description',
-      100,
-      200
-    )
-  ];
 
   const columns: GridColDef[] = [
     {
@@ -326,7 +343,9 @@ const Wallet = (props: { title: string }) => {
                 <Divider orientation="vertical" variant="middle" flexItem />
               }
               spacing={2}>
-              <Container component={'button'} onClick={handleClickOpen}>
+              <Container
+                component={'button'}
+                onClick={() => handleClickOpen('uploadReceiptOpen')}>
                 <Typography
                   variant="h3"
                   align="center"
@@ -355,7 +374,9 @@ const Wallet = (props: { title: string }) => {
                   </MuiLink>
                 </Box>
               </Container>
-              <Container component={'button'} onClick={handleLinkAccountOpen}>
+              <Container
+                component={'button'}
+                onClick={() => handleClickOpen('linkAccountOpen')}>
                 {' '}
                 <Typography
                   variant="h3"
@@ -390,26 +411,27 @@ const Wallet = (props: { title: string }) => {
           <React.Fragment>
             <Stack direction="row" justifyContent="space-between" mb={2}>
               <Stack direction="row" spacing={2}>
-                <StyledActionButton onClick={handleClickOpen}>
+                <StyledActionButton
+                  onClick={() => handleClickOpen('uploadReceiptOpen')}>
                   Upload receipt
                 </StyledActionButton>
-                <StyledActionButton onClick={handleLinkAccountOpen}>
+                <StyledActionButton
+                  onClick={() => handleClickOpen('linkAccountOpen')}>
                   Link an account
                 </StyledActionButton>
               </Stack>
 
               <div className="relative">
-                <MHButton
-                  type="button"
+                <StyledActionButton
                   variant="outlined"
-                  sx={{ p: '5px 12px', position: 'relative' }}
-                  color="secondary">
-                  32 eligible transactions
-                </MHButton>
+                  color="secondary"
+                  onClick={() => handleClickOpen('transactionsOpen')}>
+                  199 eligible transactions
+                </StyledActionButton>
 
                 <span className="absolute flex h-3 w-3 -top-1 -right-1">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-400"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#28404A] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#28404A]"></span>
                 </span>
               </div>
             </Stack>
@@ -440,28 +462,28 @@ const Wallet = (props: { title: string }) => {
         )}
       </div>
 
-      {/* <DataTable rows={rows} columns={columns} /> */}
-
-      {open && <UploadReceipt open={open} onClose={handleClose} />}
-
-      {linkAccountOpen && (
-        <LinkAccount open={linkAccountOpen} onClose={handleLinkAccountClose} />
+      {walletState.uploadReceiptOpen && (
+        <UploadReceipt
+          open={walletState.uploadReceiptOpen}
+          onClose={() => handleClose('uploadReceiptOpen')}
+        />
       )}
 
-      {/* {<Transactions />} */}
+      {walletState.linkAccountOpen && (
+        <LinkAccount
+          open={walletState.linkAccountOpen}
+          onClose={() => handleClose('linkAccountOpen')}
+        />
+      )}
+
+      {walletState.transactionsOpen && (
+        <Transactions
+          open={walletState.transactionsOpen}
+          onClose={() => handleClose('transactionsOpen')}
+        />
+      )}
     </React.Fragment>
   );
 };
-
-const StyledActionButton = styled(MHButton)(({ theme }) => ({
-  fontSize: '12px',
-  padding: '5px 12px',
-  '& svg': {
-    mr: 1
-  },
-  '&:hover svg': {
-    color: theme.palette.primary.main
-  }
-}));
 
 export default Wallet;

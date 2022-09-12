@@ -46,7 +46,7 @@ const SearchField = ({
         onBlur={searchOnBlur}
         className="flex-grow"
         endAdornment={
-          <InputAdornment applyPadding>
+          <InputAdornment>
             <IconButtonUnstyled onClick={() => {}}>
               <FilterIcon />
             </IconButtonUnstyled>

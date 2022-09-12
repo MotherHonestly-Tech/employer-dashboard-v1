@@ -29,8 +29,10 @@ const ToolkitsPage = (props: ResProps) => {
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
+  console.warn('resUrl', resUrl);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(6);
+  const [postsPerPage, setPostsPerPage] = useState(8);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -43,9 +45,9 @@ const ToolkitsPage = (props: ResProps) => {
       });
       const jsonData = await response.json();
       setResources(jsonData);
-      console.log(resources);
+      // console.log(resources);
     } catch (err) {
-      console.error("Cannot find Data");
+      // console.error("Cannot find Data");
     }
   };
 
@@ -79,9 +81,9 @@ const ToolkitsPage = (props: ResProps) => {
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
         <Grid container spacing={2}>
           {currentPosts.map((res, index) => (
-            <Grid item xs={12} md={6} lg={4} key={index}>
+            <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[250px] h-auto object-cover bg-cream-100 rounded-md"
+                cardClass="relative mb-10 w-[250px] h-[400px] object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"

@@ -47,7 +47,7 @@ export const PlaidLinkContextProvider = ({
   const { loading, error, sendHttpRequest } = useHttp();
 
   const generateLinkToken = React.useCallback(() => {
-    if (queryParams.get('oauth_state_id')) {
+    if (isOauth) {
       setLinkToken(localStorage.getItem('link_token'));
     } else {
       sendHttpRequest(
@@ -62,7 +62,7 @@ export const PlaidLinkContextProvider = ({
         }
       );
     }
-  }, [sendHttpRequest, queryParams]);
+  }, [sendHttpRequest, isOauth]);
 
   const exchangePublicToken = React.useCallback((publicToken: string, accountId: string) => {
     sendHttpRequest(

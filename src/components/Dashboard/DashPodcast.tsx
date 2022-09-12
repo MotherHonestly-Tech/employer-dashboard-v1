@@ -3,13 +3,13 @@ import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
+import ResCard from "../Resources/SubComponents/ResCard";
+import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResArticleIcon } from "../../../static/svg/resart.svg";
-import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
-import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+import { ReactComponent as ResPodcastIcon } from "../../static/svg/respod.svg";
+import { ReactComponent as LeftBtn } from "../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
 
 type ResProps = {
   image?: string;
@@ -37,24 +37,25 @@ function SampleNextArrow(props: ArrowProps) {
 
 function SamplePrevArrow(props: ArrowProps) {
   return (
-    <Box className="absolute top-[30%] z-10 -left-6">
+    <Box className="absolute top-[30%] z-10 -left-8">
       <LeftBtn className="cursor-pointer" onClick={props.onClick} />
     </Box>
   );
 }
 
-const ResArticle = (props: ResProps) => {
+const DashPodcast = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(4);
+  const [noOfElement, setnoOfElement] = useState(3);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
+
   let history = useHistory();
 
   const { path } = useRouteMatch();
 
   const handleClickOpen = () => {
-    history.push(`${path}/articles`);
+    history.push(`resources/podcasts`);
   };
 
   const settings = {
@@ -62,11 +63,11 @@ const ResArticle = (props: ResProps) => {
     centerPadding: "0px",
     dots: false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     speed: 500,
     autoplay: true,
-    autoplaySpeed: 1400,
+    autoplaySpeed: 1500,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -78,9 +79,9 @@ const ResArticle = (props: ResProps) => {
       });
       const jsonData = await response.json();
       setResources(jsonData);
-      // console.log(resources);
+      console.log(resources);
     } catch (err) {
-      // console.error("Cannot find Data");
+      console.error("Cannot find Data");
     }
   };
 
@@ -91,7 +92,7 @@ const ResArticle = (props: ResProps) => {
   }, []);
   return (
     <Fragment>
-      <Box className=" py-12 bg-white">
+      <Box className=" py-12 ">
         <Box className="mx-auto overscroll-x-hidden flex" sx={{}}>
           <Typography
             variant="body2"
@@ -103,8 +104,8 @@ const ResArticle = (props: ResProps) => {
               fontFamily: "Area-Extended",
             }}
           >
-            <ResArticleIcon className="-mt-2" height="24px" width="25px" />
-            Articles
+            <ResPodcastIcon className="-mt-2" height="24px" width="25px" />
+            podcast
           </Typography>
         </Box>
         <Typography
@@ -117,27 +118,27 @@ const ResArticle = (props: ResProps) => {
             fontFamily: "Columbia-Sans",
           }}
         >
-          Over 456+ Articles on All Things Caregiving
+          The Podcast
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-0 relative">
+        <Box className="mx-auto pt-10 px-0 relative">
           <Grid container spacing={1}>
-            <Box className="w-[95%] bg-white mx-auto ">
+            <Box className="w-[95%] mx-auto">
               <Slider {...settings}>
                 {resources.map((res, index) => (
-                  <Grid item xs={12} md={6} lg={3} key={index}>
+                  <Grid item xs={12} md={6} lg={4} key={index}>
                     <ResCard
-                      cardClass="relative w-[280px] h-[465px] shadow-none object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[260px] h-[440px] shadow-sm object-cover bg-cream-100 rounded-md"
                       iconClass="hidden"
                       imgBg="bg-cream-200 "
-                      bodyBg="bg-cream-100"
+                      bodyBg="bg-white"
                       imageSrc={res.image}
                       top={res.tops}
                       title={res.titles}
                       text={res.texts}
                       category={res.categ}
-                      titleUrl={`${location.pathname}/articles/${res.slugs}`}
-                      playUrl={`${location.pathname}/articles/${res.slugs}`}
+                      titleUrl={`resources/podcasts/${res.slugs}`}
+                      playUrl={`resources/podcasts/${res.slugs}`}
                     />
                   </Grid>
                 ))}
@@ -149,12 +150,10 @@ const ResArticle = (props: ResProps) => {
               View All
             </MHButton>
           </div>
-
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>
   );
 };
 
-export default ResArticle;
+export default DashPodcast;

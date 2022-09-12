@@ -3,13 +3,14 @@ import { Fragment } from "react";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 
-import MHButton from "../../Button/MHButton";
-import ResCard from "../SubComponents/ResCard";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResArticleIcon } from "../../../static/svg/resart.svg";
-import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
-import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+import { ReactComponent as ResToolkitIcon } from "../../static/svg/resdot.svg";
+import { ReactComponent as LeftBtn } from "../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
+
+import ResCard from "../Resources/SubComponents/ResCard";
+import MHButton from "../Button/MHButton";
 
 type ResProps = {
   image?: string;
@@ -37,24 +38,25 @@ function SampleNextArrow(props: ArrowProps) {
 
 function SamplePrevArrow(props: ArrowProps) {
   return (
-    <Box className="absolute top-[30%] z-10 -left-6">
+    <Box className="absolute top-[30%] z-10 -left-8">
       <LeftBtn className="cursor-pointer" onClick={props.onClick} />
     </Box>
   );
 }
 
-const ResArticle = (props: ResProps) => {
+const DashToolkit = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
-  const [noOfElement, setnoOfElement] = useState(4);
+  const [noOfElement, setnoOfElement] = useState(2);
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
+
   let history = useHistory();
 
   const { path } = useRouteMatch();
 
   const handleClickOpen = () => {
-    history.push(`${path}/articles`);
+    history.push(`resources/toolkits`);
   };
 
   const settings = {
@@ -62,11 +64,11 @@ const ResArticle = (props: ResProps) => {
     centerPadding: "0px",
     dots: false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 2,
     slidesToScroll: 1,
     speed: 500,
     autoplay: true,
-    autoplaySpeed: 1400,
+    autoplaySpeed: 1100,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -78,9 +80,9 @@ const ResArticle = (props: ResProps) => {
       });
       const jsonData = await response.json();
       setResources(jsonData);
-      // console.log(resources);
+      console.log(resources);
     } catch (err) {
-      // console.error("Cannot find Data");
+      console.error("Cannot find Data");
     }
   };
 
@@ -89,13 +91,15 @@ const ResArticle = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
   return (
     <Fragment>
-      <Box className=" py-12 bg-white">
-        <Box className="mx-auto overscroll-x-hidden flex" sx={{}}>
+      <Box className="bg-lilac-200">
+        <Box className=" overscroll-x-hidden mt-6 gap-2 flex px-8" sx={{}}>
+          <ResToolkitIcon className="" height="24px" width="25px" />
           <Typography
             variant="body2"
-            className="mx-auto gap-2 flex font-normal uppercase "
+            className="text-center mt-1 font-normal uppercase "
             color="primary"
             sx={{
               fontWeight: 900,
@@ -103,13 +107,12 @@ const ResArticle = (props: ResProps) => {
               fontFamily: "Area-Extended",
             }}
           >
-            <ResArticleIcon className="-mt-2" height="24px" width="25px" />
-            Articles
+            The Toolkits
           </Typography>
         </Box>
         <Typography
           variant="h3"
-          className="mx-auto text-center my-2 "
+          className="text-left my-2 px-8"
           color="primary"
           sx={{
             fontWeight: 500,
@@ -117,44 +120,43 @@ const ResArticle = (props: ResProps) => {
             fontFamily: "Columbia-Sans",
           }}
         >
-          Over 456+ Articles on All Things Caregiving
+          Resources To Make Life Easier
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-0 relative">
-          <Grid container spacing={1}>
-            <Box className="w-[95%] bg-white mx-auto ">
+        <Box className="mx-auto pt-10  px-20 relative">
+          <Grid container spacing={0}>
+            <Box className="w-[95%]  mx-auto ">
               <Slider {...settings}>
                 {resources.map((res, index) => (
-                  <Grid item xs={12} md={6} lg={3} key={index}>
+                  <Grid item xs={4} key={index}>
                     <ResCard
-                      cardClass="relative w-[280px] h-[465px] shadow-none object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[320px] h-[440px] shadow-sm object-cover bg-cream-100"
                       iconClass="hidden"
                       imgBg="bg-cream-200 "
-                      bodyBg="bg-cream-100"
+                      bodyBg="bg-white"
                       imageSrc={res.image}
-                      top={res.tops}
+                      // top={res.tops}
                       title={res.titles}
-                      text={res.texts}
+                      // text={res.texts}
                       category={res.categ}
-                      titleUrl={`${location.pathname}/articles/${res.slugs}`}
-                      playUrl={`${location.pathname}/articles/${res.slugs}`}
+                      titleUrl={`resources/toolkits/${res.slugs}`}
+                      playUrl={`resources/toolkits/${res.slugs}`}
                     />
                   </Grid>
                 ))}
               </Slider>
             </Box>
           </Grid>
-          <div className="flex justify-center py-12">
+
+          <div className="flex justify-center py-8">
             <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
               View All
             </MHButton>
           </div>
-
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>
   );
 };
 
-export default ResArticle;
+export default DashToolkit;

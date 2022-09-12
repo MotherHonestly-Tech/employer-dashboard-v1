@@ -14,8 +14,8 @@ import Layout from '../components/Layout/Layout';
 import Coaching from '../pages/Dashboard/Coaching';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Merchants from '../pages/Dashboard/Merchants';
-import Resources from '../pages/Dashboard/Resources';
 import Wallet from '../pages/Dashboard/Wallet';
+import ResourcesNavigator from './ResourcesNavigator';
 
 import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
@@ -72,8 +72,8 @@ const DashboardNavigator = () => {
               <Route path={`${path}/merchants`} exact>
                 <Merchants />
               </Route>
-              <Route path={`${path}/resources`} exact>
-                <Resources />
+              <Route path={`${path}/resources`}>
+                <ResourcesNavigator />
               </Route>
               <Route path={`${path}/coaching`} exact>
                 <Coaching />

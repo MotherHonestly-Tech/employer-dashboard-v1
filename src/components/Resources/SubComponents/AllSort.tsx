@@ -11,7 +11,7 @@ type AllSortProps = {
 const AllSort = (props: AllSortProps) => {
   return (
     <Fragment>
-      <Box className="bg-white h-12 flex px-6 relative ">
+      <Box className="bg-white h-12 flex px-8 relative ">
         <Typography
           color="primary"
           className="uppercase p-4"
@@ -93,7 +93,7 @@ const AllSort = (props: AllSortProps) => {
           </Typography>
         </Typography>
 
-        <Box className="absolute right-0 flex">
+        <Box className="absolute right-12 flex">
           <Typography
             color="primary"
             className="capitalize p-4 flex opacity-50 text-[10px] font-areaSemi"
