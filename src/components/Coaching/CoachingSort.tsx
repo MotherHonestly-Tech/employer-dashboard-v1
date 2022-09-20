@@ -40,7 +40,7 @@ const CoachingSort = (props: Props) => {
           className="uppercase p-4"
           sx={{
             fontWeight: 900,
-            fontSize: "10px",
+            fontSize: "12px",
             fontFamily: "Area-Extended",
           }}
         >
@@ -50,7 +50,7 @@ const CoachingSort = (props: Props) => {
         <Link to={"/"} className="cursor-pointer no-underline">
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
+            className="capitalize p-4 flex font-areaSemi text-[12px]"
           >
             Category
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
@@ -59,7 +59,7 @@ const CoachingSort = (props: Props) => {
         <Link to={"/"} className="cursor-pointer no-underline">
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
+            className="capitalize p-4 flex font-areaSemi text-[12px]"
           >
             Expertise
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
@@ -77,7 +77,7 @@ const CoachingSort = (props: Props) => {
             id="search-interest"
             type="text"
             placeholder="Search coach"
-            className="flex-grow shadow-inner"
+            className="flex-grow text-[12px] shadow-inner"
           />
           <MHButton
             sx={{
@@ -101,7 +101,7 @@ const CoachingSort = (props: Props) => {
         <Box className="absolute right-1 flex">
           <Typography
             color="primary"
-            className="capitalize p-4 flex opacity-50  text-[10px] font-areaSemi"
+            className="capitalize p-4 flex opacity-50  text-[12px] font-areaSemi"
           >
             {resources.length} Results
           </Typography>

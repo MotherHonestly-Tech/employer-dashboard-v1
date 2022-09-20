@@ -65,16 +65,16 @@ const PodcastsPage = (props: ResProps) => {
         pageInfo="  Achieve your personal and professional goals with personalized
       solutions from our specialized experts in career, care, and s
       wellbeing."
-        podClassName="absolute top-40 flex gap-32 "
-        pageInfoClassName="font-semibold  text-[12px] font-areaSemi"
+        podClassName="absolute top-52 left-20 flex gap-32 "
+        pageInfoClassName="font-semibold w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661824668/image_1_oe6a7y.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661880063/image_m2yyjt.png"
       >
         {/* <ResToolkitIcon className="" height="24px" width="25px" /> */}
         <BgOverlay
           className="overflow-hidden absolute top-2 right-0"
-          height="320px"
-          width="300px"
+          height="400px"
+          width="400px"
         />
       </AllresHeader>
 

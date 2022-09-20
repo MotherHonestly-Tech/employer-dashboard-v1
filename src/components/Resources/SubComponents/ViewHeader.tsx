@@ -11,6 +11,7 @@ type HeaderProps = {
   downloadClassName?: string;
   ticketClassName?: string;
   author?: string;
+  authorClassName?: string;
   downloadLink?: string;
   ticketLink?: string;
   categoryOne?: string;
@@ -28,13 +29,13 @@ type HeaderProps = {
 const ViewHeader = (props: HeaderProps) => {
   return (
     <Fragment>
-      <Grid container spacing={0} className=" h-[440px]">
-        <Grid item xs={12} md={6} lg={7}>
+      <Grid container spacing={0} className=" h-[550px]">
+        <Grid item xs={12} md={6} lg={6}>
           <Box className="bg-lilac-200 h-full pt-3 pl-12 relative">
             <Typography
               variant="body2"
               color="primary"
-              className="text-left  my-6 w-3/4 font-columbia text-3xl capitalize font-[500]"
+              className="text-left  my-6 w-4/4 font-columbia text-3xl capitalize font-[500]"
             >
               <Typography
                 variant="body2"
@@ -54,7 +55,7 @@ const ViewHeader = (props: HeaderProps) => {
             </Typography>
             <Typography
               variant="body2"
-              className="text-left  w-3/4 text-sm font-areaSemi"
+              className="text-left w-3/4 text-[16px] font-areaSemi"
               color="primary"
             >
               {props.description}
@@ -67,15 +68,15 @@ const ViewHeader = (props: HeaderProps) => {
                   window.open(props.downloadLink);
                 }}
               >
-                <DownloadIcon className="h-12" />
+                <DownloadIcon className="h-12 mt-8" />
               </a>
 
               <Typography
                 variant="body2"
-                className="text-left mt-4 text-[13px]  uppercase font-areaNorm"
+                className="text-left mt-12 text-[14px]  uppercase font-areaExt"
                 color="primary"
               >
-                Download Now
+                Download Toolkit
               </Typography>
             </Box>
             <Box className={props.ticketClassName}>
@@ -134,10 +135,10 @@ const ViewHeader = (props: HeaderProps) => {
 
             <Typography
               variant="body2"
-              className="text-left mt-10 opacity-50 text-[13px] mb-8 uppercase font-areaNorm"
+              className={props.authorClassName}
               color="primary"
             >
-              {props.author}
+              BY {props.author}
             </Typography>
 
             <Box className="bottom-6 absolute">
@@ -151,7 +152,7 @@ const ViewHeader = (props: HeaderProps) => {
 
               <Typography
                 variant="body2"
-                className="text-left my-2 text-[12px] uppercase font-areaNorm"
+                className="text-left my-2 text-[12px] uppercase font-areaExt"
                 color="primary"
               >
                 {props.dateTwo}
@@ -159,8 +160,8 @@ const ViewHeader = (props: HeaderProps) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={5} className=" relative">
-          <Box className="bg-green-100 h-full w-full">
+        <Grid item xs={12} md={6} lg={6} className=" relative">
+          <Box className="bg-green-100 h-[550px]">
             <img
               src={props.imageUrl}
               alt=""

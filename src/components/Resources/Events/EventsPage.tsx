@@ -75,14 +75,14 @@ const EventsPage = (props: ResProps) => {
         pageInfo="Achieve your personal and professional goals with personalized
         solutions from our specialized experts in career, care, and s
         wellbeing."
-        pageInfoClassName="font-semibold text-left text-[12px] font-areaSemi"
+        pageInfoClassName="font-semibold text-left w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png"
       >
         <BgOverlay
-          className="overflow-hidden absolute top-32 ml-[720px]"
-          height="200px"
-          width="300px"
+          className="overflow-hidden absolute top-28 right-0"
+          height="400px"
+          width="400px"
         />
       </AllresHeader>
       <EventSort />

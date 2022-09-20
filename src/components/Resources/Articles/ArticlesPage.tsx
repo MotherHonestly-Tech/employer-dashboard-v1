@@ -13,11 +13,11 @@ import {
 } from "@mui/material";
 
 import { ReactComponent as BgOverlay } from "../../../static/svg/article.svg";
-import AllSort from "../SubComponents/AllSort";
 import Footer from "../../Layout/Footer";
 import Pagination from "../../UI/Pagination";
 import AllresHeader from "../SubComponents/AllresHeader";
 import ResCard from "../SubComponents/ResCard";
+import ArticleSort from "./ArticleSort";
 
 type ResProps = {
   image?: string;
@@ -69,22 +69,22 @@ const ArticlesPage = (props: ResProps) => {
         boxClassName="place-content-center overscroll-x-hidden gap-2 flex pb-4"
         title="Articles"
         titleInfo="Read The Latest Articles + Interviews"
-        titleInfoclassName="text-left my-2 w-screen font-columbia text-2xl capitalize font-[500]"
+        titleInfoclassName="text-left -ml-12 my-2 w-screen font-columbia text-4xl capitalize font-[500]"
         pageInfo="  Achieve your personal and professional goals with personalized
       solutions from our specialized experts in career, care, and s
       wellbeing."
-        pageInfoClassName="font-semibold  text-[12px] font-areaSemi"
+        pageInfoClassName="font-semibold w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_1_h2qjf3.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661880068/image_1_rgia4z.png"
       >
         {/* <ResToolkitIcon className="" height="24px" width="25px" /> */}
         <BgOverlay
           className="overflow-hidden absolute top-12 -right-20"
-          height="320px"
-          width="350px"
+          height="400px"
+          width="400px"
         />
       </AllresHeader>
-      <AllSort resourcesLength={resources.length} />
+      <ArticleSort resourcesLength={resources.length} />
 
       <Box className="mx-auto pt-10 bg-white px-6 pb-4">
         <Grid container spacing={2}>

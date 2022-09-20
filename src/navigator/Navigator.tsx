@@ -1,13 +1,13 @@
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import AuthNavigator from './AuthNavigator';
-import DashboardNavigator from './DashboardNavigator';
-import NotFound from '../pages/Not-Found/404';
+import AuthNavigator from "./AuthNavigator";
+import DashboardNavigator from "./DashboardNavigator";
+import NotFound from "../pages/Not-Found/404";
 
-import AuthContext from '../store/context/auth-context';
-import { FnComponent } from '../models/component.model';
-import OnboardingNavigator from './OnboardingNavigator';
+import AuthContext from "../store/context/auth-context";
+import { FnComponent } from "../models/component.model";
+import OnboardingNavigator from "./OnboardingNavigator";
 
 const AppNavigator: FnComponent<{}> = (props) => {
   const authCtx = React.useContext(AuthContext);
@@ -21,15 +21,15 @@ const AppNavigator: FnComponent<{}> = (props) => {
             authCtx.isAuthenticated ? (
               <Redirect
                 to={{
-                  pathname: '/organization/dashboard',
-                  state: { from: routeProps.location }
+                  pathname: "/organization/dashboard",
+                  state: { from: routeProps.location },
                 }}
               />
             ) : (
               <Redirect
                 to={{
-                  pathname: '/auth/sign-in',
-                  state: { from: routeProps.location }
+                  pathname: "/auth/sign-in",
+                  state: { from: routeProps.location },
                 }}
               />
             )

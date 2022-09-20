@@ -60,7 +60,6 @@ const Coach = (props: CardProps) => {
                 className="no-underline h-14 line-clamp-2 w-[70%] text-[16px] capitalize py-2 font-areaSemi leading-[140%] font-bold text-navy-900"
               >
                 {props.name}
-                {props.name}
               </Link>
 
               <Rating
