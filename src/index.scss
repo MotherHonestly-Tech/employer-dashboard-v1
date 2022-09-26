@@ -65,6 +65,7 @@ $primary-color: #28404a;
   font-family: 'Area-Normal-Semibold', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 code {

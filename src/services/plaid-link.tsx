@@ -3,12 +3,18 @@ import { useLocation } from 'react-router-dom';
 
 import useHttp from '../hooks/use-http';
 import { HttpResponse } from '../models/api.interface';
+import { LinkSuccessMetadata } from '../models/plaid.model';
 
 export type PlaidLinkContextShape = {
   isOauth: boolean;
   linkToken: string | null;
   generateLinkToken: () => void;
-  exchangePublicToken: (publicToken: string, accountId: string) => void;
+  exchangePublicToken: (
+    publicToken: string,
+    metadata: LinkSuccessMetadata,
+    userId: number
+  ) => void;
+  removeLinkToken: () => void;
   //   publicKey: string;
   //   env: 'sandbox' | 'development' | 'production';
   //   product: 'auth' | 'transactions';
@@ -21,7 +27,12 @@ const PlaidLinkContext = React.createContext<PlaidLinkContextShape>({
   isOauth: false,
   linkToken: null,
   generateLinkToken: () => {},
-  exchangePublicToken: (publicToken: string, accountId: string) => {}
+  exchangePublicToken: (
+    publicToken: string,
+    metadata: LinkSuccessMetadata,
+    userId: number
+  ) => {},
+  removeLinkToken: () => {}
   //   publicKey: '',
   //   env: 'sandbox',
   //   product: 'auth',
@@ -47,7 +58,7 @@ export const PlaidLinkContextProvider = ({
   const { loading, error, sendHttpRequest } = useHttp();
 
   const generateLinkToken = React.useCallback(() => {
-    if (isOauth) {
+    if (isOauth.current) {
       setLinkToken(localStorage.getItem('link_token'));
     } else {
       sendHttpRequest(
@@ -64,27 +75,39 @@ export const PlaidLinkContextProvider = ({
     }
   }, [sendHttpRequest, isOauth]);
 
-  const exchangePublicToken = React.useCallback((publicToken: string, accountId: string) => {
-    sendHttpRequest(
-      process.env.REACT_APP_PLAID_API_URL + 'plaid/access/token',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          publicToken,
-          accountId
-        })
-      },
-      (response: HttpResponse<string>) => {
-        console.log(response);
-      }
-    );
-  }, [sendHttpRequest]);
+  const removeLinkToken = React.useCallback(() => {
+    localStorage.removeItem('link_token');
+  }, []);
+
+  const exchangePublicToken = React.useCallback(
+    (publicToken: string, metadata: LinkSuccessMetadata, userId: number) => {
+      removeLinkToken();
+      sendHttpRequest(
+        process.env.REACT_APP_PLAID_API_URL + 'plaid/access/token',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            publicToken,
+            accountId: metadata.account_id,
+            mask: metadata.account.mask,
+            officialName: metadata.account.name,
+            customerId: userId
+          })
+        },
+        (response: HttpResponse<string>) => {
+          console.log(response);
+        }
+      );
+    },
+    [sendHttpRequest, removeLinkToken]
+  );
 
   const contextValue = {
     isOauth: isOauth.current,
     linkToken,
     generateLinkToken,
-    exchangePublicToken
+    exchangePublicToken,
+    removeLinkToken
   };
 
   return (

@@ -12,6 +12,9 @@ import MHDataTable, { GridColDef } from '../DataTable/MHDataTable';
 import StyledActionButton from '../Button/StyledActionButton';
 import MHFormControl from '../Form/MHFormControl';
 import { MHSelect } from '../Form/MHSelect';
+import MHRadioGroup from '../Form/MHRadioGroup';
+import IconButtonStyled from '../Button/IconButtonStyled';
+import MHButton from '../Button/MHButton';
 import useHttp from '../../hooks/use-http';
 import useInput from '../../hooks/use-input';
 
@@ -27,9 +30,9 @@ import { HttpResponse } from '../../models/api.interface';
 import { Transaction } from '../../models/plaid.model';
 import * as validators from '../../utils/validators';
 import DashboardContext from '../../store/context/dashboard.context';
-import MHRadioGroup from '../Form/MHRadioGroup';
-import IconButtonStyled from '../Button/IconButtonStyled';
-import MHButton from '../Button/MHButton';
+import { Category } from '../../models/wallet.model';
+import AuthContext from '../../store/context/auth-context';
+import NotificationContext from '../../store/context/notifications.context';
 
 const RADIO_OPTIONS: Array<{ value: string; label: string }> = [
   {
@@ -42,6 +45,89 @@ const RADIO_OPTIONS: Array<{ value: string; label: string }> = [
   }
 ];
 
+const TRANSACTIONS: Transaction[] = [
+  {
+    'id': 1234,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 9.5,
+    'merchantName': 'Sparkfun',
+    'processed': false,
+    'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 12390,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 89.4,
+    'merchantName': 'Sparkfun',
+    'processed': false,
+    'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 12378,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 24,
+    'merchantName': 'Sparkfun',
+    'processed': false,
+    'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 12,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 45.67,
+    'merchantName': 'Sparkfun',
+    'processed': false,
+    'financeCategoryDetailed': 'GENERAL_SERVICES_EDUCATION',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+] as Array<Transaction>;
+
 const Transactions = ({
   open,
   onClose
@@ -49,28 +135,42 @@ const Transactions = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-  const { loading, error, sendHttpRequest: fetchTransactions } = useHttp();
-
+  const [transactions, setTransactions] = React.useState<Transaction[]>(
+    []
+  );
   const [transactionId, setTransactionId] = React.useState<number | null>(null);
+  const {
+    loading: loadingTransactions,
+    error: transactionsError,
+    sendHttpRequest: fetchTransactions
+  } = useHttp();
 
+  const dashboardCtx = React.useContext(DashboardContext);
+  const { staticDataCacheMap } = dashboardCtx;
+
+  const authCtx = React.useContext(AuthContext);
+  const { userId } = authCtx;
+
+  const notificationCtx = React.useContext(NotificationContext);
+  const { pushNotification } = notificationCtx;
+
+  // 
   React.useEffect(() => {
     fetchTransactions(
       getURLWithQueryParams(
         process.env.REACT_APP_PLAID_API_URL + 'plaid/transaction',
         {
-          customerId: '123312'
+          customerId: String(userId!)
         }
       ),
       {
         method: 'GET'
       },
       (response: HttpResponse<Transaction[]>) => {
-        console.info(response);
         setTransactions(response.data);
       }
     );
-  }, [fetchTransactions]);
+  }, [fetchTransactions, userId]);
 
   const columns: GridColDef[] = [
     {
@@ -107,17 +207,28 @@ const Transactions = ({
       cellRenderer: (row: Transaction) => (
         <StyledActionButton
           variant="outlined"
-          color="secondary"
+          color={transactionId !== row.id ? 'secondary' : 'primary'}
           startIcon={<ReimburseIcon />}
-          onClick={() => setTransactionId(row.id)}>
+          onClick={setSelectedTransaction.bind(null, row.id)}>
           Reimburse
         </StyledActionButton>
       )
     }
   ];
 
-  const dashboardCtx = React.useContext(DashboardContext);
-  const { staticDataCacheMap } = dashboardCtx;
+  const setSelectedTransaction = (id: number) => {
+    setTransactionId(id);
+    categoryInputChangeHandler('');
+    typeInputChangeHandler('');
+    amountInputChangeHandler('');
+    descInputChangeHandler('');
+  };
+
+  const {
+    loading: submitting,
+    error,
+    sendHttpRequest: submitTransaction
+  } = useHttp();
 
   const {
     value: enteredCategory,
@@ -138,14 +249,23 @@ const Transactions = ({
     onBlur: amountInputBlurHandler
   } = useInput([
     {
-      validator: (value: string) => validators.required(value)
+      validator: (value: string) =>
+        enteredType === 'partial' ? validators.required(value) : true
+    },
+    {
+      validator: (value: string) => {
+        const transaction = transactions.find((t) => t.id === transactionId);
+        return enteredType === 'partial'
+          ? validators.max(transaction!.amount)(value)
+          : true;
+      }
     }
   ]);
 
   const {
-    value: enteredDesc,
-    onChange: descInputChangeHandler,
-    onBlur: descInputBlurHandler
+    value: enteredType,
+    valid: enteredTypeIsValid,
+    onChange: typeInputChangeHandler
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -153,10 +273,10 @@ const Transactions = ({
   ]);
 
   const {
-    value: enteredType,
-    valid: enteredTypeIsValid,
-    onChange: typeInputChangeHandler,
-    onBlur: typeInputBlurHandler
+    value: enteredDesc,
+    valid: enteredDescIsValid,
+    onChange: descInputChangeHandler,
+    onBlur: descInputBlurHandler
   } = useInput([
     {
       validator: (value: string) => validators.required(value)
@@ -167,7 +287,68 @@ const Transactions = ({
     'Please enter a valid amount'
   );
 
-  const submitHandler = (event: React.SyntheticEvent<HTMLFormElement>) => {};
+  let formIsValid =
+    enteredCategoryIsValid &&
+    enteredTypeIsValid &&
+    enteredAmountIsValid &&
+    enteredDescIsValid;
+
+  const submitHandler = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!formIsValid) {
+      return;
+    }
+
+    const [category] = staticDataCacheMap
+      .get('categories')!
+      .filter((category) => category.id === +enteredCategory) as Category[];
+
+    const transaction = transactions.find((t) => t.id === transactionId);
+
+    const formData = new FormData();
+    formData.append('source', 'PLAID');
+    formData.append('categoryId', enteredCategory);
+    formData.append('categoryName', category.categoryName);
+    formData.append('merchantName', transaction!.merchantName);
+    formData.append(
+      'amount',
+      enteredType === 'full' ? transaction!.amount + '' : enteredAmount
+    );
+    formData.append('description', enteredDesc);
+    formData.append('trnxRefId', transaction!.transactionRefId + '');
+
+    formData.append('customerId', String(userId));
+
+    submitTransaction(
+      process.env.REACT_APP_API_BASE_URL +
+        'employee/dashboard/reembursement/pending',
+      {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data'
+        },
+        body: formData
+      },
+      (response: HttpResponse<unknown>) => {
+        const transactionsData = [...transactions];
+        const transactionIndex = transactionsData.findIndex(
+          (t) => t.id === transactionId
+        );
+
+        if (transactionIndex > -1) {
+          transactionsData.splice(transactionIndex, 1);
+          setTransactions(transactionsData);
+        }
+        setTransactionId(null);
+        pushNotification({
+          message: 'Transaction submitted successfully',
+          type: 'success',
+          duration: 7000
+        });
+      }
+    );
+  };
 
   // if (loading) {
   //   return (
@@ -185,28 +366,28 @@ const Transactions = ({
         handleClose={onClose}
         scroll="paper"
         actions={null}
-        maxWidth={'lg'}
+        maxWidth={transactionId ? 'lg' : 'md'}
         fullWidth>
         <Typography
           variant="body1"
           fontSize="16px"
           fontFamily="Area-Normal-Black"
           color="primary.main">
-          Reimbursement
+          Transactions
         </Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body2" gutterBottom mb="30px">
           Please note, we only reimburse care related expenses
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={transactionId ? 9 : 12}>
+          <Grid item xs={transactionId ? 8 : 12}>
             <MHDataTable
               rows={transactions}
               columns={columns}
+              frontEndPagination
               containerStyles={{
                 borderWidth: 0,
-                borderRadius: 0,
-                marginTop: '30px'
+                borderRadius: 0
               }}
               headerStyles={{
                 background: '#E8E8E8',
@@ -224,16 +405,13 @@ const Transactions = ({
           {transactionId && (
             <Grid
               item
-              xs={3}
+              xs={4}
               position="sticky"
               height="90%"
               sx={{
                 top: 0
               }}>
-              <Box
-                component={'form'}
-                onSubmit={submitHandler}
-                id="upload-receipt-form">
+              <Box component={'form'} onSubmit={submitHandler}>
                 <Stack
                   direction="row"
                   alignItems="flex-start"
@@ -302,10 +480,9 @@ const Transactions = ({
                   onChange={descInputChangeHandler}
                   onBlur={descInputBlurHandler}
                   multiline
-                  rows={8}
                 />
 
-                <MHButton type="submit" fullWidth>
+                <MHButton type="submit" loading={submitting} fullWidth>
                   Proceed
                 </MHButton>
               </Box>

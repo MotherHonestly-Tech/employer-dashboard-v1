@@ -12,7 +12,7 @@ const Label = styled('label')(
     ...({
         ...style
     })
-    `
+  `
 );
 
 export default Label;

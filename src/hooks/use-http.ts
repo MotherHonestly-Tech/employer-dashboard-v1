@@ -28,11 +28,13 @@ const useHttp = () => {
           method: requestConfig.method || 'GET',
           headers: {
             ...(requestConfig.headers || {
-              'Content-Type': 'application/json',
-            }),
-            ...(token ? { Authorization: `Bearer ${token.accessToken}` } : {})
+              'Content-Type': 'application/json'
+            })
+            // ...(token ? { Authorization: `Bearer ${token.accessToken}` } : {})
           },
-          body: requestConfig.body || null
+          ...(requestConfig.body && {
+            body: requestConfig.body
+          })
         });
 
         // if (!response.ok) {
@@ -46,11 +48,12 @@ const useHttp = () => {
         }
 
         responseHandlerFn(responseData);
-      } catch (error: any) {
-        error instanceof Error && setError({
-          message:
-            config?.errorMessage || error.message || 'Something went wrong'
-        });
+      } catch (error) {
+        error instanceof Error &&
+          setError({
+            message:
+              config?.errorMessage || error.message || 'Something went wrong'
+          });
       }
 
       setLoading(false);

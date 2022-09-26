@@ -233,8 +233,8 @@ type ExtraProps = {
   error?: string;
 };
 
-function CustomSelect<TValue>(props: SelectUnstyledProps<TValue> & ExtraProps) {
-  const components: SelectUnstyledProps<TValue>['components'] = {
+function CustomSelect<T extends {}>(props: SelectUnstyledProps<T> & ExtraProps) {
+  const components: SelectUnstyledProps<T>['components'] = {
     Root: StyledButton,
     Listbox: StyledListbox,
     Popper: StyledPopper,
@@ -298,7 +298,7 @@ export function MHSelect(props: SelectProps<string>) {
   );
 }
 
-function CustomMultiSelect<TValue>(
+function CustomMultiSelect<TValue extends {}>(
   props: MultiSelectUnstyledProps<TValue> & ExtraProps
 ) {
   const components: MultiSelectUnstyledProps<TValue>['components'] = {

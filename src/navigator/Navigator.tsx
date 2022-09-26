@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import AuthNavigator from './AuthNavigator';
 import DashboardNavigator from './DashboardNavigator';
-import NotFound from '../pages/Not-Found/404';
+import NotFound from '../pages/Error/404';
 
 import AuthContext from '../store/context/auth-context';
 import { FnComponent } from '../models/component.model';

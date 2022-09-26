@@ -36,9 +36,10 @@ import * as validators from '../../utils/validators';
 import { HttpResponse } from '../../models/api.interface';
 import AuthContext from '../../store/context/auth-context';
 import DashboardContext from '../../store/context/dashboard.context';
-import { Category, Merchant } from '../../models/wallet';
+import { Category, Merchant } from '../../models/wallet.model';
 import NotificationContext from '../../store/context/notifications.context';
 import PlaidLinkContext from '../../services/plaid-link';
+import { LinkSuccessMetadata } from '../../models/plaid.model';
 
 const UploadWrapper = styled('div')<{
   isdragactive: string;
@@ -362,6 +363,7 @@ const UploadReceipt = ({
       .filter((merchant) => merchant.id === +enteredMerchant) as Merchant[];
 
     const formData = new FormData();
+    formData.append('source', 'MANUAL');
     formData.append('reciept', uploadedFile as Blob);
     formData.append('categoryId', enteredCategory);
     formData.append('merchantId', enteredMerchant);
@@ -379,6 +381,7 @@ const UploadReceipt = ({
       formData.set('merchantName', enteredMerchantName);
       formData.set('website', enteredMerchantWebsite);
       formData.set('merchantAddress', enteredMerchantAddress);
+      formData.append('logoUrl', merchant.logoUrl);
     }
 
     uploadReceipt(
@@ -402,10 +405,14 @@ const UploadReceipt = ({
       console.log(public_token, metadata);
       setCompleted(true);
       history.replace('/organization/wallet');
-      exchangePublicToken(public_token, metadata.accounts[0].id);
+      exchangePublicToken(
+        public_token,
+        (metadata as unknown) as LinkSuccessMetadata,
+        userId as number
+      );
       // window.history.pushState('', '', '/');
     },
-    [history, exchangePublicToken]
+    [history, exchangePublicToken, userId]
   );
 
   const onExit = React.useCallback(() => {

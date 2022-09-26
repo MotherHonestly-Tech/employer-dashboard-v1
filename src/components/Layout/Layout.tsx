@@ -35,7 +35,7 @@ const Layout: FnComponent = (props) => {
           {props.children}
         </Box>
 
-        {!resourcePathMatch && <SecondarySidebar />}
+        {/* {!resourcePathMatch && <SecondarySidebar />} */}
       </Stack>
     </Box>
   );

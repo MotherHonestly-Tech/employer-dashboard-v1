@@ -21,6 +21,7 @@ import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
 import { User } from '../models/user.model';
 import { styled } from '@mui/material/styles';
+import Motherboard from '../components/Coaching/Motherboard';
 
 const Wrapper = styled('div')(
   ({ theme }) => `
@@ -77,6 +78,9 @@ const DashboardNavigator = () => {
               </Route>
               <Route path={`${path}/coaching`} exact>
                 <Coaching />
+              </Route>
+              <Route path={`${path}/book-motherboard/:slug/:uuid`} exact>
+                <Motherboard />
               </Route>
             </Switch>
           </CSSTransition>

@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
 import DashboardContext from '../../store/context/dashboard.context';
-import { Category } from '../../models/wallet';
+import { Category } from '../../models/wallet.model';
 import BorderLinearProgress from '../UI/LinearProgress';
 
 export const CategoryList = () => {
@@ -60,11 +60,11 @@ export const CategoryList = () => {
               <Stack color={category.colorCode} spacing={0.8}>
                 <BorderLinearProgress
                   variant="determinate"
-                  value={20}
+                  value={category.expensePercent}
                   barcolor={category.colorCode}
                 />
                 <Typography variant="body2" fontSize={'.6rem'} color="#989898">
-                  20%
+                  {category.expensePercent}%
                 </Typography>
               </Stack>
             </ListItemText>

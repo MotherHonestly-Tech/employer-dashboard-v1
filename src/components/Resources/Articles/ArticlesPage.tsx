@@ -1,6 +1,6 @@
-import { Fragment } from "react";
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   Box,
@@ -9,15 +9,15 @@ import {
   Grid,
   IconButton,
   Typography,
-  Zoom,
-} from "@mui/material";
+  Zoom
+} from '@mui/material';
 
-import { ReactComponent as BgOverlay } from "../../../static/svg/article.svg";
-import AllSort from "../SubComponents/AllSort";
-import Footer from "../../Layout/Footer";
-import Pagination from "../../UI/Pagination";
-import AllresHeader from "../SubComponents/AllresHeader";
-import ResCard from "../SubComponents/ResCard";
+import { ReactComponent as BgOverlay } from '../../../static/svg/article.svg';
+import AllSort from '../SubComponents/AllSort';
+import Footer from '../../Layout/Footer';
+import Pagination from '../../UI/Pagination';
+import AllresHeader from '../SubComponents/AllresHeader';
+import ResCard from '../SubComponents/ResCard';
 
 type ResProps = {
   image?: string;
@@ -50,13 +50,13 @@ const ArticlesPage = (props: ResProps) => {
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
-        method: "GET",
+        method: 'GET'
       });
       const jsonData = await response.json();
       setResources(jsonData);
       console.log(resources);
     } catch (err) {
-      console.error("Cannot find Data");
+      console.error('Cannot find Data');
     }
   };
 
@@ -75,8 +75,7 @@ const ArticlesPage = (props: ResProps) => {
       wellbeing."
         pageInfoClassName="font-semibold  text-[12px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_1_h2qjf3.png"
-        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661880068/image_1_rgia4z.png"
-      >
+        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661880068/image_1_rgia4z.png">
         {/* <ResToolkitIcon className="" height="24px" width="25px" /> */}
         <BgOverlay
           className="overflow-hidden absolute top-12 -right-20"
@@ -94,14 +93,12 @@ const ArticlesPage = (props: ResProps) => {
 
               {count === 1 ? (
                 <Grid item xs={12} md={12} lg={6}>
-                  <Zoom in style={{ transitionDelay: "200ms" }}>
+                  <Zoom in style={{ transitionDelay: '200ms' }}>
                     <Card
-                      className={`relative w-auto h-auto object-cover bg-pink-700 rounded-md`}
-                    >
+                      className={`relative w-auto h-auto object-cover bg-pink-700 rounded-md`}>
                       <IconButton
                         disabled
-                        className="absolute outline-none top-[6%] left-[5%]"
-                      >
+                        className="absolute outline-none top-[6%] left-[5%]">
                         {/* <img
                          className="h-6 w-6"
                          src="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
@@ -119,7 +116,7 @@ const ArticlesPage = (props: ResProps) => {
                         {/* <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
                          {res.createdAt}
                        </Typography>
-                       <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
+                       <Typography className="pt-4  w-3/4 font-areaSemi -3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
                          {res.texts}
                        </Typography> */}
 
@@ -127,8 +124,7 @@ const ArticlesPage = (props: ResProps) => {
                           <Link
                             to={`${location.pathname}/${res.slugs}
                      `}
-                            className="bg-white w-[108px] no-underline  px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
-                          >
+                            className="bg-white w-[108px] no-underline  px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]">
                             Read
                           </Link>
                           {/* <Link

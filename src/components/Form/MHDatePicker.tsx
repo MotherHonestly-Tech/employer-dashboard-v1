@@ -14,17 +14,17 @@ const grey = {
 
 const StyledInput = styled('input')<{}>(
   ({ theme }) => `
-      font-family: Area-Normal-Semibold;
-      font-size: 0.75rem;
-      box-sizing: border-box;
-      background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-      text-align: left;
-      color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-      outline: none;    
-      &:hover {
-        border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[300]};
-      }
-      `
+    font-family: Area-Normal-Semibold;
+    font-size: 0.75rem;
+    box-sizing: border-box;
+    background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+    text-align: left;
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+    outline: none;    
+    &:hover {
+      border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[300]};
+    }
+  `
 );
 
 const StyledContainer = styled('div')<{}>(
@@ -38,8 +38,7 @@ const StyledContainer = styled('div')<{}>(
     padding: 10px;
     line-height: 1.5;
     margin-bottom: 1.25rem;
-
-`
+  `
 );
 
 const MHDatePicker = () => {
@@ -48,14 +47,14 @@ const MHDatePicker = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <DatePicker
-        label="Basic example"
+        label="date-picker"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
         }}
         renderInput={({ inputRef, inputProps, InputProps }) => (
           <StyledContainer>
-            <StyledInput ref={inputRef} {...inputProps} />
+            <StyledInput ref={inputRef} {...inputProps} size={10} />
             {InputProps?.endAdornment}
           </StyledContainer>
         )}

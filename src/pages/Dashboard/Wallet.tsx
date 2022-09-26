@@ -15,35 +15,41 @@ import DataTable, { GridColDef } from '../../components/DataTable/MHDataTable';
 import LoadingIndicator from '../../components/UI/LoadingIndicator';
 import BorderLinearProgress from '../../components/UI/LinearProgress';
 import LinkAccount from '../../components/Wallet/LinkAccount';
-import MHButton from '../../components/Button/MHButton';
 import { MHSelect } from '../../components/Form/MHSelect';
-import MHTextInput from '../../components/Form/MHTextInput';
 import MHDatePicker from '../../components/Form/MHDatePicker';
 import Transactions from '../../components/Wallet/Transactions';
 import ReceiptStatus, {
   RECEIPT_STATUS
-} from '../../components/Wallet/ReceiptStatus';
+} from '../../components/Wallet/ExpenseStatus';
 import StyledActionButton from '../../components/Button/StyledActionButton';
 import useInput from '../../hooks/use-input';
 import useTitle from '../../hooks/use-title';
 import useHttp from '../../hooks/use-http';
 
+import { ReactComponent as ReimburseIcon } from '../../static/svg/reimburse.svg';
 import { ReactComponent as UploadReceiptIcon } from '../../static/svg/upload-receipt.svg';
 import { ReactComponent as CareCardIcon } from '../../static/svg/care-card.svg';
 import { ReactComponent as CardIconSm } from '../../static/svg/card-sm.svg';
 import { ReactComponent as PlusIconLarge } from '../../static/svg/plus-lg.svg';
 import { HttpResponse } from '../../models/api.interface';
-import { Receipt } from '../../models/receipt.model';
-import { formatAmount, formatDate } from '../../utils/utils';
+import { CareWallet, Expense } from '../../models/wallet.model';
+import {
+  formatAmount,
+  formatDate,
+  getURLWithQueryParams
+} from '../../utils/utils';
 import * as validators from '../../utils/validators';
 import * as walletReducer from '../../store/reducers/wallet';
 import PlaidLinkContext from '../../services/plaid-link';
+import AuthContext from '../../store/context/auth-context';
+import ExpenseModal from '../../components/Wallet/ExpenseModal';
 
 type WalletReducer = (
   state: {
     uploadReceiptOpen: boolean;
     linkAccountOpen: boolean;
     transactionsOpen: boolean;
+    expenseOpen: boolean;
   },
   action: {
     type: string;
@@ -52,7 +58,11 @@ type WalletReducer = (
   }
 ) => any;
 
-type ModalID = 'uploadReceiptOpen' | 'linkAccountOpen' | 'transactionsOpen';
+type ModalID =
+  | 'uploadReceiptOpen'
+  | 'linkAccountOpen'
+  | 'transactionsOpen'
+  | 'expenseOpen';
 
 const GridItem = styled(Box)(({ theme }) => ({
   // ...theme.typography.body2,
@@ -80,11 +90,15 @@ const Wallet = (props: { title: string }) => {
     {
       uploadReceiptOpen: false,
       linkAccountOpen: false,
-      transactionsOpen: false
+      transactionsOpen: false,
+      expenseOpen: false
     }
   );
 
-  const [receipts, setReceipts] = React.useState<Receipt[]>([]);
+  const [expenses, setExpenses] = React.useState<Expense[]>([]);
+  const [chosenExpense, setChosenExpense] = React.useState<Expense | null>(
+    null
+  );
   useTitle(props.title);
 
   const handleClickOpen = (id: ModalID) => {
@@ -115,6 +129,9 @@ const Wallet = (props: { title: string }) => {
       validator: (value: string) => validators.required(value)
     }
   ]);
+
+  const authCtx = React.useContext(AuthContext);
+  const { userId } = authCtx;
 
   const plaidLinkCtx = React.useContext(PlaidLinkContext);
   const { isOauth } = plaidLinkCtx;
@@ -152,7 +169,7 @@ const Wallet = (props: { title: string }) => {
       headerName: 'Merchant',
       width: 200,
       type: 'text',
-      cellRenderer: (row: Receipt) => (
+      cellRenderer: (row: Expense) => (
         <Stack direction="row" alignItems="center" spacing={1}>
           <Avatar
             alt={row.merchantName}
@@ -182,21 +199,21 @@ const Wallet = (props: { title: string }) => {
       headerName: 'Amount',
       width: 100,
       type: 'text',
-      valueGetter: (row: Receipt) => formatAmount(row.amount)
+      valueGetter: (row: Expense) => formatAmount(row.amount)
     },
     {
       field: 'createdDate',
       headerName: 'Date',
       width: 100,
       type: 'text',
-      valueGetter: (row: Receipt) => formatDate(row.createdDate)
+      valueGetter: (row: Expense) => formatDate(row.createdDate)
     },
     {
       field: 'workFlowId',
       headerName: 'Status',
       width: 100,
       type: 'number',
-      cellRenderer: (row: Receipt) => (
+      cellRenderer: (row: Expense) => (
         <ReceiptStatus status={row.workFlowId}></ReceiptStatus>
       )
     },
@@ -205,7 +222,7 @@ const Wallet = (props: { title: string }) => {
       headerName: 'Progress',
       width: 100,
       type: 'number',
-      cellRenderer: (row: Receipt) => (
+      cellRenderer: (row: Expense) => (
         <BorderLinearProgress
           variant="determinate"
           barcolor={RECEIPT_STATUS[row.workFlowId].color}
@@ -219,12 +236,17 @@ const Wallet = (props: { title: string }) => {
       width: 100,
       align: 'center',
       type: 'text',
-      cellRenderer: (row: Receipt) => (
+      cellRenderer: (row: Expense) => (
         <MuiLink
-          href={`/receipts/${row.id}`}
+          component="button"
           color="primary"
+          underline="always"
           sx={{
             fontWeight: 800
+          }}
+          onClick={() => {
+            handleClickOpen('expenseOpen');
+            setChosenExpense(row);
           }}>
           View
         </MuiLink>
@@ -232,20 +254,46 @@ const Wallet = (props: { title: string }) => {
     }
   ];
 
-  const { loading, error, sendHttpRequest } = useHttp();
+  const [wallet, setWallet] = React.useState<CareWallet | null>(null);
+
+  const {
+    loading: loadingExpenses,
+    error,
+    sendHttpRequest: getExpenses
+  } = useHttp();
+  const {
+    loading: loadingWallet,
+    error: walletError,
+    sendHttpRequest: fetchWallet
+  } = useHttp();
 
   React.useEffect(() => {
-    sendHttpRequest(
+    fetchWallet(
+      getURLWithQueryParams(process.env.REACT_APP_PLAID_API_URL + 'v1/wallet', {
+        customerId: String(userId!)
+      }),
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+      (response: HttpResponse<CareWallet>) => {
+        setWallet(response.data);
+      }
+    );
+
+    getExpenses(
       process.env.REACT_APP_API_BASE_URL +
         'employee/dashboard/reembursement/search',
       {},
-      (response: HttpResponse<Receipt[]>) => {
-        setReceipts(response.data);
+      (response: HttpResponse<Expense[]>) => {
+        setExpenses(response.data);
       }
     );
   }, []);
 
-  if (loading) {
+  if (loadingExpenses || loadingWallet) {
     return (
       <Stack minHeight="75vh" justifyContent="center" alignItems="center">
         <LoadingIndicator />
@@ -298,7 +346,7 @@ const Wallet = (props: { title: string }) => {
                   Monthly Credit
                 </Typography>
                 <Typography variant="h4" fontSize={36} color="primary">
-                  $83.00
+                  {wallet && formatAmount(wallet.monthlyAllocation)}
                 </Typography>
               </Box>
             </GridItem>
@@ -308,7 +356,7 @@ const Wallet = (props: { title: string }) => {
                   Credit Balance
                 </Typography>
                 <Typography variant="h4" fontSize={36} color="#BDBDBD">
-                  $0.00
+                  {wallet && formatAmount(wallet.walletBalance)}
                 </Typography>
               </Box>
             </GridItem>
@@ -318,14 +366,14 @@ const Wallet = (props: { title: string }) => {
                   Total Payout
                 </Typography>
                 <Typography variant="h4" fontSize={36} color="#BDBDBD">
-                  $0.00
+                  {wallet && formatAmount(wallet.totalPayoutAmount)}
                 </Typography>
               </Box>
             </GridItem>
           </Stack>
         </Paper>
 
-        {receipts.length === 0 ? (
+        {expenses.length === 0 ? (
           <Box
             height={300}
             width="100%"
@@ -415,25 +463,30 @@ const Wallet = (props: { title: string }) => {
                   onClick={() => handleClickOpen('uploadReceiptOpen')}>
                   Upload receipt
                 </StyledActionButton>
-                <StyledActionButton
-                  onClick={() => handleClickOpen('linkAccountOpen')}>
-                  Link an account
-                </StyledActionButton>
+                {wallet && !wallet.connectedAccount ? (
+                  <StyledActionButton
+                    onClick={() => handleClickOpen('linkAccountOpen')}>
+                    Link an account
+                  </StyledActionButton>
+                ) : null}
               </Stack>
 
-              <div className="relative">
-                <StyledActionButton
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => handleClickOpen('transactionsOpen')}>
-                  199 eligible transactions
-                </StyledActionButton>
+              {wallet && wallet.totalFlaggedTrnx ? (
+                <div className="relative">
+                  <StyledActionButton
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<ReimburseIcon />}
+                    onClick={() => handleClickOpen('transactionsOpen')}>
+                   {wallet.totalFlaggedTrnx} eligible transactions
+                  </StyledActionButton>
 
-                <span className="absolute flex h-3 w-3 -top-1 -right-1">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#28404A] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#28404A]"></span>
-                </span>
-              </div>
+                  <span className="absolute flex h-3 w-3 -top-1 -right-1">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#28404A] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#28404A]"></span>
+                  </span>
+                </div>
+              ) : null}
             </Stack>
 
             <Divider light />
@@ -457,7 +510,7 @@ const Wallet = (props: { title: string }) => {
               </Grid>
             </Grid>
 
-            <DataTable rows={receipts} columns={columns} />
+            <DataTable rows={expenses} columns={columns} frontEndPagination />
           </React.Fragment>
         )}
       </div>
@@ -480,6 +533,14 @@ const Wallet = (props: { title: string }) => {
         <Transactions
           open={walletState.transactionsOpen}
           onClose={() => handleClose('transactionsOpen')}
+        />
+      )}
+
+      {walletState.expenseOpen && (
+        <ExpenseModal
+          open={walletState.expenseOpen}
+          onClose={() => handleClose('expenseOpen')}
+          expense={chosenExpense}
         />
       )}
     </React.Fragment>

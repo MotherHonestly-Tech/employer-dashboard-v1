@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import SearchField from '../Form/SearchField';
 import { ReactComponent as SearchIcon } from '../../static/svg/search.svg';
 import DashboardContext from '../../store/context/dashboard.context';
-import { Merchant } from '../../models/wallet';
+import { Merchant } from '../../models/wallet.model';
 
 export const MerchantList = () => {
   // let merchantList: Merchant[] = [

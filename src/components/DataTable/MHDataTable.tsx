@@ -7,9 +7,11 @@ import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
 import IconButtonStyled from '../Button/IconButtonStyled';
+import { ReactComponent as EmptyDataIcon } from '../../static/svg/table-data.svg';
 
 function createData(
   merchantName: string,
@@ -206,10 +208,12 @@ const PaginationItem = styled('li')(({ theme }) => ({
 export default function MHDataTable({
   rows,
   columns,
+  frontEndPagination,
   ...props
 }: {
   rows: any[];
   columns: GridColDef[];
+  frontEndPagination: boolean;
   containerStyles?: object;
   headerStyles?: object;
   bodyStyles?: object;
@@ -220,6 +224,11 @@ export default function MHDataTable({
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+  const slicedRows = rows.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -249,50 +258,62 @@ export default function MHDataTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <StyledTableRow
-                  key={row.id}
-                  // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                  {columns.map((col, i) => {
-                    const {
-                      field,
-                      headerName,
-                      width,
-                      align,
-                      type,
-                      valueGetter,
-                      cellRenderer,
-                      description
-                    } = col;
-                    const value = valueGetter ? valueGetter(row) : row[field];
-                    return (
-                      <StyledTableCell
-                        //   component="th"
-                        scope="row"
-                        key={i}
-                        width={width}
-                        align={align || 'left'}
-                        bodystyles={props.bodyStyles}>
-                        {cellRenderer ? cellRenderer(row) : value}
-                        {/* {description && <Typography variant="body2">{description}</Typography>} */}
-                      </StyledTableCell>
-                    );
-                  })}
-                </StyledTableRow>
-              ))}
+            {slicedRows.map((row) => (
+              <StyledTableRow
+                key={row.id}
+                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                {columns.map((col, i) => {
+                  const {
+                    field,
+                    headerName,
+                    width,
+                    align,
+                    type,
+                    valueGetter,
+                    cellRenderer,
+                    description
+                  } = col;
+                  const value = valueGetter ? valueGetter(row) : row[field];
+                  return (
+                    <StyledTableCell
+                      //   component="th"
+                      scope="row"
+                      key={i}
+                      width={width}
+                      align={align || 'left'}
+                      bodystyles={props.bodyStyles}>
+                      {cellRenderer ? cellRenderer(row) : value}
+                      {/* {description && <Typography variant="body2">{description}</Typography>} */}
+                    </StyledTableCell>
+                  );
+                })}
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
+        {slicedRows.length === 0 && (
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            minHeight="300px"
+            minWidth="100%">
+            <EmptyDataIcon />
+            <Typography variant="body2" mt={2}>
+              No transactions data
+            </Typography>
+          </Stack>
+        )}
       </StyledTableContainer>
 
-      <TablePaginationActions
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-      />
+      {slicedRows.length > 0 && (
+        <TablePaginationActions
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+        />
+      )}
     </React.Fragment>
   );
 }

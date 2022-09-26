@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CoachPagination from "../Form/CoachPagination";
+import CoachPagination from "./CoachPagination";
 import Coach from "./Coach";
 
 type CoProps = {

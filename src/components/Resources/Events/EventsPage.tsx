@@ -1,10 +1,10 @@
-import { Fragment } from "react";
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-import moment from "moment";
+import moment from 'moment';
 
-import { ReactComponent as BgOverlay } from "../../../static/svg/event.svg";
+import { ReactComponent as BgOverlay } from '../../../static/svg/event.svg';
 import {
   Box,
   Card,
@@ -12,13 +12,13 @@ import {
   Grid,
   IconButton,
   Typography,
-  Zoom,
-} from "@mui/material";
-import Footer from "../../Layout/Footer";
-import EventSort from "./EventSort";
-import Pagination from "../../UI/Pagination";
-import AllresHeader from "../SubComponents/AllresHeader";
-import ResCard from "../SubComponents/ResCard";
+  Zoom
+} from '@mui/material';
+import Footer from '../../Layout/Footer';
+import EventSort from './EventSort';
+import Pagination from '../../UI/Pagination';
+import AllresHeader from '../SubComponents/AllresHeader';
+import ResCard from '../SubComponents/ResCard';
 
 type ResProps = {
   image?: string;
@@ -51,13 +51,13 @@ const EventsPage = (props: ResProps) => {
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
-        method: "GET",
+        method: 'GET'
       });
       const jsonData = await response.json();
       setResources(jsonData);
       console.log(resources);
     } catch (err) {
-      console.error("Cannot find Data");
+      console.error('Cannot find Data');
     }
   };
 
@@ -77,8 +77,7 @@ const EventsPage = (props: ResProps) => {
         wellbeing."
         pageInfoClassName="font-semibold text-left text-[12px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
-        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png"
-      >
+        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png">
         <BgOverlay
           className="overflow-hidden absolute top-32 ml-[720px]"
           height="200px"
@@ -95,14 +94,12 @@ const EventsPage = (props: ResProps) => {
 
               {count === 1 ? (
                 <Grid item xs={12} md={12} lg={6}>
-                  <Zoom in style={{ transitionDelay: "200ms" }}>
+                  <Zoom in style={{ transitionDelay: '200ms' }}>
                     <Card
-                      className={`relative w-auto h-auto object-cover bg-sky-400 rounded-md`}
-                    >
+                      className={`relative w-auto h-auto object-cover bg-sky-400 rounded-md`}>
                       <IconButton
                         disabled
-                        className="absolute outline-none top-[6%] left-[6%]"
-                      >
+                        className="absolute outline-none top-[6%] left-[6%]">
                         <img
                           className="h-6 w-6"
                           src="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
@@ -118,9 +115,9 @@ const EventsPage = (props: ResProps) => {
                           {res.titles}
                         </Typography>
                         <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
-                          {moment(res.createdAt!).format("MMMM Do ")}
+                          {moment(res.createdAt!).format('MMMM Do ')}
                         </Typography>
-                        <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
+                        <Typography className="pt-4  w-3/4 font-areaSemi -3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
                           {res.texts}
                         </Typography>
 
@@ -128,15 +125,13 @@ const EventsPage = (props: ResProps) => {
                           <Link
                             to={`${location.pathname}/${res.slugs}
                       `}
-                            className="bg-white w-[108px] no-underline px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
-                          >
+                            className="bg-white w-[108px] no-underline px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]">
                             Buy Ticket
                           </Link>
                           <Link
                             to={`${location.pathname}/${res.slugs}
                       `}
-                            className="bg-white w-[120px] no-underline px-8 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
-                          >
+                            className="bg-white w-[120px] no-underline px-8 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]">
                             Watch Video
                           </Link>
                         </Box>
@@ -158,7 +153,7 @@ const EventsPage = (props: ResProps) => {
                     imgBg="bg-pink-700"
                     bodyBg="bg-cream-100"
                     imageSrc={res.image}
-                    top={moment(res.createdAt!).format("MMMM Do ")}
+                    top={moment(res.createdAt!).format('MMMM Do ')}
                     title={res.titles}
                     text=""
                     category={res.categ}
