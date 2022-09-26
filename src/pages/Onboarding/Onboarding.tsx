@@ -21,14 +21,16 @@ import AuthContext from '../../store/context/auth-context';
 import { HttpResponse } from '../../models/api.interface';
 import { constructDateFormat } from '../../utils/utils';
 import geoData from '../../data/georef-united-states-of-america-state.json';
+import NotificationContext from '../../store/context/notifications.context';
 
-const steps = [1, 2, 3];
+const STEPS = [1, 2, 3];
 
 const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0);
   const [completed, setCompleted] = React.useState(false);
   const onboardingCtx = React.useContext(OnboardingContext);
   const authCtx = React.useContext(AuthContext);
+  const notificationCtx = React.useContext(NotificationContext);
 
   const history = useHistory();
 
@@ -56,10 +58,10 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
 
   const nextStepHandler = () => {
     setActiveStepIndex((prevIndex) =>
-      prevIndex < steps.length - 1 ? prevIndex + 1 : prevIndex
+      prevIndex < STEPS.length - 1 ? prevIndex + 1 : prevIndex
     );
 
-    if (activeStepIndex === steps.length - 1) {
+    if (activeStepIndex === STEPS.length - 1) {
       setCompleted(true);
     }
   };
@@ -70,13 +72,14 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
 
   const { userId, token, user, updateUserData } = authCtx;
   const { employee, configureStates } = onboardingCtx;
+  const { pushNotification } = notificationCtx;
 
   const empData = React.useMemo(() => employee, [employee]);
 
   const completeOnboarding = React.useCallback(() => {
     const reqPayload = {
       uuid: userId,
-      employeeEmail: user?.email,
+      workEmail: user?.email,
       firstName: empData?.firstName,
       lastName: empData?.lastName,
       state: empData?.state,
@@ -126,10 +129,16 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
     }
   }, [completed, completeOnboarding]);
 
-  if (error) {
-    setCompleted(false);
-  }
-  
+  React.useEffect(() => {
+    if (error) {
+      setCompleted(false);
+      pushNotification({
+        message: error.message,
+        type: 'error'
+      });
+    }
+  }, [error, pushNotification]);
+
   if (isOnboarded()) {
     return (
       <Redirect
@@ -176,12 +185,12 @@ const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
               sx={{
                 mt: 3
               }}>
-              <Steps steps={steps} activeStep={activeStepIndex} />
+              <Steps steps={STEPS} activeStep={activeStepIndex} />
 
               {ActiveFormComponent && (
                 <Slide
                   direction="left"
-                  in={steps.includes(activeStepIndex + 1)}
+                  in={STEPS.includes(activeStepIndex + 1)}
                   mountOnEnter
                   unmountOnExit>
                   <Box>

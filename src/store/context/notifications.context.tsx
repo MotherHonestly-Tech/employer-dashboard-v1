@@ -31,14 +31,14 @@ export const NotificationContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [notifications, setNotifications] = React.useState<Array<Notification & { id: number }>>(
-    []
-  );
+  const [notifications, setNotifications] = React.useState<
+    Array<Notification & { id: number }>
+  >([]);
 
-  const pushNotification = (notification: Notification) => {
+  const pushNotification = React.useCallback((notification: Notification) => {
     const toastNotification = {
-        ...notification,
-        id: Math.floor(Math.random() * 1000)
+      ...notification,
+      id: Math.floor(Math.random() * 1000)
     };
 
     setNotifications((prevNotifications) => [
@@ -54,7 +54,7 @@ export const NotificationContextProvider = ({
     }, notification.duration || DEFAULT_NOTIFICATION_DURATION);
 
     return toastNotification.id;
-  };
+  }, []);
 
   const popNotification = (id: number) => {
     setNotifications(notifications.filter((n) => n.id !== id));

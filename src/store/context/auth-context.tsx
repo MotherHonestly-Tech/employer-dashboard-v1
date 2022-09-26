@@ -87,7 +87,7 @@ export const AuthContextProvider = ({
   const [userId, setUserId] = React.useState<number | null>(initialUserId);
   const [user, setUser] = React.useState<User | null>(null);
 
-  const history = useHistory();
+  const history = React.useMemo(() => useHistory, [])();
 
   const { sendHttpRequest: logout } = useHttp();
   const { sendHttpRequest: resetToken } = useHttp();
@@ -167,12 +167,12 @@ export const AuthContextProvider = ({
 
   const synchronizeUser = React.useCallback(
     (responseData: Employee) => {
-      const { firstName, lastName, employeeEmail } = responseData;
+      const { firstName, lastName, workEmail } = responseData;
       const user = new User(
         Number(userId),
         firstName,
         lastName,
-        employeeEmail,
+        workEmail,
         tokenData?.token as Token,
         tokenData?.tokenExpirationDate as Date
       );

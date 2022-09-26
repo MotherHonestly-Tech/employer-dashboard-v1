@@ -6,11 +6,11 @@ import {
   CardActions,
   Button,
   Box,
-  Rating,
-} from "@mui/material";
-import React, { Fragment } from "react";
-import Typography from "@mui/material/Typography";
-import { Link, useLocation } from "react-router-dom";
+  Rating
+} from '@mui/material';
+import React, { Fragment } from 'react';
+import Typography from '@mui/material/Typography';
+import { Link, useLocation } from 'react-router-dom';
 
 export type CardProps = {
   imageSrc?: string | undefined;
@@ -26,10 +26,9 @@ const Coach = (props: CardProps) => {
   const location = useLocation();
   return (
     <Fragment>
-      <Zoom in style={{ transitionDelay: "300ms" }}>
+      <Zoom in style={{ transitionDelay: '300ms' }}>
         <Card
-          className={`relative bg-cream-100  rounded-md w-[280px] h-[380px]`}
-        >
+          className={`relative bg-cream-100  rounded-md w-[280px] h-[380px]`}>
           <CardMedia
             className={`h-[250px] w-full object-cover`}
             component="img"
@@ -57,8 +56,7 @@ const Coach = (props: CardProps) => {
             >
               <Link
                 to={`${location.pathname}/${props.url}`}
-                className="no-underline h-14 line-clamp-2 w-[70%] text-[16px] capitalize py-2 font-areaSemi leading-[140%] font-bold text-navy-900"
-              >
+                className="no-underline h-14 -2 w-[70%] text-[16px] capitalize py-2 font-areaSemi leading-[140%] font-bold text-navy-900">
                 {props.name}
                 {props.name}
               </Link>
@@ -74,7 +72,7 @@ const Coach = (props: CardProps) => {
             </Typography>
 
             <Typography
-              className="text-[11px] font-areaSemi py-1 capitalize line-clamp-2 leading-[92%] font-[600] text-navy-900 opacity-40"
+              className="text-[11px] font-areaSemi py-1 capitalize -2 leading-[92%] font-[600] text-navy-900 opacity-40"
               variant="body2"
               color="text.secondary"
               //   sx={{ fontWeight: 600, fontFamily: "Area-Normal" }}
@@ -85,8 +83,7 @@ const Coach = (props: CardProps) => {
 
             <Typography
               className="text-start py-3 text-navy-900 font-areaSemi"
-              variant="body2"
-            >
+              variant="body2">
               {props.category}
             </Typography>
           </CardContent>

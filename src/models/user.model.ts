@@ -26,6 +26,6 @@ export type Employee = {
   uuid: number;
   firstName: string;
   lastName: string;
-  employeeEmail: string;
+  workEmail: string;
   role: string;
 }

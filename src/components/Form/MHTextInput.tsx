@@ -59,10 +59,17 @@ const StyledInputElement = styled('input')`
   box-sizing: border-box;
 `;
 
-const StyledTextareaElement = styled('textarea', {
-  shouldForwardProp: (prop) =>
-    !['ownerState', 'minRows', 'maxRows'].includes(prop.toString())
-})(
+const StyledTextareaElement = styled(
+  React.forwardRef(
+    ({ ...props }, ref: React.ForwardedRef<HTMLInputElement>) => (
+      <textarea {...props} rows={4}></textarea>
+    )
+  ),
+  {
+    shouldForwardProp: (prop) =>
+      !['ownerState', 'minRows', 'maxRows', 'rows'].includes(prop.toString())
+  }
+)(
   ({ theme }) => `
   display: block;
   font-size: 0.75rem;
@@ -80,7 +87,7 @@ const StyledTextareaElement = styled('textarea', {
 
 const MHTextInput = React.forwardRef(
   (props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-    const { components, ...others } = props;
+    const { components, rows, ...others } = props;
 
     // const formControlContext = useFormControlUnstyledContext();
     React.useEffect(() => {

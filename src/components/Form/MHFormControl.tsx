@@ -30,6 +30,7 @@ type InputProps = {
   fullWidth?: boolean;
   multiline?: boolean;
   rows?: number;
+  minRows?: number;
   maxRows?: number;
   email?: boolean;
   min?: number;
@@ -147,6 +148,8 @@ const MHFormControl = (props: InputProps) => {
     error,
     multiline,
     rows,
+    minRows,
+    maxRows,
     min,
     max,
     onChange,
@@ -173,10 +176,12 @@ const MHFormControl = (props: InputProps) => {
         autoFocus={autoFocus}
         multiline={multiline}
         rows={rows}
+        minRows={minRows}
+        maxRows={maxRows}
         componentsProps={{
           input: {
             min: min,
-            max: max,
+            max: max
           }
         }}
         style={{
