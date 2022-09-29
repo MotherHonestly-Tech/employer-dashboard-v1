@@ -1,14 +1,14 @@
-import { Box, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import Slider from 'react-slick';
+import { Box, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 
-import MHButton from '../../Button/MHButton';
-import ResCard from '../SubComponents/ResCard';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import MHButton from "../../Button/MHButton";
+import ResCard from "../SubComponents/ResCard";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
-import { ReactComponent as ResToolkitIcon } from '../../../static/svg/resdot.svg';
-import { ReactComponent as LeftBtn } from '../../../static/svg/left-btn.svg';
-import { ReactComponent as RightBtn } from '../../../static/svg/right-btn.svg';
+import { ReactComponent as ResToolkitIcon } from "../../../static/svg/resdot.svg";
+import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
+import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
 
 type ResProps = {
   image?: string;
@@ -51,7 +51,7 @@ const ResToolkit = (props: ResProps) => {
 
   const settings = {
     centerMode: true,
-    centerPadding: '0px',
+    centerPadding: "0px",
     dots: false,
     infinite: true,
     slidesToShow: 3,
@@ -60,7 +60,7 @@ const ResToolkit = (props: ResProps) => {
     autoplay: true,
     autoplaySpeed: 1100,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    prevArrow: <SamplePrevArrow />,
   };
 
   let history = useHistory();
@@ -76,7 +76,7 @@ const ResToolkit = (props: ResProps) => {
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
-        method: 'GET'
+        method: "GET",
       });
       const jsonData = await response.json();
       setResources(jsonData);
@@ -103,7 +103,8 @@ const ResToolkit = (props: ResProps) => {
           fontSize="12px"
           fontFamily="Area-Extended"
           textAlign="center"
-          textTransform="uppercase">
+          textTransform="uppercase"
+        >
           The Toolkits
         </Typography>
       </Box>
@@ -113,9 +114,10 @@ const ResToolkit = (props: ResProps) => {
         color="primary"
         sx={{
           fontWeight: 500,
-          fontSize: '28px',
-          fontFamily: 'Columbia-Sans'
-        }}>
+          fontSize: "28px",
+          fontFamily: "Columbia-Sans",
+        }}
+      >
         Resources To Make Life Easier
       </Typography>
 
@@ -129,7 +131,7 @@ const ResToolkit = (props: ResProps) => {
                     cardClass="relative w-[300px] shadow-none h-[420px] object-cover bg-cream-100"
                     iconClass="hidden"
                     imgBg="bg-cream-200 "
-                    bodyBg="bg-cream-100"
+                    bodyBg="bg-white"
                     imageSrc={res.image}
                     // top={res.tops}
                     title={res.titles}
@@ -145,7 +147,7 @@ const ResToolkit = (props: ResProps) => {
         </Grid>
 
         <div className="flex justify-center py-8">
-          <MHButton onClick={() => handleClickOpen()} sx={{ width: '113px' }}>
+          <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
             View All
           </MHButton>
         </div>

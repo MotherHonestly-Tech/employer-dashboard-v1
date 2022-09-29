@@ -38,7 +38,7 @@ const EventSort = (props: Props) => {
           className="uppercase p-4"
           sx={{
             fontWeight: 900,
-            fontSize: "10px",
+            fontSize: "12px",
             fontFamily: "Area-Extended",
           }}
         >
@@ -48,7 +48,7 @@ const EventSort = (props: Props) => {
         <Link to={"/"} className="cursor-pointer no-underline">
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
+            className="capitalize p-4 flex font-areaSemi text-[12px]"
           >
             Location
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
@@ -57,7 +57,7 @@ const EventSort = (props: Props) => {
         <Link to={"/"} className="cursor-pointer no-underline">
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
+            className="capitalize p-4 flex font-areaSemi text-[12px]"
           >
             Event Date
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
@@ -66,7 +66,7 @@ const EventSort = (props: Props) => {
         <Link to={"/"} className="cursor-pointer no-underline">
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px]"
+            className="capitalize p-4 flex font-areaSemi text-[12px]"
           >
             Rating
             <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />
@@ -78,24 +78,24 @@ const EventSort = (props: Props) => {
         >
           <Typography
             color="primary"
-            className="capitalize p-4 flex font-areaSemi text-[10px] "
+            className="capitalize p-3 flex font-areaSemi text-[12px] "
           >
             Digital Only
-            <CancelIcon className="mt-[2px] ml-1" height="10px" width="10px" />
+            <CancelIcon className="mt-1 ml-1" height="10px" width="10px" />
           </Typography>
         </Link>
 
-        <Box className="absolute right-2 flex">
+        <Box className="absolute right-3 flex">
           <Typography
             color="primary"
-            className="capitalize p-4 flex opacity-50  text-[10px] font-areaSemi"
+            className="capitalize p-4 flex opacity-50  text-[12px] font-areaSemi"
           >
             {resources.length} Results
           </Typography>
           <Link to={"/"} className="cursor-pointer no-underline">
             <Typography
               color="primary"
-              className="capitalize p-4 flex font-areaSemi text-[10px]"
+              className="capitalize p-4 flex font-areaSemi text-[12px]"
             >
               Sort by
               <SortIcon className="mt-[2px] ml-1" height="10px" width="10px" />

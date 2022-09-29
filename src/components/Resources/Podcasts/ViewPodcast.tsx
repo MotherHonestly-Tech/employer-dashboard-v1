@@ -77,6 +77,7 @@ const ViewPodcast = (props: ComponentProps) => {
         episodeClassName=" text-left pb-2 w-3/4 text-base font-areaSemi"
         episode={data.episode}
         season={data.season}
+        authorClassName="hidden"
       />
 
       <Box className="px-40 py-10 bg-white">

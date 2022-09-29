@@ -29,7 +29,7 @@ const ToolkitsPage = (props: ResProps) => {
 
   var resUrl = `${process.env.REACT_APP_RES_URL}`;
 
-  console.warn('resUrl', resUrl);
+  console.warn("resUrl", resUrl);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -60,19 +60,19 @@ const ToolkitsPage = (props: ResProps) => {
         boxClassName="place-content-center overscroll-x-hidden gap-2 flex pb-4"
         title="Toolkits & Guides"
         titleInfo="Download Our Helpful Toolkits"
-        titleInfoclassName="text-center my-2 w-full font-columbia text-2xl capitalize font-[500]"
+        titleInfoclassName="text-center my-2 font-columbia text-4xl capitalize font-[500]"
         pageInfo="  Achieve your personal and professional goals with personalized
-      solutions from our specialized experts in career, care, and s
+      solutions from our specialized experts in career, care, and
       wellbeing."
-        pageInfoClassName="font-semibold text-[12px] font-areaSemi"
+        pageInfoClassName="font-semibold w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661643245/image_lqxpea.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639768/image_bfore8.png"
       >
         {/* <ResToolkitIcon className="" height="24px" width="25px" /> */}
         <BgOverlay
           className="overflow-hidden absolute -top-6 right-0 "
-          height="350px"
-          width="350px"
+          height="400px"
+          width="400px"
         />
       </AllresHeader>
 

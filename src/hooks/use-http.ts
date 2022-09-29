@@ -29,8 +29,8 @@ const useHttp = () => {
           headers: {
             ...(requestConfig.headers || {
               'Content-Type': 'application/json'
-            })
-            // ...(token ? { Authorization: `Bearer ${token.accessToken}` } : {})
+            }),
+            ...(token ? { Authorization: `Bearer ${token.accessToken}` } : {})
           },
           ...(requestConfig.body && {
             body: requestConfig.body

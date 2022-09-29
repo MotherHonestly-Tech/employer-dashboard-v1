@@ -19,13 +19,13 @@ const VideoHeader = (props: HeaderProps) => {
         <Typography
           variant="body2"
           color="primary"
-          className="text-center  my-6 w-full font-columbia text-3xl capitalize font-[500]"
+          className="text-center  my-6 w-full font-columbia text-4xl capitalize font-[500]"
         >
           {props.title}
         </Typography>
         <Typography
           variant="body2"
-          className="text-center  w-full text-sm font-areaSemi"
+          className="text-center  w-full text-[16px] font-areaSemi"
           color="primary"
         >
           {props.description}
@@ -34,7 +34,7 @@ const VideoHeader = (props: HeaderProps) => {
         <Box className="py-12">
           <Typography
             variant="body2"
-            className="text-center mt-1 text-[10px] opacity-50 capitalize font-areaSemi"
+            className="text-center mt-1 text-[12px] opacity-50 capitalize font-areaSemi"
             color="primary"
           >
             {props.categoryTwo}
