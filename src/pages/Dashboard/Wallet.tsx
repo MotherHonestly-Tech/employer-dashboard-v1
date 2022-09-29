@@ -269,7 +269,7 @@ const Wallet = (props: { title: string }) => {
 
   React.useEffect(() => {
     fetchWallet(
-      getURLWithQueryParams(process.env.REACT_APP_PLAID_API_URL + 'v1/wallet', {
+      getURLWithQueryParams(process.env.REACT_APP_PLAID_API_URL + 'wallet', {
         customerId: String(userId!)
       }),
       {

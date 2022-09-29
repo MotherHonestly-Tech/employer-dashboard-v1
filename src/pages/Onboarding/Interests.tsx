@@ -31,10 +31,12 @@ const Interests = () => {
   const [interests, setInterests] = React.useState<Interest[]>([]);
 
   const { token, userId } = authCtx;
+
   const {
     loading: loadingInterests,
     sendHttpRequest: fetchInterests
   } = useHttp();
+  
   const {
     loading: savingInterests,
     sendHttpRequest: personalizeDashboard
@@ -52,7 +54,7 @@ const Interests = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token?.accessToken}`
+          // 'Authorization': `Bearer ${token?.accessToken}`
         }
       },
       (response: HttpResponse<Interest[]>) => {

@@ -24,7 +24,7 @@ function App() {
   // }, []);
 
   return (
-    <div className="mh-organization">
+    <div id="root" className="mh-organization">
       {/* @ts-ignore */}
       {/* <div><angular-component /></div> */}
       

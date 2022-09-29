@@ -19,8 +19,6 @@ const ResourcesNavigator = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
 
-  console.warn(path);
-
   return (
     <TransitionGroup>
       <CSSTransition
