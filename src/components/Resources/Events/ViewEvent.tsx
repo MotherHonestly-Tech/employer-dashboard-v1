@@ -77,12 +77,13 @@ const ViewEvent = (props: ComponentProps) => {
         categoryTwo={data.category}
         downloadClassName="hidden flex -ml-4 my-6"
         podClassName="mt-10 flex gap-32 hidden"
-        ticketClassName="py-6"
+        ticketClassName="py-12"
         ticketLink={data.ticketUrl}
         date={moment(data.date).format("MMMM Do ")}
-        dateTwo={moment(data.date).format("MMMM D YYYY")}
+        dateTwo={moment(data.date).format("MMMM D, YYYY")}
         dateClassName="text-left pb-2 w-3/4 text-base font-areaSemi"
         episodeClassName="hidden"
+        authorClassName="hidden"
       />
 
       <Box className="px-40 py-10 bg-white">

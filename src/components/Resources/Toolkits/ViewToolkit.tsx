@@ -3,7 +3,7 @@ import ViewHeader from "../SubComponents/ViewHeader";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import moment from "moment";
 
 type ComponentProps = {
@@ -74,11 +74,12 @@ const ViewToolkit = (props: ComponentProps) => {
         downloadLink={data.downloadUrl}
         downloadClassName="flex -ml-4 my-8"
         date={moment(data.date).format("DD/MM/YYYY HH:mm")}
-        dateTwo={moment(data.date).format("MMMM D YYYY")}
+        dateTwo={moment(data.date).format("MMMM D, YYYY")}
         ticketClassName="py-6 hidden"
         podClassName="mt-10 flex gap-32 hidden"
         dateClassName="hidden text-left pb-2 w-3/4 text-base font-areaSemi"
         episodeClassName="hidden"
+        authorClassName="hidden"
       />
 
       <Box className="px-40 py-10 bg-white">

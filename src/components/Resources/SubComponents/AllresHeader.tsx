@@ -1,8 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 
-import { Link } from "react-router-dom";
-
 type HeaderProps = {
   BgUrl: string;
   ResIconUrl: string;
@@ -21,15 +19,15 @@ const AllresHeader = (props: HeaderProps) => {
   return (
     <Fragment>
       <Box
-        className="relative h-80 w-full bg-lilac-200 overflow-hidden"
+        className="relative h-96 w-full bg-lilac-200 overflow-hidden"
         // sx={{ background: "red" }}
       >
         <img
           src={props.BgUrl}
           alt={props.title}
           style={{
-            width: "450px",
-            height: "330px",
+            width: "550px",
+            height: "384px",
           }}
         />
         <Box className="" sx={{}}>
@@ -39,7 +37,7 @@ const AllresHeader = (props: HeaderProps) => {
         <Box className="absolute top-24 inset-x-[50%] text-center place-content-center">
           <Typography
             variant="body2"
-            className="text-center w-96"
+            className="text-center w-[500px]"
             color="primary"
             sx={{
               fontWeight: 600,
@@ -51,7 +49,7 @@ const AllresHeader = (props: HeaderProps) => {
               <img
                 src={props.ResIconUrl}
                 alt=""
-                className="-mt-1"
+                className="mt-10"
                 style={{
                   width: "23px",
                   height: "26px",
@@ -60,7 +58,7 @@ const AllresHeader = (props: HeaderProps) => {
 
               <Typography
                 variant="body2"
-                className="text-center mt-1 font-bold font-areaExt text-[12px]  uppercase "
+                className="text-center mt-10 font-bold font-areaExt text-[16px]  uppercase "
                 color="primary"
               >
                 {props.title}
@@ -68,7 +66,7 @@ const AllresHeader = (props: HeaderProps) => {
             </Box>
             <Typography
               variant="body2"
-              className="text-left mt-1 font-semibold font-areaSemi text-[18px] "
+              className="text-left mt-1 font-semibold font-areaSemi text-[24px] "
               color="primary"
             >
               {props.titleExt}
