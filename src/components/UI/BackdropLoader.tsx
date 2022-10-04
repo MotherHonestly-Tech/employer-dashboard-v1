@@ -4,6 +4,19 @@ import ReactDOM from 'react-dom';
 import Backdrop from '@mui/material/Backdrop';
 import { ReactComponent as PrimaryIcon } from '../../static/svg/primary-icon.svg';
 
+export const PrimaryLoader = () => {
+  return (
+    <>
+      <div className="loading-icon-container">
+        <div className="loading-icon overshot"></div>
+      </div>
+      <div style={{ position: 'absolute' }}>
+        <PrimaryIcon />
+      </div>
+    </>
+  );
+};
+
 const BackdropLoader = () => {
   return (
     <React.Fragment>
@@ -16,13 +29,7 @@ const BackdropLoader = () => {
             zIndex: (theme) => theme.zIndex.drawer + 1
           }}
           open={true}>
-          <div className="loading-icon-container">
-            <div className="loading-icon overshot"></div>
-          </div>
-          <div
-            style={{ position: 'absolute' }}>
-            <PrimaryIcon />
-          </div>
+          <PrimaryLoader />
           {/* <CircularProgress
             color="primary"
             thickness={4.2}

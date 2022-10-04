@@ -136,7 +136,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
-  const pageLimit = 5;
+  const pageLimit = Math.ceil(count / rowsPerPage);
   const pages: Array<number> =
     count / rowsPerPage > 1
       ? Array.from(Array(Math.ceil(count / rowsPerPage)).keys())
@@ -146,6 +146,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     let start = Math.floor(page / pageLimit) * pageLimit;
     return new Array(pageLimit).fill(0).map((_, idx) => start + idx);
   };
+
+  // console.log(getPaginationGroup());
 
   return (
     <Stack
@@ -218,6 +220,8 @@ export default function MHDataTable({
   headerStyles?: object;
   bodyStyles?: object;
 }) {
+  // Front end pagination is active by default
+  // TO DO: Write logic for server side pagination
   const [page, setPage] = React.useState(0);
   const rowsPerPage = 10;
 

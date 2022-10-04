@@ -1,10 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import {
-  PlaidLinkOnSuccessMetadata,
-  PlaidLinkOptions,
-  usePlaidLink
-} from 'react-plaid-link';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -19,6 +13,7 @@ import MHFormControl from '../Form/MHFormControl';
 import MHButton from '../Button/MHButton';
 import UploadButton from '../Form/UploadButton';
 import Notification from '../UI/Notification';
+import PayoutAccount from './PayoutAccount';
 import useInput from '../../hooks/use-input';
 import useHttp from '../../hooks/use-http';
 
@@ -34,12 +29,11 @@ import {
 } from '../../utils/utils';
 import * as validators from '../../utils/validators';
 import { HttpResponse } from '../../models/api.interface';
+import { CareWallet, Category, Merchant } from '../../models/wallet.model';
+import NotificationContext from '../../store/context/notifications.context';
 import AuthContext from '../../store/context/auth-context';
 import DashboardContext from '../../store/context/dashboard.context';
-import { Category, Merchant } from '../../models/wallet.model';
-import NotificationContext from '../../store/context/notifications.context';
 import PlaidLinkContext from '../../services/plaid-link';
-import { LinkSuccessMetadata } from '../../models/plaid.model';
 
 const UploadWrapper = styled('div')<{
   isdragactive: string;
@@ -120,16 +114,19 @@ const UploadThumb = ({ file }: { file: File | null }) =>
 
 const UploadReceipt = ({
   open,
-  onClose
+  onClose,
+  wallet,
 }: {
   open: boolean;
   onClose: () => void;
+  wallet: CareWallet | null;
 }) => {
   const dashboardCtx = React.useContext(DashboardContext);
   const { staticDataCacheMap } = dashboardCtx;
 
   const authCtx = React.useContext(AuthContext);
   const { userId } = authCtx;
+
   const notificationCtx = React.useContext(NotificationContext);
   const { pushNotification } = notificationCtx;
 
@@ -244,14 +241,8 @@ const UploadReceipt = ({
     }
   ]);
 
-  const history = useHistory();
   const linkCtx = React.useContext(PlaidLinkContext);
-  const {
-    linkToken,
-    isOauth,
-    generateLinkToken,
-    exchangePublicToken
-  } = linkCtx;
+  const { isOauth } = linkCtx;
 
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
   const [isDragActive, setIsDragActive] = React.useState('');
@@ -395,60 +386,19 @@ const UploadReceipt = ({
         body: formData
       },
       (response: HttpResponse<unknown>) => {
+        pushNotification({
+          type: 'success',
+          message: 'Expense created successfully'
+        });
         setIsUploaded(true);
       }
     );
   }
 
-  const onSuccess = React.useCallback(
-    (public_token: string, metadata: PlaidLinkOnSuccessMetadata) => {
-      console.log(public_token, metadata);
-      setCompleted(true);
-      history.replace('/organization/wallet');
-      exchangePublicToken(
-        public_token,
-        (metadata as unknown) as LinkSuccessMetadata,
-        userId as number
-      );
-      // window.history.pushState('', '', '/');
-    },
-    [history, exchangePublicToken, userId]
-  );
-
-  const onExit = React.useCallback(() => {
-    onClose();
-  }, [onClose]);
-
-  const config: PlaidLinkOptions = {
-    token: linkToken,
-    onSuccess,
-    onExit,
-    ...(isOauth && {
-      receivedRedirectUri: window.location.href
-    })
-  };
-
-  const { open: openLink, ready } = usePlaidLink(config);
-
-  React.useEffect(() => {
-    generateLinkToken();
-  }, [generateLinkToken]);
-
-  React.useEffect(() => {
-    if (ready && isUploaded) {
-      openLink();
-    }
-  }, [isUploaded, ready, openLink]);
-
-  React.useEffect(() => {
-    if (isOauth && ready) {
-      openLink();
-    }
-  }, [isOauth, ready, openLink]);
-
   return (
     <React.Fragment>
       {error && <Notification type="error" message={error.message} />}
+
       <MHDialog
         open={open}
         title={!completed && !isUploaded ? 'Upload your receipt' : ''}
@@ -473,9 +423,6 @@ const UploadReceipt = ({
         }
         maxWidth={completed ? 'xs' : 'sm'}
         fullWidth>
-        {/* <Typography variant="h3" align="center" color="#28404A" gutterBottom>
-      Upload Your Receipt
-    </Typography> */}
         {!completed ? (
           !isUploaded ? (
             <Box
@@ -592,40 +539,11 @@ const UploadReceipt = ({
               />
             </Box>
           ) : (
-            <Box
-              sx={{
-                px: 2,
-                '& svg': {
-                  display: 'block'
-                }
-              }}>
-              <Typography
-                variant="h2"
-                align="center"
-                color="primary.main"
-                gutterBottom
-                paragraph>
-                Add your Payout Account
-              </Typography>
-              <Typography
-                variant="body1"
-                align="center"
-                color="primary.main"
-                paragraph
-                gutterBottom>
-                In order to proceed with your application for reimbursement, we
-                will need to verify your Payout account.
-              </Typography>
-              <Typography
-                variant="body1"
-                align="center"
-                color="primary.main"
-                paragraph
-                gutterBottom>
-                You will be redirected to Plaid to add your Payout account
-                shortly.
-              </Typography>
-            </Box>
+            <PayoutAccount
+              connectedAccount={wallet?.connectedAccount}
+              handleClose={onClose}
+              setCompleted={setCompleted}
+            />
           )
         ) : (
           <Box
@@ -653,8 +571,8 @@ const UploadReceipt = ({
               color="primary.main"
               paragraph
               gutterBottom>
-              Your receipt will be reviewed by MH Team and your account will be
-              credited.
+              Your expense will be reviewed by MH Team and your connected
+              account will be credited upon approval.
             </Typography>
           </Box>
         )}
@@ -664,3 +582,9 @@ const UploadReceipt = ({
 };
 
 export default UploadReceipt;
+
+{
+  /* <Typography variant="h3" align="center" color="#28404A" gutterBottom>
+      Upload Your Receipt
+    </Typography> */
+}

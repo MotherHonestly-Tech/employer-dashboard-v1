@@ -39,7 +39,7 @@ export const DashboardContextProvider = ({
   >(new Map());
 
   const authCtx = React.useContext(AuthContext);
-  const { loading, error, sendHttpRequest: fetchCategories } = useHttp();
+  const { sendHttpRequest: fetchCategories } = useHttp();
   const { sendHttpRequest: fetchMerchants } = useHttp();
 
   const reqOptions = {
@@ -69,35 +69,35 @@ export const DashboardContextProvider = ({
   }, []);
 
   const setCategoryData = (categories: Category[]) => {
-    // setDataCacheMap((prevState) => {
-    //   const newState = new Map(prevState);
-    //   const mappedCategories: (Category &
-    //     SelectOption<string>)[] = categories.map((category) => ({
-    //     ...category,
-    //     value: category.id + '',
-    //     label: category.categoryName
-    //   }));
-    //   newState.set('categories', mappedCategories);
-    //   return newState;
-    // });
+    setDataCacheMap((prevState) => {
+      const newState = new Map(prevState);
+      const mappedCategories: (Category &
+        SelectOption<string>)[] = categories.map((category) => ({
+        ...category,
+        value: category.id + '',
+        label: category.categoryName
+      }));
+      newState.set('categories', mappedCategories);
+      return newState;
+    });
   };
 
   const setMerchantData = (merchants: Merchant[]) => {
-    // setDataCacheMap((prevState) => {
-    //   const newState = new Map(prevState);
-    //   const mappedMerchants: (Merchant & SelectOption<string>)[] = merchants
-    //     .concat({
-    //       id: -1,
-    //       merchantName: 'Other'
-    //     } as Merchant)
-    //     .map((merchant) => ({
-    //       ...merchant,
-    //       value: merchant.id + '',
-    //       label: merchant.merchantName
-    //     }));
-    //   newState.set('merchants', mappedMerchants);
-    //   return newState;
-    // });
+    setDataCacheMap((prevState) => {
+      const newState = new Map(prevState);
+      const mappedMerchants: (Merchant & SelectOption<string>)[] = merchants
+        .concat({
+          id: -1,
+          merchantName: 'Other'
+        } as Merchant)
+        .map((merchant) => ({
+          ...merchant,
+          value: merchant.id + '',
+          label: merchant.merchantName
+        }));
+      newState.set('merchants', mappedMerchants);
+      return newState;
+    });
   };
 
   const computeCategoryExpenses = React.useCallback(

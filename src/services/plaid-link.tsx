@@ -4,17 +4,26 @@ import { useLocation } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import { HttpResponse } from '../models/api.interface';
 import { LinkSuccessMetadata } from '../models/plaid.model';
+import { ModalID } from '../pages/Dashboard/Wallet';
+  
+type TokenExchange = {
+  exchangePublicToken: (
+    publicToken: string,
+    metadata: LinkSuccessMetadata,
+    employerRefId: number,
+    onResponse: (response: HttpResponse<unknown>) => void
+  ) => void;
+  loading: boolean;
+  error: { message: string } | null;
+};
 
 export type PlaidLinkContextShape = {
   isOauth: boolean;
   linkToken: string | null;
   generateLinkToken: () => void;
-  exchangePublicToken: (
-    publicToken: string,
-    metadata: LinkSuccessMetadata,
-    userId: number
-  ) => void;
+  exchangeToken: TokenExchange;
   removeLinkToken: () => void;
+  setModalAction: (modalAction: ModalID) => void;
   //   publicKey: string;
   //   env: 'sandbox' | 'development' | 'production';
   //   product: 'auth' | 'transactions';
@@ -27,12 +36,18 @@ const PlaidLinkContext = React.createContext<PlaidLinkContextShape>({
   isOauth: false,
   linkToken: null,
   generateLinkToken: () => {},
-  exchangePublicToken: (
-    publicToken: string,
-    metadata: LinkSuccessMetadata,
-    userId: number
-  ) => {},
-  removeLinkToken: () => {}
+  exchangeToken: {
+    loading: false,
+    error: null,
+    exchangePublicToken: (
+      publicToken: string,
+      metadata: LinkSuccessMetadata,
+      employerRefId: number,
+      onResponse: (response: HttpResponse<unknown>) => void
+    ) => {}
+  },
+  removeLinkToken: () => {},
+  setModalAction: (modalAction: ModalID) => {}
   //   publicKey: '',
   //   env: 'sandbox',
   //   product: 'auth',
@@ -55,13 +70,24 @@ export const PlaidLinkContextProvider = ({
   const [linkToken, setLinkToken] = React.useState<string | null>(null);
   const isOauth = React.useRef<boolean>(!!queryParams.get('oauth_state_id'));
 
-  const { loading, error, sendHttpRequest } = useHttp();
+  const {
+    loading: generatingLinkToken,
+    error: errorGeneratingLinkToken,
+    sendHttpRequest: requestLinkToken
+  } = useHttp();
+
+  const {
+    loading: exchangingPublicToken,
+    error: errorExchangingPubToken,
+    sendHttpRequest: exchangeTokens
+  } = useHttp();
+
 
   const generateLinkToken = React.useCallback(() => {
     if (isOauth.current) {
       setLinkToken(localStorage.getItem('link_token'));
     } else {
-      sendHttpRequest(
+      requestLinkToken(
         process.env.REACT_APP_PLAID_API_URL + 'plaid/link/token',
         {
           method: 'GET'
@@ -73,7 +99,7 @@ export const PlaidLinkContextProvider = ({
         }
       );
     }
-  }, [sendHttpRequest, isOauth]);
+  }, [requestLinkToken, isOauth]);
 
   const removeLinkToken = React.useCallback(() => {
     localStorage.removeItem('link_token');
@@ -82,7 +108,7 @@ export const PlaidLinkContextProvider = ({
   const exchangePublicToken = React.useCallback(
     (publicToken: string, metadata: LinkSuccessMetadata, userId: number) => {
       removeLinkToken();
-      sendHttpRequest(
+      exchangeTokens(
         process.env.REACT_APP_PLAID_API_URL + 'plaid/access/token',
         {
           method: 'POST',
@@ -91,7 +117,9 @@ export const PlaidLinkContextProvider = ({
             accountId: metadata.account_id,
             mask: metadata.account.mask,
             officialName: metadata.account.name,
-            customerId: userId
+            customerId: userId,
+            bankName: metadata.institution.name,
+            type: 'Employee'
           })
         },
         (response: HttpResponse<string>) => {
@@ -99,15 +127,24 @@ export const PlaidLinkContextProvider = ({
         }
       );
     },
-    [sendHttpRequest, removeLinkToken]
+    [exchangeTokens, removeLinkToken]
   );
+
+  const setModalAction = React.useCallback((modalAction: ModalID) => {
+    localStorage.setItem('modal_action', modalAction);
+  }, []);
 
   const contextValue = {
     isOauth: isOauth.current,
     linkToken,
     generateLinkToken,
-    exchangePublicToken,
-    removeLinkToken
+    exchangeToken: {
+      exchangePublicToken,
+      loading: exchangingPublicToken,
+      error: errorExchangingPubToken
+    },
+    removeLinkToken,
+    setModalAction
   };
 
   return (

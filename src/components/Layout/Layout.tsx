@@ -18,6 +18,19 @@ const Layout: FnComponent = (props) => {
     strict: false
   });
 
+  const merchantsPathMatch = matchPath(window.location.pathname, {
+    path: '/organization/merchants',
+    exact: false,
+    strict: false
+  });
+
+  const renderSecSidebar = function (): boolean {
+    if (resourcePathMatch || merchantsPathMatch) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <Box>
       <AppBar />
@@ -35,7 +48,7 @@ const Layout: FnComponent = (props) => {
           {props.children}
         </Box>
 
-        {/* {!resourcePathMatch && <SecondarySidebar />} */}
+        {renderSecSidebar() && <SecondarySidebar />}
       </Stack>
     </Box>
   );

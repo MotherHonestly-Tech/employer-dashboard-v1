@@ -43,6 +43,7 @@ import * as walletReducer from '../../store/reducers/wallet';
 import PlaidLinkContext from '../../services/plaid-link';
 import AuthContext from '../../store/context/auth-context';
 import ExpenseModal from '../../components/Wallet/ExpenseModal';
+import DashboardContext from '../../store/context/dashboard.context';
 
 type WalletReducer = (
   state: {
@@ -58,7 +59,7 @@ type WalletReducer = (
   }
 ) => any;
 
-type ModalID =
+export type ModalID =
   | 'uploadReceiptOpen'
   | 'linkAccountOpen'
   | 'transactionsOpen'
@@ -136,11 +137,16 @@ const Wallet = (props: { title: string }) => {
   const plaidLinkCtx = React.useContext(PlaidLinkContext);
   const { isOauth } = plaidLinkCtx;
 
+  const dashboardCtx = React.useContext(DashboardContext);
+  const { computeCategoryExpenses } = dashboardCtx;
+
   React.useEffect(() => {
     isOauth &&
       dispatch({
         type: walletReducer.OPEN_MODAL,
-        id: 'uploadReceiptOpen',
+        id:
+          (localStorage.getItem('modal_action') as ModalID) ||
+          'uploadReceiptOpen',
         open: true
       });
   }, []);
@@ -268,6 +274,22 @@ const Wallet = (props: { title: string }) => {
   } = useHttp();
 
   React.useEffect(() => {
+    getCareWallet();
+    getExpenseTransactions();
+  }, []);
+
+  const getExpenseTransactions = () => {
+    getExpenses(
+      process.env.REACT_APP_API_BASE_URL +
+        'employee/dashboard/reembursement/search',
+      {},
+      (response: HttpResponse<Expense[]>) => {
+        setExpenses(response.data);
+      }
+    );
+  };
+
+  const getCareWallet = () => {
     fetchWallet(
       getURLWithQueryParams(process.env.REACT_APP_PLAID_API_URL + 'wallet', {
         customerId: String(userId!)
@@ -278,20 +300,15 @@ const Wallet = (props: { title: string }) => {
           'Content-Type': 'application/json'
         }
       },
-      (response: HttpResponse<CareWallet>) => {
-        setWallet(response.data);
+      ({ data }: HttpResponse<CareWallet>) => {
+        setWallet(data);
+        computeCategoryExpenses(
+          data.expensePerCategory,
+          data.numOfApprovedReembursement
+        );
       }
     );
-
-    getExpenses(
-      process.env.REACT_APP_API_BASE_URL +
-        'employee/dashboard/reembursement/search',
-      {},
-      (response: HttpResponse<Expense[]>) => {
-        setExpenses(response.data);
-      }
-    );
-  }, []);
+  };
 
   if (loadingExpenses || loadingWallet) {
     return (
@@ -463,7 +480,7 @@ const Wallet = (props: { title: string }) => {
                   onClick={() => handleClickOpen('uploadReceiptOpen')}>
                   Upload receipt
                 </StyledActionButton>
-                {wallet && !wallet.connectedAccount ? (
+                {wallet && !wallet.connectedAccount.mask ? (
                   <StyledActionButton
                     onClick={() => handleClickOpen('linkAccountOpen')}>
                     Link an account
@@ -478,7 +495,7 @@ const Wallet = (props: { title: string }) => {
                     color="secondary"
                     startIcon={<ReimburseIcon />}
                     onClick={() => handleClickOpen('transactionsOpen')}>
-                   {wallet.totalFlaggedTrnx} eligible transactions
+                    {wallet.totalFlaggedTrnx} eligible transactions
                   </StyledActionButton>
 
                   <span className="absolute flex h-3 w-3 -top-1 -right-1">
@@ -519,6 +536,7 @@ const Wallet = (props: { title: string }) => {
         <UploadReceipt
           open={walletState.uploadReceiptOpen}
           onClose={() => handleClose('uploadReceiptOpen')}
+          wallet={wallet}
         />
       )}
 

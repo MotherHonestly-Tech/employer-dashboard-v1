@@ -60,11 +60,11 @@ export const CategoryList = () => {
               <Stack color={category.colorCode} spacing={0.8}>
                 <BorderLinearProgress
                   variant="determinate"
-                  value={category.expensePercent}
+                  value={category.expensePercent ? category.expensePercent : 0}
                   barcolor={category.colorCode}
                 />
                 <Typography variant="body2" fontSize={'.6rem'} color="#989898">
-                  {category.expensePercent}%
+                  {category.expensePercent ? category.expensePercent : 0}%
                 </Typography>
               </Stack>
             </ListItemText>

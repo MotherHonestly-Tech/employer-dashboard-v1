@@ -5,7 +5,6 @@ import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
@@ -59,22 +58,6 @@ const SideDrawer = styled(MuiDrawer, {
       borderRadius: '15px'
     }
   }
-}));
-
-const ListStyled = styled(
-  List,
-  {}
-)<{
-  component?: React.ElementType;
-}>(({ theme }) => ({}));
-
-const ListItemStyled = styled(ListItem)<{
-  component?: React.ElementType;
-  to: string;
-}>(({ theme }) => ({
-  position: 'relative',
-  cursor: 'pointer',
-  height: 52
 }));
 
 const SecondarySidebar: FnComponent = () => {
