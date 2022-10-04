@@ -87,44 +87,84 @@ const Merchants = () => {
         </Stack>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid container rowSpacing={4} columnSpacing={2}>
         <Grid item xs={3}>
           <Merchant
             bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
-            alt="Splendid Spoon"
-            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696756/SplendidSpoon_Guidelines_042121_1_rvqdgo.svg"
-            name="Splendid Spoon"
-            description="Splendid spoon that help people get and stay healthy with plant-based habits."
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
             discount="10% off"
           />
         </Grid>
         <Grid item xs={3}>
           <Merchant
             bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
-            alt="Splendid Spoon"
-            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696756/SplendidSpoon_Guidelines_042121_1_rvqdgo.svg"
-            name="Splendid Spoon"
-            description="Splendid spoon that help people get and stay healthy with plant-based habits."
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
             discount="10% off"
           />
         </Grid>
         <Grid item xs={3}>
           <Merchant
             bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
-            alt="Splendid Spoon"
-            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696756/SplendidSpoon_Guidelines_042121_1_rvqdgo.svg"
-            name="Splendid Spoon"
-            description="Splendid spoon that help people get and stay healthy with plant-based habits."
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
             discount="10% off"
           />
         </Grid>
         <Grid item xs={3}>
           <Merchant
             bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
-            alt="Splendid Spoon"
-            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696756/SplendidSpoon_Guidelines_042121_1_rvqdgo.svg"
-            name="Splendid Spoon"
-            description="Splendid spoon that help people get and stay healthy with plant-based habits."
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
+            discount="10% off"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Merchant
+            bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
+            discount="10% off"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Merchant
+            bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
+            discount="10% off"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Merchant
+            bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
+            discount="10% off"
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Merchant
+            bannerSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696474/hopskipdrive_1_uizjnf.png"
+            alt="Papa"
+            iconSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg"
+            name="Papa"
+            description="Papa gives older adults companionship and support to live and feel better at home."
             discount="10% off"
           />
         </Grid>

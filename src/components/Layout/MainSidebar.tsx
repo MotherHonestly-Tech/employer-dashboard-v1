@@ -14,6 +14,7 @@ import { ReactComponent as WalletIcon } from '../../static/svg/wallet.svg';
 import { ReactComponent as MerchantIcon } from '../../static/svg/merchant.svg';
 import { ReactComponent as ResourcesIcon } from '../../static/svg/resources.svg';
 import { ReactComponent as CoachingIcon } from '../../static/svg/coaching.svg';
+import { ReactComponent as ConnectIcon } from '../../static/svg/connect.svg';
 import { DRAWER_WIDTH } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
@@ -105,6 +106,9 @@ const Indicator = styled('div')(({ theme }) => ({
   },
   '.MuiListItem-root.active:nth-of-type(6) ~ &': {
     transform: `translateY(${52 * 5}px)`
+  },
+  '.MuiListItem-root.active:nth-of-type(7) ~ &': {
+    transform: `translateY(${52 * 6}px)`
   }
 }));
 
@@ -204,8 +208,13 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
         />
         <RouterLink
           icon={<CoachingIcon />}
-          primary="Coaching"
+          primary="1:1 Coaching"
           to="/organization/coaching"
+        />
+        <RouterLink
+          icon={<ConnectIcon />}
+          primary="1:1 Connect"
+          to="/organization/connect"
         />
         {/* <RouterLink icon={<WalletIcon />} primary="Wallet" to="/wallet" /> */}
         <Indicator />

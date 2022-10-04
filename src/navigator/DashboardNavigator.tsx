@@ -15,6 +15,7 @@ import Coaching from '../pages/Dashboard/Coaching';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Merchants from '../pages/Dashboard/Merchants';
 import Wallet from '../pages/Dashboard/Wallet';
+import Connect from '../pages/Dashboard/Connect';
 import ResourcesNavigator from './ResourcesNavigator';
 
 import { DashboardContextProvider } from '../store/context/dashboard.context';
@@ -82,7 +83,14 @@ const DashboardNavigator = () => {
                 <ResourcesNavigator />
               </Route>
               <Route path={`${path}/coaching`} exact>
-                <Coaching />
+                <Wrapper>
+                  <Coaching />
+                </Wrapper>
+              </Route>
+              <Route path={`${path}/connect`} exact>
+                <Wrapper>
+                  <Connect />
+                </Wrapper>
               </Route>
               <Route path={`${path}/book-motherboard/:slug/:uuid`} exact>
                 <Motherboard />

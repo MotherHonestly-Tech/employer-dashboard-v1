@@ -40,7 +40,8 @@ const Layout: FnComponent = (props) => {
 
         <Box
           sx={{
-            backgroundColor: (theme) => '#fefefe',
+            // backgroundColor: (theme) => '#fefefe',
+            backgroundColor: (theme) => '#ffffff',
             flexGrow: 1,
             overflow: 'auto'
           }}>

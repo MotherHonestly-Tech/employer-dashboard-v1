@@ -47,8 +47,8 @@ export const NotificationContextProvider = ({
     ]);
 
     const interval = setInterval(() => {
-      setNotifications(
-        notifications.filter((n) => n.message !== notification.message)
+      setNotifications((prevNotifications) =>
+        prevNotifications.filter((n) => n.message !== notification.message)
       );
       clearInterval(interval);
     }, notification.duration || DEFAULT_NOTIFICATION_DURATION);
