@@ -2,17 +2,18 @@ import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import VideoHeader from "./VideoHeader";
+import AuthContext from "../../../store/context/auth-context";
 
 type ComponentProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -24,15 +25,22 @@ const ViewVideo = (props: ComponentProps) => {
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_VIDEO_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -40,16 +48,22 @@ const ViewVideo = (props: ComponentProps) => {
   };
 
   const [data, setData] = useState<any>("");
+  const params = useParams<any>();
+  // console.log(params.id!);
 
-  var viewUrl = `https://mocki.io/v1/cbbfc96e-eec5-4867-8f69-6186cf2a7973`;
+  var viewUrl = `${process.env.REACT_APP_RES_VIDEO_VIEW_URL}${params.id}`;
 
   const getData = async () => {
     try {
       const response = await fetch(viewUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setData(jsonData);
+      setData(jsonData.data);
     } catch (err) {
       console.error("Cannot find Data");
     }
@@ -59,13 +73,18 @@ const ViewVideo = (props: ComponentProps) => {
     getResource();
     getData();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <VideoHeader
         title={data.title}
-        description={data.titleDetails}
-        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639776/image_2_lqcgpe.png"
-        categoryTwo={data.category}
+        description={data.description}
+        imageUrl={data.s3bucketKeyThumbNail}
+        categoryTwo={data.interests}
         downloadClassName="hidden flex -ml-4 my-6"
       />
 
@@ -78,7 +97,7 @@ const ViewVideo = (props: ComponentProps) => {
 
         <Box>
           <iframe
-            src={data.videoUrl}
+            src={data.source}
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
@@ -86,14 +105,6 @@ const ViewVideo = (props: ComponentProps) => {
             title="MH Mother: The Summit 2019"
           ></iframe>
         </Box>
-
-        <Typography
-          variant="h3"
-          color="primary"
-          className="text-xl pt-6 font-areaSemi"
-        >
-          Key Takeaway:
-        </Typography>
 
         <Box className="mt-8">
           <Box className="flex mb-4">
@@ -105,7 +116,7 @@ const ViewVideo = (props: ComponentProps) => {
               color="primary"
               className="text-base px-24 uppercase font-areaNorm"
             >
-              {data.keypoint}
+              {/* {data.keypoint} */}
             </Typography>
           </Box>
           <Typography
@@ -113,7 +124,7 @@ const ViewVideo = (props: ComponentProps) => {
             color="primary"
             className="text-[13px] px-24 my-4 leading-[200%] font-areaSemi"
           >
-            {data.keynote}
+            {/* {data.keynote} */}
           </Typography>
         </Box>
       </Box>
@@ -134,12 +145,12 @@ const ViewVideo = (props: ComponentProps) => {
                 iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
-                imageSrc={res.image}
-                top={res.tops}
-                title={res.titles}
-                category={res.categ}
-                titleUrl={`${location.pathname}/${res.slugs}`}
-                playUrl={`${location.pathname}/${res.slugs}`}
+                imageSrc={res.s3bucketKeyThumbNail}
+                top={res.interests}
+                title={res.title}
+                category={res.interests}
+                titleUrl={`/organization/resources/videos/${res.slug}/${res.id}`}
+                playUrl={`/organization/resources/videos/${res.slug}/${res.id}`}
               />
             </Grid>
           ))}

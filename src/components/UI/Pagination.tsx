@@ -76,7 +76,7 @@ const Pagination = (props: PaginationProps) => {
                   onClick={props.onClicks}
                   className={
                     page === props.currentPage
-                      ? "my-5 bg-white px-4 text-[12px] font-areaNorm "
+                      ? "my-5 bg-white px-4 text-[12px] font-areaExt "
                       : "my-5 bg-white px-4 text-[12px] "
                   }
                 >

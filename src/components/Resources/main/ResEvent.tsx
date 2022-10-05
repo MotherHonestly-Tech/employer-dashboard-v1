@@ -12,15 +12,17 @@ import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
 import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
 
 import moment from "moment";
+import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  eventDate?: number;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -50,7 +52,10 @@ const ResEvent = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   const [noOfElement, setnoOfElement] = useState(4);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_EVENT_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const settings = {
     centerMode: true,
@@ -80,9 +85,13 @@ const ResEvent = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -94,6 +103,10 @@ const ResEvent = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
 
   return (
     <Fragment>
@@ -137,12 +150,13 @@ const ResEvent = (props: ResProps) => {
                       iconClass="hidden"
                       imgBg="bg-cream-200 "
                       bodyBg="bg-cream-100"
-                      imageSrc={res.image}
                       top={moment(res.createdAt!).format("MMMM Do ")}
-                      title={res.titles}
-                      category={res.categ}
-                      titleUrl={`${location.pathname}/events/${res.slugs}`}
-                      playUrl={`${location.pathname}/events/${res.slugs}`}
+                      imageSrc={res.s3bucketKeyThumbNail}
+                      // top={res.interests}
+                      title={res.title}
+                      category={res.interests}
+                      titleUrl={`${location.pathname}/events/${res.slug}/${res.id}`}
+                      playUrl={`${location.pathname}/events/${res.slug}/${res.id}`}
                     />
                   </Grid>
                 ))}

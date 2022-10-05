@@ -10,15 +10,16 @@ import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
 import ResCard from "../Resources/SubComponents/ResCard";
 import MHButton from "../Button/MHButton";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import AuthContext from "../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -48,7 +49,11 @@ const DashVideo = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   const [noOfElement, setnoOfElement] = useState(3);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
+
+  var resUrl = `${process.env.REACT_APP_RES_VIDEO_URL}${userId}`;
+
   let history = useHistory();
 
   const { path } = useRouteMatch();
@@ -77,9 +82,13 @@ const DashVideo = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -91,6 +100,11 @@ const DashVideo = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <Box className="bg-inherit py-12 ">
@@ -132,13 +146,13 @@ const DashVideo = (props: ResProps) => {
                       cardClass="relative w-[260px] h-[390px] shadow-sm object-cover bg-cream-100 rounded-md"
                       iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
                       imgBg="bg-cream-200 "
-                      bodyBg="bg-white"
-                      imageSrc={res.image}
-                      top={res.tops}
-                      title={res.titles}
-                      category={res.categ}
-                      titleUrl={`resources/videos/${res.slugs}`}
-                      playUrl={`resources/videos/${res.slugs}`}
+                      bodyBg="bg-cream-100"
+                      imageSrc={res.s3bucketKeyThumbNail}
+                      top={res.interests}
+                      title={res.title}
+                      category={res.interests}
+                      titleUrl={`resources/videos/${res.slug}/${res.id}`}
+                      playUrl={`resources/videos/${res.slug}/${res.id}`}
                     />
                   </Grid>
                 ))}

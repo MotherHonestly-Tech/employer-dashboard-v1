@@ -9,15 +9,16 @@ import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { ReactComponent as ResToolkitIcon } from "../../../static/svg/resdot.svg";
 import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
 import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -47,7 +48,10 @@ const ResToolkit = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   const [noOfElement, setnoOfElement] = useState(3);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
+
+  var resUrl = `${process.env.REACT_APP_RES_TOOLKIT_URL}${userId}`;
 
   const settings = {
     centerMode: true,
@@ -77,9 +81,13 @@ const ResToolkit = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       // console.log(resources);
     } catch (err) {
       // console.error("Cannot find Data");
@@ -91,6 +99,10 @@ const ResToolkit = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
 
   return (
     <Box bgcolor="#F6F8F5" paddingTop={5}>
@@ -132,13 +144,12 @@ const ResToolkit = (props: ResProps) => {
                     iconClass="hidden"
                     imgBg="bg-cream-200 "
                     bodyBg="bg-white"
-                    imageSrc={res.image}
-                    // top={res.tops}
-                    title={res.titles}
-                    // text={res.texts}
-                    category={res.categ}
-                    titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
-                    playUrl={`${location.pathname}/toolkits/${res.slugs}`}
+                    imageSrc={res.s3bucketKeyThumbNail}
+                    top={res.interests}
+                    title={res.title}
+                    category={res.interests}
+                    titleUrl={`${location.pathname}/toolkits/${res.slug}/${res.id}`}
+                    playUrl={`${location.pathname}/toolkits/${res.slug}/${res.id}`}
                   />
                 </Grid>
               ))}
@@ -146,11 +157,11 @@ const ResToolkit = (props: ResProps) => {
           </Box>
         </Grid>
 
-        <div className="flex justify-center py-8">
+        <Box className="flex justify-center py-8">
           <MHButton onClick={() => handleClickOpen()} sx={{ width: "113px" }}>
             View All
           </MHButton>
-        </div>
+        </Box>
       </Box>
     </Box>
   );

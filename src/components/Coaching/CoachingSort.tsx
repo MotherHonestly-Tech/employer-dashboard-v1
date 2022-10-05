@@ -12,7 +12,7 @@ type Props = {};
 const CoachingSort = (props: Props) => {
   const [resources, setResources] = useState([]);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_COACH_URL}`;
 
   // console.log(location.pathname);
 

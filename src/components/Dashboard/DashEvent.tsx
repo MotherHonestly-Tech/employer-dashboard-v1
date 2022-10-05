@@ -12,6 +12,7 @@ import { ReactComponent as LeftBtn } from "../../static/svg/left-btn.svg";
 import { ReactComponent as RightBtn } from "../../static/svg/right-btn.svg";
 
 import moment from "moment";
+import AuthContext from "../../store/context/auth-context";
 
 type ResProps = {
   image?: string;
@@ -50,7 +51,10 @@ const DashEvent = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   const [noOfElement, setnoOfElement] = useState(3);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_EVENT_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   let history = useHistory();
 
@@ -78,9 +82,13 @@ const DashEvent = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -92,6 +100,10 @@ const DashEvent = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
 
   return (
     <Fragment>
@@ -134,7 +146,7 @@ const DashEvent = (props: ResProps) => {
                       cardClass="relative w-[260px] h-[390px]  shadow-sm object-cover bg-cream-100 rounded-md"
                       iconClass="hidden"
                       imgBg="bg-cream-200 "
-                      bodyBg="bg-white"
+                      bodyBg="bg-cream-100"
                       imageSrc={res.image}
                       top={moment(res.createdAt!).format("MMMM Do ")}
                       title={res.titles}

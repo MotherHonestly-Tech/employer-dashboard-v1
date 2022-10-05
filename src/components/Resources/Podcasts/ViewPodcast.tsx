@@ -3,17 +3,18 @@ import ViewHeader from "../SubComponents/ViewHeader";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import PodcastPlayer from "./PodcastPlayer";
+import AuthContext from "../../../store/context/auth-context";
 
 type ComponentProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -25,15 +26,22 @@ const ViewPodcast = (props: ComponentProps) => {
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_PODCAST_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -42,15 +50,22 @@ const ViewPodcast = (props: ComponentProps) => {
 
   const [data, setData] = useState<any>("");
 
-  var viewUrl = `https://mocki.io/v1/eae5c0ae-f56b-440a-8384-3b596d9e51c4`;
+  const params = useParams<any>();
+  console.log(params.id!);
+
+  var viewUrl = `${process.env.REACT_APP_RES_PODCAST_VIEW_URL}${params.id}`;
 
   const getData = async () => {
     try {
       const response = await fetch(viewUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setData(jsonData);
+      setData(jsonData.data);
     } catch (err) {
       console.error("Cannot find Data");
     }
@@ -60,14 +75,19 @@ const ViewPodcast = (props: ComponentProps) => {
     getResource();
     getData();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ViewHeader
         titles={data.title}
-        description={data.titleDetails}
-        imageUrl={data.bgImageUrl}
+        description={data.description}
+        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
         categoryOne="Career"
-        categoryTwo={data.category}
+        categoryTwo={data.interests}
         downloadLink="https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkLnBvZGJlYW4uY29tL21vdGhlcmhvbmVzdGx5L2ZlZWQueG1s"
         downloadClassName="flex -ml-4 my-8 hidden"
         date={data.date}
@@ -92,17 +112,9 @@ const ViewPodcast = (props: ComponentProps) => {
 
           <PodcastPlayer
             // appleUrl="https://embed.podcasts.apple.com/us/podcast/finding-flexibility-and-confidence-as-a-working/id1439395271?i=1000567545032"
-            spotifyUrl={data.podUrl}
+            spotifyUrl={data.source}
           />
         </Box>
-
-        <Typography
-          variant="h3"
-          color="primary"
-          className="text-xl mt-12 font-areaSemi"
-        >
-          Key Takeaway:
-        </Typography>
 
         <Box className="mt-8">
           <Box className="flex mb-4">
@@ -143,13 +155,12 @@ const ViewPodcast = (props: ComponentProps) => {
                 iconClass="hidden"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
-                imageSrc={res.image}
-                top={res.tops}
-                title={res.titles}
-                text={res.texts}
-                category={res.categ}
-                titleUrl={`${location.pathname}/${res.slugs}`}
-                playUrl={`${location.pathname}/${res.slugs}`}
+                imageSrc={res.s3bucketKeyThumbNail}
+                top={res.interests}
+                title={res.title}
+                category={res.interests}
+                titleUrl={`/organization/resources/podcasts/${res.slug}/${res.id}`}
+                playUrl={`/organization/resources/podcasts/${res.slug}/${res.id}`}
               />
             </Grid>
           ))}
