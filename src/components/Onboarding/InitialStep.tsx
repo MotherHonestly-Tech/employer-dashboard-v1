@@ -307,6 +307,7 @@ const InitialStep = React.forwardRef(
                 }}
                 onBlur={householdSizeInputBlurHandler}
                 error={householdSizeErrorTip}
+              
               />
             </Grid>
             {+enteredHouseholdSize > 2 && (

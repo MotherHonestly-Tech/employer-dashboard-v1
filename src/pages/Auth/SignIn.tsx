@@ -121,7 +121,7 @@ const SignIn: FnComponent<{
       (response: HttpResponse<any>) => {
         // console.log(response.data);
         authCtx.login(response.data.token, response.data.uuid);
-        history.replace('/organization/dashboard');
+        history.push('/organization/dashboard');
       }
     );
   };

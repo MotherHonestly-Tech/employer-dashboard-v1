@@ -125,7 +125,7 @@ const TRANSACTIONS: Transaction[] = [
     'financeCategoryDetailed': 'GENERAL_SERVICES_EDUCATION',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
     'TransactionDate': new Date('2022-08-29')
-  },
+  }
 ] as Array<Transaction>;
 
 const Transactions = ({
@@ -135,9 +135,7 @@ const Transactions = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  const [transactions, setTransactions] = React.useState<Transaction[]>(
-    []
-  );
+  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [transactionId, setTransactionId] = React.useState<number | null>(null);
   const {
     loading: loadingTransactions,
@@ -154,7 +152,7 @@ const Transactions = ({
   const notificationCtx = React.useContext(NotificationContext);
   const { pushNotification } = notificationCtx;
 
-  // 
+  //
   React.useEffect(() => {
     fetchTransactions(
       getURLWithQueryParams(
@@ -167,7 +165,33 @@ const Transactions = ({
         method: 'GET'
       },
       (response: HttpResponse<Transaction[]>) => {
-        setTransactions(response.data);
+        function get_random(list: any[]) {
+          return list[Math.floor(Math.random() * list.length)];
+        }
+
+        // get_random([
+        //   'PERSONAL_CARE',
+        //   'GENERAL_SERVICES_CHILDCARE',
+        //   'GENERAL_SERVICES_ELDERCARE'
+        // ]);
+
+        const mappedTrans = response.data.map((item) => ({
+          ...item,
+          merchantName: get_random([
+            'Care.com',
+            'Sittercity',
+            'Papa',
+            'Maven',
+            'Natalit'
+          ]),
+          financeCategoryDetailed: get_random([
+            'PERSONAL_CARE',
+            'GENERAL_SERVICES_CHILDCARE',
+            'GENERAL_SERVICES_ELDERCARE',
+            'GENERAL_MERCHANDISE_PET_SUPPLIES'
+          ])
+        }));
+        setTransactions(mappedTrans);
       }
     );
   }, [fetchTransactions, userId]);
@@ -342,7 +366,7 @@ const Transactions = ({
         }
         setTransactionId(null);
         pushNotification({
-          message: 'Transaction submitted successfully',
+          message: 'Transaction submitted successfully. We\'ll be in touch on the status.',
           type: 'success',
           duration: 7000
         });

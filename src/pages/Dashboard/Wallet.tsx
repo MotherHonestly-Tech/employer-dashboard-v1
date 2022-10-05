@@ -284,6 +284,10 @@ const Wallet = (props: { title: string }) => {
         'employee/dashboard/reembursement/search',
       {},
       (response: HttpResponse<Expense[]>) => {
+        const mappedExpenses = response.data.map(item => ({
+          ...item,
+          
+        }))
         setExpenses(response.data);
       }
     );
@@ -487,15 +491,16 @@ const Wallet = (props: { title: string }) => {
                   </StyledActionButton>
                 ) : null}
               </Stack>
-
-              {wallet && wallet.totalFlaggedTrnx ? (
+              {/* && wallet.totalFlaggedTrnx */}
+              {/* {wallet.totalFlaggedTrnx}  */}
+              {wallet ? (
                 <div className="relative">
                   <StyledActionButton
                     variant="outlined"
                     color="secondary"
                     startIcon={<ReimburseIcon />}
                     onClick={() => handleClickOpen('transactionsOpen')}>
-                    {wallet.totalFlaggedTrnx} eligible transactions
+                    Eligible transactions
                   </StyledActionButton>
 
                   <span className="absolute flex h-3 w-3 -top-1 -right-1">
