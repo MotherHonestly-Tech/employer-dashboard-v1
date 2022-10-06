@@ -22,22 +22,22 @@ import { ReactComponent as ConsultantIcon } from '../../static/svg/brand/consult
 
 const COACHES: Consultant[] = [
   {
-    firstName: 'Jane',
-    lastName: 'Doe',
+    firstName: 'Hugh',
+    lastName: 'Marks',
     headShotUrl:
       'https://res.cloudinary.com/mother-honestly/image/upload/v1665065516/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_1_dzuva0.png',
     interests: 'Return-to-work'
   },
   {
-    firstName: 'Jane',
-    lastName: 'Doe',
+    firstName: 'Christine',
+    lastName: 'Kirra',
     headShotUrl:
       'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1336471714-1024x1024-transformed_1_bavm7o.png',
     interests: 'Financial wellness'
   },
   {
-    firstName: 'Jane',
-    lastName: 'Doe',
+    firstName: 'Jessica',
+    lastName: 'Lynn',
     headShotUrl:
       'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1316878046-1024x1024-transformed_1_ee3ihq.png',
     interests: 'Leadership'
