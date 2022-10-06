@@ -18,7 +18,7 @@ const StyledBadge = styled(BadgeUnstyled)(
   & .${badgeUnstyledClasses.badge} {
     z-index: auto;
     position: absolute;
-    top: 60%;
+    top: 75%;
     left: 0;
     min-width: 22px;
     height: 30px;

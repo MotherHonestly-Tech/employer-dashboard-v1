@@ -151,3 +151,19 @@ export const parseAmount = (amount: string) => {
   amount = amount.replace(/,/g, '').trim();
   return amount;
 };
+
+export const sortListByIdAsc = (list: any[]): any[] => {
+  const sortedList = list.sort((a, b) => {
+    if (a.id < b.id) {
+      return -1;
+    }
+
+    if (a.id > b.id) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return sortedList;
+};

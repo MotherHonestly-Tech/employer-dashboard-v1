@@ -60,20 +60,36 @@ const Merchant = ({
         }}
         onClick={handleOpen}>
         <Box
+          height="180px"
           position="relative"
           sx={{
             '& > img': {
               objectFit: 'contain',
-              objectPosition: 'center'
+              objectPosition: 'center',
+              width: '100%'
             }
           }}>
-          <img src={bannerSrc} alt={alt} />
+          <img src={bannerSrc} alt={alt} height="140px" width="100%" />
           <Discount>{discount}</Discount>
         </Box>
-        <Box bgcolor="#F1F1F1" px={1.5} py={1}>
+
+        <Box bgcolor="#F1F1F1" position="relative" px={1.5} py={1} height="100px">
           <ListItem component={'button'} sx={{}} disableGutters>
             <ListItemAvatar>
-              <Avatar variant="rounded" alt={'alt'} src={iconSrc} />
+              <Avatar
+                variant="rounded"
+                alt={'alt'}
+                src={iconSrc}
+                sx={{
+                  bgcolor: '#ffffff',
+                  '& img': {
+                    objectFit: 'contain',
+                    objectPosition: 'center',
+                    width: '100%',
+                    height: '100%'
+                  }
+                }}
+              />
             </ListItemAvatar>
             <ListItemText>
               <Typography variant="subtitle1" fontSize="12px" color="#28404A">

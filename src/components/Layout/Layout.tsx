@@ -24,6 +24,8 @@ const Layout: FnComponent = (props) => {
     strict: false
   });
 
+  const allowedPathMatches = [resourcePathMatch, merchantsPathMatch];
+
   const renderSecSidebar = function (): boolean {
     if (resourcePathMatch || merchantsPathMatch) {
       return false;

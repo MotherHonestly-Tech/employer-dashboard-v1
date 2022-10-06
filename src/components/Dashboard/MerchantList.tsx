@@ -73,6 +73,15 @@ export const MerchantList = () => {
                 variant="rounded"
                 alt={merchant.merchantName}
                 src={merchant.logoUrl}
+                sx={{
+                  bgcolor: '#ffffff',
+                  '& img': {
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                  }
+                }}
               />
             </ListItemAvatar>
             <ListItemText>

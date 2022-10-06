@@ -28,6 +28,7 @@ const STEPS = [1, 2, 3];
 const Onboarding = ({ isOnboarded }: { isOnboarded: () => boolean }) => {
   const [activeStepIndex, setActiveStepIndex] = React.useState(0);
   const [completed, setCompleted] = React.useState(false);
+
   const onboardingCtx = React.useContext(OnboardingContext);
   const authCtx = React.useContext(AuthContext);
   const notificationCtx = React.useContext(NotificationContext);

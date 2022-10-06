@@ -83,7 +83,7 @@ const WalletBalance = () => {
               fontWeight: 600,
               fontSize: '1rem'
             }}>
-            Total Credit Balance
+            Care Wallet Balance
           </Typography>
           <Typography
             align="center"

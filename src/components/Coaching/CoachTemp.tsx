@@ -14,62 +14,63 @@ import CoachBadge from './CoachBadge';
 import { Consultant } from '../../models/coaching.model';
 
 const CoachTemp = ({ coach }: { coach: Consultant }) => {
-
-    
-
   return (
-    <CoachBadge content="Business Owner">
-      <Card
-        sx={{
-          maxWidth: 345,
-          borderRadius: 1,
-          overflow: 'hidden',
-          backgroundColor: '#F9F9F7'
-        }}>
-        <CardActionArea>
+    <Card
+      sx={{
+        maxWidth: 345,
+        borderRadius: 1,
+        overflow: 'hidden',
+        backgroundColor: '#F9F9F7',
+        '& img': {
+          objectFit: 'contain',
+          objectPosition: 'center',
+          width: '100%',
+          height: 'auto'
+        }
+      }}>
+      <CardActionArea>
+        <CoachBadge content={coach.badgeContent || 'Business Owner'}>
           <CardMedia
             component="img"
-            height="140"
+            height="150"
             // image="https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png"
             image={coach.headShotUrl}
             alt="green iguana"
           />
+        </CoachBadge>
 
-          <CardContent sx={{}}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              mb={1}>
-              <Typography variant="subtitle1" component="div">
-                {coach.firstName + ' ' + coach.lastName}
-              </Typography>
-              <Rating
-                name="size-large"
-                defaultValue={5}
-                size="large"
-                readOnly
-                precision={0.5}
-              />
-            </Stack>
-            <Typography variant="body2" color="text.secondary">
-              From $50 per Session
+        <CardContent sx={{}}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={1}>
+            <Typography variant="subtitle1" component="div">
+              {coach.firstName + ' ' + coach.lastName}
             </Typography>
-          </CardContent>
+            <Rating
+              name="size-large"
+              defaultValue={5}
+              size="large"
+              readOnly
+              precision={0.5}
+            />
+          </Stack>
+          <Typography variant="body2" color="text.secondary">
+            From $50 per Session
+          </Typography>
+        </CardContent>
 
-          <Divider light variant="middle" />
+        <Divider light variant="middle" />
 
-          <CardActions
-            sx={{
-              px: 2
-            }}>
-            <Typography variant="body2">
-              Career, Family, Back to Work
-            </Typography>
-          </CardActions>
-        </CardActionArea>
-      </Card>
-    </CoachBadge>
+        <CardActions
+          sx={{
+            px: 2
+          }}>
+          <Typography variant="body2">{coach.interests}</Typography>
+        </CardActions>
+      </CardActionArea>
+    </Card>
   );
 };
 

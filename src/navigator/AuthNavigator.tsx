@@ -17,7 +17,7 @@ import ForgotPassword from '../pages/Auth/ForgotPassword';
 import ResetLinkSuccess from '../pages/Auth/ResetLinkSuccess';
 import PasswordReset from '../pages/Auth/PasswordReset';
 import ResetSuccess from '../pages/Auth/ResetSuccess';
-import MHLogoIcon from '../theme/icons/MHLogo';
+import MHLogo from '../theme/icons/MHLogo';
 
 import { ReactComponent as OrgLogo } from '../static/svg/unilever-logo.svg';
 
@@ -107,9 +107,9 @@ const AuthNavigator: FnComponent = () => {
 
               <Typography variant="body2" color="#194049" align="center" mt={4}>
                 Powered by &nbsp;{' '}
-                <MHLogoIcon
+                <MHLogo
                   style={{
-                    width: '1rem',
+                    width: '2rem',
                     display: 'inline',
                     verticalAlign: 'middle'
                   }}

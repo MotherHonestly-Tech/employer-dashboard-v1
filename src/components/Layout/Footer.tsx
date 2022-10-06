@@ -1,8 +1,9 @@
-import { Box, Grid, Typography } from "@mui/material";
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Box, Grid, Typography } from '@mui/material';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
-import { ReactComponent as FooterIcon } from "../../static/svg/logo-mh.svg";
+import { ReactComponent as FooterIcon } from '../../static/svg/logo-mh.svg';
+import MHLogo from '../../theme/icons/MHLogo';
 
 type Props = {};
 
@@ -18,7 +19,7 @@ const Footer = (props: Props) => {
               <Typography className="bottom-0 left-0 absolute">
                 2022 Mother Honestly, All Rights Reserved
               </Typography>
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <Typography className="bottom-0 w-full left-80 absolute">
                   Privacy Policy
                 </Typography>
@@ -28,9 +29,15 @@ const Footer = (props: Props) => {
           <Grid item xs={6} className="">
             <Box className="flex relative w-full p-2">
               <Typography className="bottom-0 right-12 absolute">
-                Powered by Mother Honestly
+                Powered by Mother Honestly &nbsp; {' '}
+                <MHLogo
+                  style={{
+                    width: '2rem',
+                    display: 'inline',
+                    verticalAlign: 'middle'
+                  }}
+                />
               </Typography>
-              <FooterIcon className="bottom-0 right-0 absolute" />
             </Box>
           </Grid>
         </Grid>

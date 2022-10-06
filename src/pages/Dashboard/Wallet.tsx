@@ -280,14 +280,18 @@ const Wallet = (props: { title: string }) => {
 
   const getExpenseTransactions = () => {
     getExpenses(
-      process.env.REACT_APP_API_BASE_URL +
-        'employee/dashboard/reembursement/search',
+      getURLWithQueryParams(
+        process.env.REACT_APP_API_BASE_URL +
+          'employee/dashboard/reembursement/search',
+        {
+          customerId: String(userId!)
+        }
+      ),
       {},
       (response: HttpResponse<Expense[]>) => {
-        const mappedExpenses = response.data.map(item => ({
-          ...item,
-          
-        }))
+        const mappedExpenses = response.data.map((item) => ({
+          ...item
+        }));
         setExpenses(response.data);
       }
     );
@@ -484,23 +488,26 @@ const Wallet = (props: { title: string }) => {
                   onClick={() => handleClickOpen('uploadReceiptOpen')}>
                   Upload receipt
                 </StyledActionButton>
-                {wallet && !wallet.connectedAccount.mask ? (
+                {/* && !wallet.connectedAccount.mask */}
+                {wallet ? (
                   <StyledActionButton
                     onClick={() => handleClickOpen('linkAccountOpen')}>
-                    Link an account
+                    {!wallet.connectedAccount.mask
+                      ? 'Link an account'
+                      : 'Change linked account'}
                   </StyledActionButton>
                 ) : null}
               </Stack>
-              {/* && wallet.totalFlaggedTrnx */}
-              {/* {wallet.totalFlaggedTrnx}  */}
-              {wallet ? (
+              
+              {/* */}
+              {wallet && wallet.totalFlaggedTrnx ? (
                 <div className="relative">
                   <StyledActionButton
                     variant="outlined"
                     color="secondary"
                     startIcon={<ReimburseIcon />}
                     onClick={() => handleClickOpen('transactionsOpen')}>
-                    Eligible transactions
+                    {wallet.totalFlaggedTrnx} Eligible transactions
                   </StyledActionButton>
 
                   <span className="absolute flex h-3 w-3 -top-1 -right-1">

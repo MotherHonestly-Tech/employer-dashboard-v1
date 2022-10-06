@@ -12,6 +12,7 @@ import {
   ExpensePerCategory,
   Merchant
 } from '../../models/wallet.model';
+import { sortListByIdAsc } from '../../utils/utils';
 
 type DashboardCtxType = {
   staticDataCacheMap: Map<string, any[]>;
@@ -86,6 +87,15 @@ export const DashboardContextProvider = ({
     setDataCacheMap((prevState) => {
       const newState = new Map(prevState);
       const mappedMerchants: (Merchant & SelectOption<string>)[] = merchants
+        .sort((a, b) => {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        })
         .concat({
           id: -1,
           merchantName: 'Other'
@@ -93,7 +103,8 @@ export const DashboardContextProvider = ({
         .map((merchant) => ({
           ...merchant,
           value: merchant.id + '',
-          label: merchant.merchantName
+          label: merchant.merchantName,
+          // categoryList: sortListByIdAsc(merchant.categoryList) // causes error when list is undefined
         }));
       newState.set('merchants', mappedMerchants);
       return newState;
@@ -111,7 +122,8 @@ export const DashboardContextProvider = ({
       for (const key of Object.keys(expPerCategory)) {
         const categoryIndex = categories.findIndex(
           (cat) =>
-            cat.categoryName.trim() === CategoryName[key as keyof typeof CategoryName]
+            cat.categoryName.trim() ===
+            CategoryName[key as keyof typeof CategoryName]
         );
         if (categoryIndex === -1) {
           continue;

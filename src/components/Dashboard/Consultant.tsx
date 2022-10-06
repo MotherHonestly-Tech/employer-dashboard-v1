@@ -7,7 +7,11 @@ import Zoom from '@mui/material/Zoom';
 
 import { FnComponent } from '../../models/component.model';
 
-const Consultant: FnComponent<{ imageSrc: string }> = ({ imageSrc }) => {
+const Consultant: FnComponent<{
+  imageSrc: string;
+  name?: string;
+  interests?: string;
+}> = ({ imageSrc, name, interests }) => {
   return (
     <Zoom in style={{ transitionDelay: '300ms' }}>
       <Box
@@ -41,7 +45,7 @@ const Consultant: FnComponent<{ imageSrc: string }> = ({ imageSrc }) => {
               fontWeight: 500,
               fontSize: '1rem'
             }}>
-            Blessing Adesiyan
+            {name}
           </Typography>
           <Typography
             variant="body1"
@@ -59,25 +63,13 @@ const Consultant: FnComponent<{ imageSrc: string }> = ({ imageSrc }) => {
             }}
           />
           <Typography
-            gutterBottom
-            variant="body1"
-            color="#909090"
-            mb={2}
-            sx={{
-              fontWeight: 400,
-              fontSize: '0.75rem'
-            }}>
-            Lorem ipsum dolor sit amet, consec tempor incididunt tempor
-            incididunt
-          </Typography>
-          <Typography
             variant="body1"
             color="#28404A"
             sx={{
               fontWeight: 400,
               fontSize: '0.75rem'
             }}>
-            Care, Family, Back to Work
+            {interests}
           </Typography>
         </Box>
       </Box>

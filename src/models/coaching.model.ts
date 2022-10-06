@@ -29,4 +29,6 @@ export interface Consultant {
     lastActivityDate: Date;
     slug: string;
     headShotUrl: string;
+    badgeContent: string;
+    interests: string;
   }

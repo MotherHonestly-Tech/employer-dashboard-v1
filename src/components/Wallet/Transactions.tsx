@@ -366,7 +366,8 @@ const Transactions = ({
         }
         setTransactionId(null);
         pushNotification({
-          message: 'Transaction submitted successfully. We\'ll be in touch on the status.',
+          message:
+            "Transaction submitted successfully. We'll be in touch on the status.",
           type: 'success',
           duration: 7000
         });

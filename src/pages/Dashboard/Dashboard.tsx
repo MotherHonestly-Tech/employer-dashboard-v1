@@ -1,23 +1,77 @@
-import React from "react";
+import React from 'react';
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 
-import WalletBalance from "../../components/Dashboard/WalletBalance";
-import Consultant from "../../components/Dashboard/Consultant";
-import Concierge from "../../components/Dashboard/Concierge";
-import RecentTransactions from "../../components/Dashboard/RecentTransactions";
-import AuthContext from "../../store/context/auth-context";
-import Footer from "../../components/Layout/Footer";
-import DashToolkit from "../../components/Dashboard/DashToolkit";
-import DashVideo from "../../components/Dashboard/DashVideo";
-import DashEvent from "../../components/Dashboard/DashEvent";
-import DashArticle from "../../components/Dashboard/DashArticle";
-import DashPodcast from "../../components/Dashboard/DashPodcast";
+import WalletBalance from '../../components/Dashboard/WalletBalance';
+// import Consultant from '../../components/Dashboard/Consultant';
+import Concierge from '../../components/Dashboard/Concierge';
+import RecentTransactions from '../../components/Dashboard/RecentTransactions';
+import AuthContext from '../../store/context/auth-context';
+import Footer from '../../components/Layout/Footer';
+import DashToolkit from '../../components/Dashboard/DashToolkit';
+import DashVideo from '../../components/Dashboard/DashVideo';
+import DashEvent from '../../components/Dashboard/DashEvent';
+import DashArticle from '../../components/Dashboard/DashArticle';
+import DashPodcast from '../../components/Dashboard/DashPodcast';
+import CoachTemp from '../../components/Coaching/CoachTemp';
+import { Consultant } from '../../models/coaching.model';
+import { ReactComponent as ConsultantIcon } from '../../static/svg/brand/consultant.svg';
+
+const COACHES: Consultant[] = [
+  {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065516/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_1_dzuva0.png',
+    interests: 'Return-to-work'
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1336471714-1024x1024-transformed_1_bavm7o.png'
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1316878046-1024x1024-transformed_1_ee3ihq.png'
+  }
+] as Consultant[];
+
+const CARE_COACHES: Consultant[] = [
+  {
+    firstName: 'Alexis',
+    lastName: 'Barad-Cutler',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Alexis_Barad-Cutler_1_yqmooc.png'
+  },
+  {
+    firstName: 'Tiffany',
+    lastName: 'Porter',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Tiffany_Porter_New_1_kyalzb.png'
+  },
+  {
+    firstName: 'Nikki',
+    lastName: 'Adamson',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Nikki_Adamson_1_blm5el.png'
+  }
+] as Consultant[];
 
 const Dashboard = () => {
   const authCtx = React.useContext(AuthContext);
+
+  const coach: Consultant = {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    headShotUrl:
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+  } as Consultant;
 
   return (
     <React.Fragment>
@@ -27,8 +81,7 @@ const Dashboard = () => {
         </Typography>
 
         <Typography variant="body1" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt
+          Your family at a glance : Partner, 2 Kids, 1 Pet
         </Typography>
       </Box>
 
@@ -47,15 +100,43 @@ const Dashboard = () => {
         </Typography>
 
         <Grid container spacing={7}>
-          <Grid item xs={4}>
-            <Consultant imageSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png" />
-          </Grid>
-          <Grid item xs={4}>
-            <Consultant imageSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash_dxhylh.png" />
-          </Grid>
-          <Grid item xs={4}>
-            <Consultant imageSrc="https://res.cloudinary.com/mother-honestly/image/upload/v1657976886/jurica-koletic-7YVZYZeITc8-unsplash_1_bxrqph.png" />
-          </Grid>
+          {COACHES.map((coach) => (
+            <Grid item xs={4}>
+              <CoachTemp coach={coach} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      <Box mt={5}>
+        <Box py={7} minHeight="100px">
+          <Typography variant="h1" align="center" paragraph>
+            1:1 Coaching For Career, Caregiving & More
+          </Typography>
+
+          <Stack
+            direction="row"
+            spacing={1}
+            justifyContent="center"
+            alignItems="center"
+            mt={2}>
+            <ConsultantIcon width="1.3rem" />
+            <Typography
+              variant="subtitle2"
+              color="#194049"
+              fontSize=".7rem"
+              textTransform="uppercase">
+              Consultants
+            </Typography>
+          </Stack>
+        </Box>
+
+        <Grid container spacing={7}>
+          {CARE_COACHES.map((coach) => (
+            <Grid item xs={4}>
+              <CoachTemp coach={coach} />
+            </Grid>
+          ))}
         </Grid>
       </Box>
 
