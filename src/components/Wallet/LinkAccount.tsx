@@ -118,7 +118,7 @@ const LinkAccount = ({
         actions={
           !completed ? null : (
             <MHButton type="button" fullWidth onClick={onClose}>
-              Close modal
+              Close
             </MHButton>
           )
         }

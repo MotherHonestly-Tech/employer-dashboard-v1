@@ -242,7 +242,7 @@ const Wallet = (props: { title: string }) => {
         <BorderLinearProgress
           variant="determinate"
           barcolor={RECEIPT_STATUS[row.workFlowId].color}
-          value={(row.workFlowId / 5) * 100}
+          value={(row.workFlowId / 4) * 100}
         />
       )
     },
@@ -377,8 +377,9 @@ const Wallet = (props: { title: string }) => {
                 <Typography variant="body2" fontSize={12} color="primary">
                   Monthly Credit
                 </Typography>
+                {/* formatAmount(wallet.monthlyAllocation) */}
                 <Typography variant="h4" fontSize={36} color="primary">
-                  {wallet && formatAmount(wallet.monthlyAllocation)}
+                  {wallet && formatAmount(100)}
                 </Typography>
               </Box>
             </GridItem>
@@ -387,8 +388,9 @@ const Wallet = (props: { title: string }) => {
                 <Typography variant="body2" fontSize={12} color="#BDBDBD">
                   Wallet Balance
                 </Typography>
+                {/* wallet.walletBalance */}
                 <Typography variant="h4" fontSize={36} color="#BDBDBD">
-                  {wallet && formatAmount(wallet.walletBalance)}
+                  {wallet && formatAmount(320)}
                 </Typography>
               </Box>
             </GridItem>
@@ -397,8 +399,9 @@ const Wallet = (props: { title: string }) => {
                 <Typography variant="body2" fontSize={12} color="#BDBDBD">
                   Total Payout
                 </Typography>
+                {/* wallet.totalPayoutAmount */}
                 <Typography variant="h4" fontSize={36} color="#BDBDBD">
-                  {wallet && formatAmount(wallet.totalPayoutAmount)}
+                  {wallet && formatAmount(280)}
                 </Typography>
               </Box>
             </GridItem>

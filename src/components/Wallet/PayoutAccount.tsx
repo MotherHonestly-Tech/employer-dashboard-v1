@@ -175,13 +175,13 @@ const PayoutAccount = ({
             </Typography>
           </Stack>
 
-          <MuiLink
+          {/* <MuiLink
             component="button"
             color="primary"
             underline="always"
             onClick={openPlaidLink}>
             Change connected account
-          </MuiLink>
+          </MuiLink> */}
 
           <MHButton
             type="button"

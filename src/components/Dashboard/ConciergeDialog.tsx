@@ -71,7 +71,7 @@ export const DialogBox = ({
             </MHButton>
           ) : (
             <MHButton type="button" fullWidth onClick={onClose}>
-              Close modal
+              Close
             </MHButton>
           )
         }
@@ -119,18 +119,33 @@ export const DialogBox = ({
             }}>
             <SuccessIcon width={120} />
 
-            <Typography variant="body2" color="initial" align="center" mb={3} gutterBottom>
+            <Typography
+              variant="body2"
+              color="initial"
+              align="center"
+              mb={3}
+              gutterBottom>
               Thank you, your request has been sent. <br /> We will respond
               shortly.
             </Typography>
 
             <ChatIcon width={50} />
 
-            <Typography variant="body2" color="initial" align="center" mb={3} gutterBottom>
+            <Typography
+              variant="body2"
+              color="initial"
+              align="center"
+              mb={3}
+              gutterBottom>
               Check your Message on your Dashboard
             </Typography>
 
-            <Typography variant="body2" color="initial" align="center" mb={3} gutterBottom>
+            <Typography
+              variant="body2"
+              color="initial"
+              align="center"
+              mb={3}
+              gutterBottom>
               Working hours: <br />
               Mon - Friday | 8am - 6pm (EST)
             </Typography>

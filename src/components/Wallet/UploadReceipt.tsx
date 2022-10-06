@@ -115,7 +115,7 @@ const UploadThumb = ({ file }: { file: File | null }) =>
 const UploadReceipt = ({
   open,
   onClose,
-  wallet,
+  wallet
 }: {
   open: boolean;
   onClose: () => void;
@@ -417,7 +417,7 @@ const UploadReceipt = ({
             ) : null
           ) : (
             <MHButton type="button" fullWidth onClick={onClose}>
-              Close modal
+              Close
             </MHButton>
           )
         }
