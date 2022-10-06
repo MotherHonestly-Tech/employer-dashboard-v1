@@ -365,6 +365,7 @@ const UploadReceipt = ({
     formData.append('merchantName', merchant.merchantName);
     formData.append('website', merchant.website);
     formData.append('merchantAddress', merchant.address);
+    formData.append('logoUrl', merchant.logoUrl);
 
     formData.append('customerId', String(userId));
 
@@ -372,7 +373,6 @@ const UploadReceipt = ({
       formData.set('merchantName', enteredMerchantName);
       formData.set('website', enteredMerchantWebsite);
       formData.set('merchantAddress', enteredMerchantAddress);
-      formData.append('logoUrl', merchant.logoUrl);
     }
 
     uploadReceipt(

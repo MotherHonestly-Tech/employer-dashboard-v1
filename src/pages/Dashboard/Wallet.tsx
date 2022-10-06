@@ -181,7 +181,17 @@ const Wallet = (props: { title: string }) => {
             alt={row.merchantName}
             src={row.logoUrl}
             variant="rounded"
-            sx={{ width: 35, height: 35 }}
+            sx={{
+              width: 35,
+              height: 35,
+              bgcolor: '#ffffff',
+              '& img': {
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                objectPosition: 'center'
+              }
+            }}
           />
           <Typography
             variant="body1"
@@ -375,7 +385,7 @@ const Wallet = (props: { title: string }) => {
             <GridItem>
               <Box>
                 <Typography variant="body2" fontSize={12} color="#BDBDBD">
-                  Credit Balance
+                  Wallet Balance
                 </Typography>
                 <Typography variant="h4" fontSize={36} color="#BDBDBD">
                   {wallet && formatAmount(wallet.walletBalance)}
