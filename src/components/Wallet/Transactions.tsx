@@ -64,7 +64,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-09-29')
   },
   {
     'id': 2,
@@ -84,7 +84,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-08-17')
   },
   {
     'id': 3,
@@ -104,7 +104,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-08-23')
   },
   {
     'id': 4,
@@ -124,7 +124,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'FOOD_AND_DRINK_OTHER_FOOD_AND_DRINK',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-08-18')
   },
   {
     'id': 5,
@@ -144,7 +144,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_MERCHANDISE_PET_SUPPLIES',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-08-30')
   },
   {
     'id': 6,
@@ -164,7 +164,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_SERVICES_EDUCATION',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-07-29')
   },
   {
     'id': 7,
@@ -184,7 +184,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'FOOD_AND_DRINK_OTHER_FOOD_AND_DRINK',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-31')
+    'TransactionDate': new Date('2022-07-18')
   },
   {
     'id': 8,
@@ -204,7 +204,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-07-12')
   },
   {
     'id': 9,
@@ -224,7 +224,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_LAUNDRY_AND_DRY_CLEANING',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-07-09')
   },
   {
     'id': 10,
@@ -244,7 +244,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-06-31')
   },
   {
     'id': 11,
@@ -264,7 +264,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_LAUNDRY_AND_DRY_CLEANING',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-31')
+    'TransactionDate': new Date('2022-06-31')
   },
   {
     'id': 12,
@@ -284,7 +284,7 @@ const TRANSACTIONS: Transaction[] = [
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
-    'TransactionDate': new Date('2022-08-29')
+    'TransactionDate': new Date('2022-06-19')
   },
 ] as Array<Transaction>;
 
