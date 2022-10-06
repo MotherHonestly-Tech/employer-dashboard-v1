@@ -242,7 +242,7 @@ const Wallet = (props: { title: string }) => {
         <BorderLinearProgress
           variant="determinate"
           barcolor={RECEIPT_STATUS[row.workFlowId].color}
-          value={(row.workFlowId / 4) * 100}
+          value={(row.workFlowId / 3) * 100}
         />
       )
     },
