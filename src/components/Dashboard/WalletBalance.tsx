@@ -64,7 +64,12 @@ const WalletBalance = () => {
         flexDirection="column">
         <BackgroundOverlay />
 
-        <Box position="relative" flexGrow={1} display="flex" flexDirection={'column'} justifyContent="center">
+        <Box
+          position="relative"
+          flexGrow={1}
+          display="flex"
+          flexDirection={'column'}
+          justifyContent="center">
           {/* <DashedIcon
             sx={{
               position: 'absolute',
@@ -94,7 +99,7 @@ const WalletBalance = () => {
               fontWeight: 600,
               fontSize: '1.5rem'
             }}>
-            $599
+            $320
           </Typography>
           <Typography
             align="center"
