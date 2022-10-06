@@ -332,10 +332,7 @@ const Wallet = (props: { title: string }) => {
         <Typography variant="h1" align="center" color="primary" gutterBottom>
           My Care Wallet
         </Typography>
-        <Typography variant="body1" align="center" color="#9C9C9C" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt
-        </Typography>
+
         <Paper
           sx={{
             p: 2,
@@ -498,7 +495,7 @@ const Wallet = (props: { title: string }) => {
                   </StyledActionButton>
                 ) : null}
               </Stack>
-              
+
               {/* */}
               {wallet && wallet.totalFlaggedTrnx ? (
                 <div className="relative">

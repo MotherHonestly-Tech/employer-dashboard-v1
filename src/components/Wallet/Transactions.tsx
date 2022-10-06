@@ -47,7 +47,7 @@ const RADIO_OPTIONS: Array<{ value: string; label: string }> = [
 
 const TRANSACTIONS: Transaction[] = [
   {
-    'id': 1234,
+    'id': 1,
     'fullName': 'Plaid Gold Standard 0% Interest Checking',
     'address': '',
     'paymentMethod': '',
@@ -59,15 +59,15 @@ const TRANSACTIONS: Transaction[] = [
     'customerId': 123312,
     'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
     'currencyCode': 'USD',
-    'amount': 9.5,
-    'merchantName': 'Sparkfun',
+    'amount': 19.5,
+    'merchantName': 'Care.com',
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
     'TransactionDate': new Date('2022-08-29')
   },
   {
-    'id': 12390,
+    'id': 2,
     'fullName': 'Plaid Gold Standard 0% Interest Checking',
     'address': '',
     'paymentMethod': '',
@@ -80,14 +80,14 @@ const TRANSACTIONS: Transaction[] = [
     'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
     'currencyCode': 'USD',
     'amount': 89.4,
-    'merchantName': 'Sparkfun',
+    'merchantName': 'Vivvi',
     'processed': false,
     'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
     'TransactionDate': new Date('2022-08-29')
   },
   {
-    'id': 12378,
+    'id': 3,
     'fullName': 'Plaid Gold Standard 0% Interest Checking',
     'address': '',
     'paymentMethod': '',
@@ -99,12 +99,172 @@ const TRANSACTIONS: Transaction[] = [
     'customerId': 123312,
     'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
     'currencyCode': 'USD',
-    'amount': 24,
-    'merchantName': 'Sparkfun',
+    'amount': 24.0,
+    'merchantName': 'Care.com',
     'processed': false,
     'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
     'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 4,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 4.33,
+    'merchantName': 'Splendid Spoon',
+    'processed': false,
+    'financeCategoryDetailed': 'FOOD_AND_DRINK_OTHER_FOOD_AND_DRINK',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 5,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 17.55,
+    'merchantName': 'Rover',
+    'processed': false,
+    'financeCategoryDetailed': 'GENERAL_MERCHANDISE_PET_SUPPLIES',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 6,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 54.12,
+    'merchantName': 'Edify',
+    'processed': false,
+    'financeCategoryDetailed': 'GENERAL_SERVICES_EDUCATION',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 7,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 8.57,
+    'merchantName': 'Splendid Spoon',
+    'processed': false,
+    'financeCategoryDetailed': 'FOOD_AND_DRINK_OTHER_FOOD_AND_DRINK',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-31')
+  },
+  {
+    'id': 8,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 12,
+    'merchantName': 'Papa',
+    'processed': false,
+    'financeCategoryDetailed': 'PERSONAL_CARE_OTHER_PERSONAL_CARE',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 9,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 20.12,
+    'merchantName': 'Handy',
+    'processed': false,
+    'financeCategoryDetailed': 'PERSONAL_CARE_LAUNDRY_AND_DRY_CLEANING',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 10,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 44.50,
+    'merchantName': 'Bobbie',
+    'processed': false,
+    'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-29')
+  },
+  {
+    'id': 11,
+    'fullName': 'Plaid Gold Standard 0% Interest Checking',
+    'address': '',
+    'paymentMethod': '',
+    'paymentChannel': 'in store',
+    'paymentProcessor': '',
+    'longitude': 0,
+    'latitude': 0,
+    'AccountId': 'XXARodR7bVtZNeBJ4llyHPp9e6QdbwfyAXN6r',
+    'customerId': 123312,
+    'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
+    'currencyCode': 'USD',
+    'amount': 19.20,
+    'merchantName': 'Handy',
+    'processed': false,
+    'financeCategoryDetailed': 'PERSONAL_CARE_LAUNDRY_AND_DRY_CLEANING',
+    'financeCategoryPrimary': 'FOOD_AND_DRINK',
+    'TransactionDate': new Date('2022-08-31')
   },
   {
     'id': 12,
@@ -119,14 +279,23 @@ const TRANSACTIONS: Transaction[] = [
     'customerId': 123312,
     'transactionRefId': '4qWd6Rd7nktZ4BP6nEEwHb3DglmrGzFnQezaz',
     'currencyCode': 'USD',
-    'amount': 45.67,
-    'merchantName': 'Sparkfun',
+    'amount': 34.50,
+    'merchantName': 'Bobbie',
     'processed': false,
-    'financeCategoryDetailed': 'GENERAL_SERVICES_EDUCATION',
+    'financeCategoryDetailed': 'GENERAL_SERVICES_CHILDCARE',
     'financeCategoryPrimary': 'FOOD_AND_DRINK',
     'TransactionDate': new Date('2022-08-29')
-  }
+  },
 ] as Array<Transaction>;
+
+const MERCHANT_CATEGORIES = [
+  'PERSONAL_CARE',
+  'GENERAL_SERVICES_CHILDCARE',
+  'GENERAL_SERVICES_ELDERCARE',
+  'GENERAL_MERCHANDISE_PET_SUPPLIES',
+  'HOME_IMPROVEMENT_REPAIR_AND_MAINTENANCE',
+  'PERSONAL_CARE'
+];
 
 const Transactions = ({
   open,
@@ -165,33 +334,11 @@ const Transactions = ({
         method: 'GET'
       },
       (response: HttpResponse<Transaction[]>) => {
-        function get_random(list: any[]) {
-          return list[Math.floor(Math.random() * list.length)];
-        }
-
-        // get_random([
-        //   'PERSONAL_CARE',
-        //   'GENERAL_SERVICES_CHILDCARE',
-        //   'GENERAL_SERVICES_ELDERCARE'
-        // ]);
-
         const mappedTrans = response.data.map((item) => ({
-          ...item,
-          merchantName: get_random([
-            'Care.com',
-            'Sittercity',
-            'Papa',
-            'Maven',
-            'Natalit'
-          ]),
-          financeCategoryDetailed: get_random([
-            'PERSONAL_CARE',
-            'GENERAL_SERVICES_CHILDCARE',
-            'GENERAL_SERVICES_ELDERCARE',
-            'GENERAL_MERCHANDISE_PET_SUPPLIES'
-          ])
+          ...item
         }));
-        setTransactions(mappedTrans);
+
+        setTransactions(TRANSACTIONS);
       }
     );
   }, [fetchTransactions, userId]);

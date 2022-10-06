@@ -167,3 +167,7 @@ export const sortListByIdAsc = (list: any[]): any[] => {
 
   return sortedList;
 };
+
+function get_random(list: any[]) {
+  return list[Math.floor(Math.random() * list.length)];
+}

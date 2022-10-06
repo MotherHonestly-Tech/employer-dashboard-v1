@@ -5,7 +5,7 @@ import useHttp from '../hooks/use-http';
 import { HttpResponse } from '../models/api.interface';
 import { LinkSuccessMetadata } from '../models/plaid.model';
 import { ModalID } from '../pages/Dashboard/Wallet';
-  
+
 type TokenExchange = {
   exchangePublicToken: (
     publicToken: string,
@@ -82,7 +82,6 @@ export const PlaidLinkContextProvider = ({
     sendHttpRequest: exchangeTokens
   } = useHttp();
 
-
   const generateLinkToken = React.useCallback(() => {
     if (isOauth.current) {
       setLinkToken(localStorage.getItem('link_token'));
@@ -106,7 +105,12 @@ export const PlaidLinkContextProvider = ({
   }, []);
 
   const exchangePublicToken = React.useCallback(
-    (publicToken: string, metadata: LinkSuccessMetadata, userId: number) => {
+    (
+      publicToken: string,
+      metadata: LinkSuccessMetadata,
+      userId: number,
+      onResponse: (response: HttpResponse<unknown>) => void
+    ) => {
       removeLinkToken();
       exchangeTokens(
         process.env.REACT_APP_PLAID_API_URL + 'plaid/access/token',
@@ -124,6 +128,7 @@ export const PlaidLinkContextProvider = ({
         },
         (response: HttpResponse<string>) => {
           console.log(response);
+          onResponse(response);
         }
       );
     },

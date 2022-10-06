@@ -171,7 +171,7 @@ const PayoutAccount = ({
               color="primary.main"
               paragraph
               gutterBottom>
-              Bank of America Account ending with ****{connectedAccount?.mask}
+              TD Bank Account ending with ****{connectedAccount?.mask}
             </Typography>
           </Stack>
 
