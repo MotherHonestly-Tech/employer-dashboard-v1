@@ -32,13 +32,15 @@ const COACHES: Consultant[] = [
     firstName: 'Jane',
     lastName: 'Doe',
     headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1336471714-1024x1024-transformed_1_bavm7o.png'
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1336471714-1024x1024-transformed_1_bavm7o.png',
+    interests: 'Financial wellness'
   },
   {
     firstName: 'Jane',
     lastName: 'Doe',
     headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1316878046-1024x1024-transformed_1_ee3ihq.png'
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1316878046-1024x1024-transformed_1_ee3ihq.png',
+    interests: 'Leadership'
   }
 ] as Consultant[];
 
@@ -47,19 +49,22 @@ const CARE_COACHES: Consultant[] = [
     firstName: 'Alexis',
     lastName: 'Barad-Cutler',
     headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Alexis_Barad-Cutler_1_yqmooc.png'
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Alexis_Barad-Cutler_1_yqmooc.png',
+    interests: 'Mentorship, Eldercare, Productivity'
   },
   {
     firstName: 'Tiffany',
     lastName: 'Porter',
     headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Tiffany_Porter_New_1_kyalzb.png'
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Tiffany_Porter_New_1_kyalzb.png',
+    interests: 'Career, Family, Back to Work'
   },
   {
     firstName: 'Nikki',
     lastName: 'Adamson',
     headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Nikki_Adamson_1_blm5el.png'
+      'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Nikki_Adamson_1_blm5el.png',
+    interests: 'Career, Family, Back to Work'
   }
 ] as Consultant[];
 
