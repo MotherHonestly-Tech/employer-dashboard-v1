@@ -15,25 +15,29 @@ const Connect = () => {
       firstName: 'Mark',
       lastName: 'Henry',
       headShotUrl:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1665065516/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_1_dzuva0.png'
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1665065516/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_1_dzuva0.png',
+      interests: 'Leadership'
     },
     {
       firstName: 'Christine',
       lastName: 'Kirra',
       headShotUrl:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1336471714-1024x1024-transformed_1_bavm7o.png',
+      interests: 'Mentoring'
     },
     {
-      firstName: 'Jane',
-      lastName: 'Doe',
+      firstName: 'Melissa',
+      lastName: 'Jones',
       headShotUrl:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1665065090/istockphoto-1316878046-1024x1024-transformed_1_ee3ihq.png',
+      interests: 'Return-to-work'
     },
     {
-      firstName: 'Jane',
-      lastName: 'Doe',
+      firstName: 'Margaret',
+      lastName: 'Intoina',
       headShotUrl:
-        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1665427800/christina-wocintechchat-com-kXfBDl0fR1E-unsplash_1_uvv2rx.png',
+      interests: 'Financial wellness'
     }
   ] as Consultant[];
 
@@ -51,7 +55,12 @@ const Connect = () => {
             Message from CEO
           </Typography>
           <Typography variant="body2" paragraph>
-           
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
           </Typography>
 
           <Typography variant="body2" textTransform="uppercase" align="center">
