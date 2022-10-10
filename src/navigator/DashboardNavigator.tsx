@@ -11,18 +11,17 @@ import '../index.scss';
 
 import Startup from '../components/Dashboard/Startup';
 import Layout from '../components/Layout/Layout';
-import Coaching from '../pages/Dashboard/Coaching';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Merchants from '../pages/Dashboard/Merchants';
 import Wallet from '../pages/Dashboard/Wallet';
 import Connect from '../pages/Dashboard/Connect';
+import CoachingNavigator from './CoachingNavigator';
 import ResourcesNavigator from './ResourcesNavigator';
 
 import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
 import { User } from '../models/user.model';
 import { styled } from '@mui/material/styles';
-import Motherboard from '../components/Coaching/Motherboard';
 import { WalletContextProvider } from '../store/context/wallet.context';
 
 const Wrapper = styled('div')(
@@ -82,18 +81,15 @@ const DashboardNavigator = () => {
               <Route path={`${path}/resources`}>
                 <ResourcesNavigator />
               </Route>
-              <Route path={`${path}/coaching`} exact>
+              <Route path={`${path}/coaching`}>
                 <Wrapper>
-                  <Coaching />
+                  <CoachingNavigator />
                 </Wrapper>
               </Route>
               <Route path={`${path}/connect`} exact>
                 <Wrapper>
                   <Connect />
                 </Wrapper>
-              </Route>
-              <Route path={`${path}/book-motherboard/:slug/:uuid`} exact>
-                <Motherboard />
               </Route>
             </Switch>
           </CSSTransition>

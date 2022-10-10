@@ -10,15 +10,16 @@ import AllresHeader from "../SubComponents/AllresHeader";
 import { Box, Grid } from "@mui/material";
 import Footer from "../../Layout/Footer";
 import Pagination from "../../UI/Pagination";
+import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -27,7 +28,9 @@ const ToolkitsPage = (props: ResProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ResProps[]>([]);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_TOOLKIT_URL}`;
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   console.warn("resUrl", resUrl);
 
@@ -42,9 +45,13 @@ const ToolkitsPage = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       // console.log(resources);
     } catch (err) {
       // console.error("Cannot find Data");
@@ -54,6 +61,11 @@ const ToolkitsPage = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <AllresHeader
@@ -87,12 +99,12 @@ const ToolkitsPage = (props: ResProps) => {
                 iconClass="hidden"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
-                imageSrc={res.image}
-                top={res.tops}
-                title={res.titles}
-                category={res.categ}
-                titleUrl={`${location.pathname}/${res.slugs}`}
-                playUrl={`${location.pathname}/${res.slugs}`}
+                imageSrc={res.s3bucketKeyThumbNail}
+                top={res.interests}
+                title={res.title}
+                category={res.interests}
+                titleUrl={`/organization/resources/toolkits/${res.slug}/${res.id}`}
+                playUrl={`/organization/resources/toolkits/${res.slug}/${res.id}`}
               />
             </Grid>
           ))}

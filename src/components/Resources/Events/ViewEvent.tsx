@@ -3,18 +3,21 @@ import ViewHeader from "../SubComponents/ViewHeader";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import MHButton from "../../Button/MHButton";
 import moment from "moment";
+import AuthContext from "../../../store/context/auth-context";
 
 type ComponentProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  thumbNailImageSrc?: string;
+  interests?: string;
+  eventDate?: number;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -26,7 +29,10 @@ const ViewEvent = (props: ComponentProps) => {
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_EVENT_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   let history = useHistory();
 
@@ -38,26 +44,37 @@ const ViewEvent = (props: ComponentProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
     }
   };
 
+  const params = useParams<any>();
+  // console.log(params.id!);
+
   const [data, setData] = useState<any>("");
 
-  var viewUrl = `https://mocki.io/v1/f42e39da-9550-4718-a9f4-03e2ade39d30`;
+  var viewUrl = `${process.env.REACT_APP_RES_EVENT_VIEW_URL}${params.id}`;
 
   const getData = async () => {
     try {
       const response = await fetch(viewUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setData(jsonData);
+      setData(jsonData.data);
     } catch (err) {
       console.error("Cannot find Data");
     }
@@ -67,20 +84,25 @@ const ViewEvent = (props: ComponentProps) => {
     getResource();
     getData();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ViewHeader
         titles={data.title}
-        description={data.titleDetails}
-        imageUrl={data.bgImageUrl}
+        description="Catch up on amazing events"
+        imageUrl={data.s3bucketKeyThumbNail}
         categoryOne="Career"
-        categoryTwo={data.category}
+        categoryTwo={data.interest}
         downloadClassName="hidden flex -ml-4 my-6"
         podClassName="mt-10 flex gap-32 hidden"
         ticketClassName="py-12"
-        ticketLink={data.ticketUrl}
-        date={moment(data.date).format("MMMM Do ")}
-        dateTwo={moment(data.date).format("MMMM D, YYYY")}
+        ticketLink={data.ticketLink}
+        date={moment(data.eventDate).format("MMMM Do ")}
+        dateTwo={moment(data.eventDate).format("MMMM D, YYYY")}
         dateClassName="text-left pb-2 w-3/4 text-base font-areaSemi"
         episodeClassName="hidden"
         authorClassName="hidden"
@@ -92,25 +114,26 @@ const ViewEvent = (props: ComponentProps) => {
           color="primary"
           className="text-3xl font-columbia font-[500]"
         >
-          {data.description}
+          Description:
         </Typography>
         <Typography
           variant="body2"
           color="primary"
           className="text-[13px] mt-6 leading-[200%] font-areaSemi"
         >
-          {data.importantInfo}
+          {data.description}
         </Typography>
 
         <img
-          src={data.imageUrl}
+          src={data.s3bucketKeyThumbNail}
           alt=""
           className="mx-auto my-6 w-full h-[600px]"
         />
+
         <Box className="flex justify-center py-6">
           <MHButton
             onClick={() => {
-              window.open(data.ticketUrl);
+              window.open(data.ticketLink);
             }}
             sx={{ width: "113px" }}
           >
@@ -135,12 +158,13 @@ const ViewEvent = (props: ComponentProps) => {
                 iconClass="hidden"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
-                imageSrc={res.image}
                 top={moment(res.createdAt!).format("MMMM Do ")}
-                title={res.titles}
-                category={res.categ}
-                titleUrl={`${location.pathname}/${res.slugs}`}
-                playUrl={`${location.pathname}/${res.slugs}`}
+                imageSrc={res.thumbNailImageSrc}
+                // top={res.interests}
+                title={res.title}
+                category={res.interests}
+                titleUrl={`/organization/resources/events/${res.slug}/${res.id}`}
+                playUrl={`/organization/resources/events/${res.slug}/${res.id}`}
               />
             </Grid>
           ))}

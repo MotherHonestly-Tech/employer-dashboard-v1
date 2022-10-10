@@ -10,7 +10,7 @@ type Props = {};
 const EventSort = (props: Props) => {
   const [resources, setResources] = useState([]);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_EVENT_URL}`;
 
   // console.log(location.pathname);
 

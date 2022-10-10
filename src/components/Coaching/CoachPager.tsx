@@ -16,7 +16,7 @@ type CoProps = {
 const CoachPager = (props: CoProps) => {
   const [resources, setResources] = useState<CoProps[]>([]);
 
-  var resUrl = `https://mocki.io/v1/72ecf44b-8808-4fab-9ff8-918a5ecffbd5`;
+  var resUrl = `${process.env.REACT_APP_COACH_PAGER_URL}`;
 
   const getResource = async () => {
     try {

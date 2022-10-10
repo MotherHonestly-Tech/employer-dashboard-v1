@@ -24,10 +24,16 @@ const Layout: FnComponent = (props) => {
     strict: false
   });
 
-  const allowedPathMatches = [resourcePathMatch, merchantsPathMatch];
+  const coachingBookingPathMatch = matchPath(window.location.pathname, {
+    path: '/organization/coaching',
+    exact: false,
+    strict: false
+  });
+
+  const unallowedPathMatches = [resourcePathMatch, merchantsPathMatch, coachingBookingPathMatch];
 
   const renderSecSidebar = function (): boolean {
-    if (resourcePathMatch || merchantsPathMatch) {
+    if (unallowedPathMatches.some((match) => match)) {
       return false;
     }
     return true;

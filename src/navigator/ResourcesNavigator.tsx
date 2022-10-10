@@ -33,31 +33,31 @@ const ResourcesNavigator = () => {
           <Route path={`${path}/toolkits`} exact>
             <ToolkitsPage />
           </Route>
-          <Route path={`${path}/toolkits/:slug`} exact>
+          <Route path={`${path}/toolkits/:slug/:id`} exact>
             <ViewToolkit />
           </Route>
           <Route path={`${path}/videos`} exact>
             <VideosPage />
           </Route>
-          <Route path={`${path}/videos/:slug`} exact>
+          <Route path={`${path}/videos/:slug/:id`} exact>
             <ViewVideo />
           </Route>
           <Route path={`${path}/events`} exact>
             <EventsPage />
           </Route>
-          <Route path={`${path}/events/:slug`} exact>
+          <Route path={`${path}/events/:slug/:id`} exact>
             <ViewEvent />
           </Route>
           <Route path={`${path}/articles`} exact>
             <ArticlesPage />
           </Route>
-          <Route path={`${path}/articles/:slug`} exact>
+          <Route path={`${path}/articles/:slug/:id`} exact>
             <ViewArticle />
           </Route>
           <Route path={`${path}/podcasts`} exact>
             <PodcastsPage />
           </Route>
-          <Route path={`${path}/podcasts/:slug`} exact>
+          <Route path={`${path}/podcasts/:slug/:id`} exact>
             <ViewPodcast />
           </Route>
         </Switch>

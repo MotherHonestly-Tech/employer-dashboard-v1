@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Fragment } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { ReactComponent as BgOverlay } from '../../../static/svg/event.svg';
+import { ReactComponent as BgOverlay } from "../../../static/svg/event.svg";
 import {
   Box,
   Card,
@@ -12,23 +12,24 @@ import {
   Grid,
   IconButton,
   Typography,
-  Zoom
-} from '@mui/material';
-import Footer from '../../Layout/Footer';
-import EventSort from './EventSort';
-import Pagination from '../../UI/Pagination';
-import AllresHeader from '../SubComponents/AllresHeader';
-import ResCard from '../SubComponents/ResCard';
+  Zoom,
+} from "@mui/material";
+import Footer from "../../Layout/Footer";
+import EventSort from "./EventSort";
+import Pagination from "../../UI/Pagination";
+import AllresHeader from "../SubComponents/AllresHeader";
+import ResCard from "../SubComponents/ResCard";
+import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
-  createdAt?: string;
+  slug?: string;
+  eventDate?: string;
   updatedAt?: string;
 };
 
@@ -37,9 +38,10 @@ const EventsPage = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   let [count] = useState(0);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_EVENT_URL}`;
 
-  // console.log(location.pathname);
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(7);
@@ -51,19 +53,28 @@ const EventsPage = (props: ResProps) => {
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
-        method: 'GET'
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
-      console.error('Cannot find Data');
+      console.error("Cannot find Data");
     }
   };
 
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <AllresHeader
@@ -77,7 +88,8 @@ const EventsPage = (props: ResProps) => {
         wellbeing."
         pageInfoClassName="font-semibold text-left w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
-        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png">
+        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png"
+      >
         <BgOverlay
           className="overflow-hidden absolute top-28 right-0"
           height="400px"
@@ -94,12 +106,14 @@ const EventsPage = (props: ResProps) => {
 
               {count === 1 ? (
                 <Grid item xs={12} md={12} lg={6}>
-                  <Zoom in style={{ transitionDelay: '200ms' }}>
+                  <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
-                      className={`relative w-auto h-auto object-cover bg-sky-400 rounded-md`}>
+                      className={`relative w-auto h-auto object-cover bg-sky-400 rounded-md`}
+                    >
                       <IconButton
                         disabled
-                        className="absolute outline-none top-[6%] left-[6%]">
+                        className="absolute outline-none top-[6%] left-[6%]"
+                      >
                         <img
                           className="h-6 w-6"
                           src="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
@@ -112,26 +126,28 @@ const EventsPage = (props: ResProps) => {
                       </IconButton>
                       <Box className="  absolute top-[20%] left-[6%]">
                         <Typography className=" capitalize  w-4/5 font-columbia text-[28px] leading-[143%] tracking-[-0.04rem] font-[500] text-white">
-                          {res.titles}
+                          {res.title}
                         </Typography>
                         <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
-                          {moment(res.createdAt!).format('MMMM Do ')}
+                          {moment(res.eventDate!).format("MMMM Do ")}
                         </Typography>
-                        <Typography className="pt-4  w-3/4 font-areaSemi -3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
+                        <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
                           {res.texts}
                         </Typography>
 
                         <Box className="pt-12 space-x-4">
                           <Link
-                            to={`${location.pathname}/${res.slugs}
+                            to={`${location.pathname}/${res.slug}
                       `}
-                            className="bg-white w-[108px] no-underline px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]">
+                            className="bg-white w-[108px] no-underline px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
+                          >
                             Buy Ticket
                           </Link>
                           <Link
-                            to={`${location.pathname}/${res.slugs}
+                            to={`${location.pathname}/${res.slug}
                       `}
-                            className="bg-white w-[120px] no-underline px-8 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]">
+                            className="bg-white w-[120px] no-underline px-8 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
+                          >
                             Watch Video
                           </Link>
                         </Box>
@@ -152,13 +168,12 @@ const EventsPage = (props: ResProps) => {
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
                     imgBg="bg-pink-700"
                     bodyBg="bg-cream-100"
-                    imageSrc={res.image}
-                    top={moment(res.createdAt!).format('MMMM Do ')}
-                    title={res.titles}
-                    text=""
-                    category={res.categ}
-                    titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
-                    playUrl={`${location.pathname}/${res.slugs}`}
+                    imageSrc={res.s3bucketKeyThumbNail}
+                    top={res.interests}
+                    title={res.title}
+                    category={res.interests}
+                    titleUrl={`/organization/resources/events/${res.slug}/${res.id}`}
+                    playUrl={`/organization/resources/events/${res.slug}/${res.id}`}
                   />
                 </Grid>
               ) : null}

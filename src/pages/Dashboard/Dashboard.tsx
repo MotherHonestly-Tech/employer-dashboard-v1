@@ -107,7 +107,7 @@ const Dashboard = () => {
         <Grid container spacing={7}>
           {COACHES.map((coach) => (
             <Grid item xs={4}>
-              <CoachTemp coach={coach} />
+              <CoachTemp coach={coach} onMouseClick={() => {}} />
             </Grid>
           ))}
         </Grid>
@@ -139,7 +139,7 @@ const Dashboard = () => {
         <Grid container spacing={7}>
           {CARE_COACHES.map((coach) => (
             <Grid item xs={4}>
-              <CoachTemp coach={coach} />
+              <CoachTemp coach={coach} onMouseClick={() => {}} />
             </Grid>
           ))}
         </Grid>

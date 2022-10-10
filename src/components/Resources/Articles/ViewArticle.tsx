@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
 import { useLocation } from "react-router-dom";
+import AuthContext from "../../../store/context/auth-context";
 
 type ComponentProps = {
   image?: string;
@@ -24,12 +25,19 @@ const ViewArticle = (props: ComponentProps) => {
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_ARTICLE_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
       setResources(jsonData);
@@ -44,6 +52,11 @@ const ViewArticle = (props: ComponentProps) => {
 
     console.log();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ViewHeader

@@ -10,37 +10,52 @@ import CoachTemp from '../../components/Coaching/CoachTemp';
 import { Consultant } from '../../models/coaching.model';
 
 const Connect = () => {
-  const coach: Consultant = {
-    firstName: 'Jane',
-    lastName: 'Doe',
-    headShotUrl:
-      'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
-  } as Consultant;
+  const coaches: Consultant[] = [
+    {
+      firstName: 'Mark',
+      lastName: 'Henry',
+      headShotUrl:
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1665065516/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_1_dzuva0.png'
+    },
+    {
+      firstName: 'Christine',
+      lastName: 'Kirra',
+      headShotUrl:
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      headShotUrl:
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      headShotUrl:
+        'https://res.cloudinary.com/mother-honestly/image/upload/v1657976885/linkedin-sales-solutions-pAtA8xe_iVM-unsplash_kzskcn.png'
+    }
+  ] as Consultant[];
 
   return (
     <React.Fragment>
       <Grid container minHeight="200px" mt={3}>
         <Grid item xs={6}>
-          {/* <img src="" /> */}
-          <Typography variant="h1" align="center" my={17}>
-            CEO Image Goes Here
-          </Typography>
+          <img
+            src="https://res.cloudinary.com/mother-honestly/image/upload/v1665427340/christina-wocintechchat-com-50TkCaP8M3A-unsplash_e3nukm.jpg"
+            alt="background"
+          />
         </Grid>
         <Grid item xs={6} bgcolor="#F3F4F6" px={2} py={6}>
           <Typography variant="h2" align="center" paragraph>
             Message from CEO
           </Typography>
           <Typography variant="body2" paragraph>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
+           
           </Typography>
 
           <Typography variant="body2" textTransform="uppercase" align="center">
-            Jane Doe
+            Jane Carrie
           </Typography>
         </Grid>
       </Grid>
@@ -54,31 +69,11 @@ const Connect = () => {
       <SearchFilter />
 
       <Grid container rowSpacing={4} columnSpacing={2} mt={2}>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-        <Grid item xs={4}>
-          <CoachTemp coach={coach} />
-        </Grid>
-   
+        {coaches.map((coach) => (
+          <Grid item xs={4} key={coach.firstName}>
+            <CoachTemp coach={coach} onMouseClick={() => {}} />
+          </Grid>
+        ))}
       </Grid>
     </React.Fragment>
   );

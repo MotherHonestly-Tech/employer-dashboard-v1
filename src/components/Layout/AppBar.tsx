@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 
 import SearchField from '../Form/SearchField';
@@ -40,6 +42,18 @@ const AppBarStyled = styled(MuiAppBar, {
 
 const AppBar = () => {
   const authCtx = React.useContext(AuthContext);
+  const { user, logout } = authCtx;
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -58,7 +72,12 @@ const AppBar = () => {
 
             <BellIcon title="notification" width="1.3rem" />
 
-            <IconButtonUnstyled>
+            <IconButtonUnstyled
+              id="basic-button"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}>
               <Stack direction="row" alignItems="center" spacing={1.25}>
                 <Avatar
                   alt="Avatar"
@@ -67,13 +86,25 @@ const AppBar = () => {
                   sx={{}}
                 />
                 <Typography color="primary">
-                  {authCtx.user?.firstName}&nbsp;
-                  {authCtx.user?.lastName}
+                  {user?.firstName}&nbsp;
+                  {user?.lastName}
                 </Typography>
 
                 <CaretDownIcon />
               </Stack>
             </IconButtonUnstyled>
+            <Menu
+              id="app-bar-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button'
+              }}>
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
+            </Menu>
           </Stack>
         </Toolbar>
       </AppBarStyled>

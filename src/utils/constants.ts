@@ -148,6 +148,21 @@ export const CARE_RESPONSIBILITY_OPTIONS: SelectOption<string>[] = [
   }
 ];
 
+export const CALENDAR_TYPES: Array<SelectOption<string>> = [
+  {
+    label: 'Google Calendar',
+    value: 'GOOGLE'
+  },
+  {
+    label: 'Outlook',
+    value: 'OUTLOOK'
+  },
+  {
+    label: 'Apple Calendar',
+    value: 'APPLE'
+  }
+];
+
 const FILE_TYPES: Array<string> = [
   'image/apng',
   'image/bmp',

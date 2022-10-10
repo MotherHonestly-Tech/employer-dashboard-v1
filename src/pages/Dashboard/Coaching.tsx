@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,6 +14,8 @@ import { HttpResponse } from '../../models/api.interface';
 import { Consultant } from '../../models/coaching.model';
 
 const Coaching = () => {
+  const history = useHistory();
+
   const [consultants, setConsultants] = React.useState<Consultant[]>([]);
 
   const { loading, error, sendHttpRequest } = useHttp();
@@ -63,8 +66,18 @@ const Coaching = () => {
       <Grid container rowSpacing={4} columnSpacing={2} mt={2}>
         {consultants.map((consultant, index) => {
           return (
-            <Grid item xs={4}>
-              <CoachTemp coach={consultant} />
+            <Grid item xs={3} minHeight="450px" display="flex" alignItems="stretch">
+              <CoachTemp
+                coach={consultant}
+                onMouseClick={() => {
+                  history.push(
+                    '/organization/coaching/booking/' +
+                      consultant.slug +
+                      '/' +
+                      consultant.uuid
+                  );
+                }}
+              />
             </Grid>
           );
         })}

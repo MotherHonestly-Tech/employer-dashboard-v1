@@ -13,7 +13,7 @@ import Divider from '@mui/material/Divider';
 import CoachBadge from './CoachBadge';
 import { Consultant } from '../../models/coaching.model';
 
-const CoachTemp = ({ coach }: { coach: Consultant }) => {
+const CoachTemp = ({ coach, onMouseClick }: { coach: Consultant, onMouseClick: () => void; }) => {
   return (
     <Card
       sx={{
@@ -25,10 +25,12 @@ const CoachTemp = ({ coach }: { coach: Consultant }) => {
           objectFit: 'contain',
           objectPosition: 'center',
           width: '100%',
-          height: 'auto'
+          // height: 'auto'
         }
       }}>
-      <CardActionArea>
+      <CardActionArea onClick={onMouseClick} sx={{
+        height: '100%'
+      }}>
         <CoachBadge content={coach.badgeContent || 'Business Owner'}>
           <CardMedia
             component="img"

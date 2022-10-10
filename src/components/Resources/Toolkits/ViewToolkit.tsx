@@ -3,17 +3,18 @@ import ViewHeader from "../SubComponents/ViewHeader";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ResCard from "../SubComponents/ResCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import moment from "moment";
+import AuthContext from "../../../store/context/auth-context";
+import useHttp from "../../../hooks/use-http";
 
 type ComponentProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
   title?: string | undefined;
@@ -26,18 +27,25 @@ const ViewToolkit = (props: ComponentProps) => {
   const [noOfElement, setnoOfElement] = useState(8);
   const slice = resources.slice(0, noOfElement);
 
-  // const params = useParams<any>();
-  // console.log(params.slug!);
+  const params = useParams<any>();
+  console.log(params.id!);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_TOOLKIT_URL}`;
+  var viewUrl = `${process.env.REACT_APP_RES_TOOLKIT_VIEW_URL}${params.id}`;
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   const getResource = async () => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -45,15 +53,17 @@ const ViewToolkit = (props: ComponentProps) => {
   };
   const [data, setData] = useState<any>("");
 
-  var viewUrl = `https://mocki.io/v1/03a58836-bfe9-4d5d-ac55-11cd5c00f367`;
-
   const getData = async () => {
     try {
       const response = await fetch(viewUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setData(jsonData);
+      setData(jsonData.data);
     } catch (err) {
       console.error("Cannot find Data");
     }
@@ -64,14 +74,18 @@ const ViewToolkit = (props: ComponentProps) => {
     getData();
   }, []);
 
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <ViewHeader
         titles={data.title}
-        description={data.titleDetails}
-        imageUrl={data.bgImageUrl}
-        categoryTwo={data.category}
-        downloadLink={data.downloadUrl}
+        description="Here's everything you need to know about this toolkit and why it's worth it."
+        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639776/image_2_lqcgpe.png"
+        categoryTwo={data.interests}
+        downloadLink={data.resourceFile}
         downloadClassName="flex -ml-4 my-8"
         date={moment(data.date).format("DD/MM/YYYY HH:mm")}
         dateTwo={moment(data.date).format("MMMM D, YYYY")}
@@ -88,21 +102,15 @@ const ViewToolkit = (props: ComponentProps) => {
           color="primary"
           className="text-3xl font-columbia font-[500]"
         >
-          {data.description}
+          Description:
         </Typography>
         <Typography
           variant="body2"
           color="primary"
           className="text-[13px] mt-6 leading-[200%] font-areaSemi"
         >
-          {data.importantInfo}
+          {data.description}
         </Typography>
-
-        <img
-          src={data.imageUrl}
-          alt=""
-          className="mx-auto my-6 w-full h-[600px]"
-        />
       </Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
@@ -115,18 +123,18 @@ const ViewToolkit = (props: ComponentProps) => {
         </Typography>
         <Grid container spacing={2}>
           {slice.map((res, index) => (
-            <Grid item xs={12} md={6} lg={3} key={index}>
+            <Grid item xs={12} md={6} lg={3} key={res.id}>
               <ResCard
                 cardClass="relative mb-10 w-[270px] h-[400px] object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"
                 imgBg="bg-cream-200 "
                 bodyBg="bg-cream-100"
-                imageSrc={res.image}
-                top={res.tops}
-                title={res.titles}
-                category={res.categ}
-                titleUrl={`${location.pathname}/${res.slugs}`}
-                playUrl={`${location.pathname}/${res.slugs}`}
+                imageSrc={res.s3bucketKeyThumbNail}
+                top={res.interests}
+                title={res.title}
+                category={res.interests}
+                titleUrl={`/organization/resources/toolkits/${res.slug}/${res.id}`}
+                playUrl={`/organization/resources/toolkits/${res.slug}/${res.id}`}
               />
             </Grid>
           ))}

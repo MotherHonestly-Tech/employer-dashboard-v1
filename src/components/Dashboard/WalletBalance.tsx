@@ -88,7 +88,7 @@ const WalletBalance = () => {
               fontWeight: 600,
               fontSize: '1rem'
             }}>
-            Care Wallet Balance
+            Work-Life Wallet Balance
           </Typography>
           <Typography
             align="center"

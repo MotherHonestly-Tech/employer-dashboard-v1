@@ -10,15 +10,16 @@ import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { ReactComponent as ResPodcastIcon } from "../../../static/svg/respod.svg";
 import { ReactComponent as LeftBtn } from "../../../static/svg/left-btn.svg";
 import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
+import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
+  s3bucketKeyThumbNail?: string;
+  interests?: string;
+  title?: string;
   texts?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -48,7 +49,10 @@ const ResPodcast = (props: ResProps) => {
   const [resources, setResources] = useState<ResProps[]>([]);
   const [noOfElement, setnoOfElement] = useState(4);
 
-  var resUrl = `${process.env.REACT_APP_RES_URL}`;
+  var resUrl = `${process.env.REACT_APP_RES_PODCAST_URL}`;
+
+  const authCtx = React.useContext(AuthContext);
+  const { token, userId } = authCtx;
 
   let history = useHistory();
 
@@ -76,9 +80,13 @@ const ResPodcast = (props: ResProps) => {
     try {
       const response = await fetch(resUrl, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.accessToken}`,
+        },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -90,6 +98,11 @@ const ResPodcast = (props: ResProps) => {
   useEffect(() => {
     getResource();
   }, []);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <Fragment>
       <Box className=" py-12 bg-white">
@@ -132,13 +145,12 @@ const ResPodcast = (props: ResProps) => {
                       iconClass="hidden"
                       imgBg="bg-cream-200 "
                       bodyBg="bg-cream-100"
-                      imageSrc={res.image}
-                      top={res.tops}
-                      title={res.titles}
-                      text={res.texts}
-                      category={res.categ}
-                      titleUrl={`${location.pathname}/podcasts/${res.slugs}`}
-                      playUrl={`${location.pathname}/podcasts/${res.slugs}`}
+                      imageSrc={res.s3bucketKeyThumbNail}
+                      top={res.interests}
+                      title={res.title}
+                      category={res.interests}
+                      titleUrl={`${location.pathname}/podcasts/${res.slug}/${res.id}`}
+                      playUrl={`${location.pathname}/podcasts/${res.slug}/${res.id}`}
                     />
                   </Grid>
                 ))}
