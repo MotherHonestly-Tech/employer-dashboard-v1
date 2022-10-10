@@ -57,7 +57,7 @@ const CARE_COACHES: Consultant[] = [
     lastName: 'Porter',
     headShotUrl:
       'https://res.cloudinary.com/mother-honestly/image/upload/v1665066719/Tiffany_Porter_New_1_kyalzb.png',
-    interests: 'Career, Family, Back to Work'
+    interests: 'Career, Financial Wellness'
   },
   {
     firstName: 'Nikki',

@@ -193,7 +193,7 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
         />
         <RouterLink
           icon={<WalletIcon />}
-          primary="Wallet"
+          primary="Work-Life Wallet"
           to="/organization/wallet"
         />
         <RouterLink

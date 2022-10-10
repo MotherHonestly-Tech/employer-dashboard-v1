@@ -62,28 +62,28 @@ function createData(
 
 const rows = [
   createData(
-    'Sittercity',
-    'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/sittercity_square_logo_1_t7zj5w.svg',
+    'Rover',
+    'https://res.cloudinary.com/mother-honestly/image/upload/v1665376871/Rover.com_logo.svg_jlkuus.png',
     'Petcare',
     'Vaccines',
-    -50,
-    495
+    -15.33,
+    320
   ),
   createData(
     'Care.com',
-    'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/care_1_ofwdit.svg',
+    'https://res.cloudinary.com/mother-honestly/image/upload/v1664696756/CareLogo_464x128_2_gvboub.svg',
     'Childcare',
-    'Medications',
-    -76,
-    599
+    'Diapers',
+    -22.45,
+    335.23
   ),
   createData(
-    'SnapHealth',
-    'https://res.cloudinary.com/mother-honestly/image/upload/v1658581169/Snaphealth_1_g44p2m.svg',
+    'Papa',
+    'https://res.cloudinary.com/mother-honestly/image/upload/v1664696754/277775504_4990737387679970_1961644617242490669_n_1_pgcwpo.svg',
     'Eldercare',
     'Consultation',
-    -42,
-    725
+    -35,
+    357.78
   )
 ];
 
@@ -116,7 +116,15 @@ function CustomizedTables() {
                       alt={row.merchantName}
                       src={row.merchantImgSrc}
                       variant="rounded"
-                      sx={{ width: 35, height: 35 }}
+                      sx={{
+                        bgcolor: '#ffffff',
+                        '& img': {
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          objectPosition: 'center'
+                        }
+                      }}
                     />
                   </ListItemAvatar>
                   <ListItemText>

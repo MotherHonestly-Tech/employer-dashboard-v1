@@ -118,6 +118,7 @@ export const AuthContextProvider = ({
   }, [user, logout]);
 
   const loginHandler = (token: Token, uuid: number) => {
+    resetUser();
     setToken(token);
     setUserId(uuid);
     const expirationTime = new Date(new Date().getTime() + TOKEN_VALIDITY);
@@ -141,6 +142,12 @@ export const AuthContextProvider = ({
     },
     [logoutHandler, tokenData]
   );
+
+  const resetUser = () => {
+    setUser(null);
+    setUserId(null);
+    setToken(null);
+  };
 
   React.useEffect(() => {
     setExpirationTimer(tokenData?.tokenExpirationDate as Date);

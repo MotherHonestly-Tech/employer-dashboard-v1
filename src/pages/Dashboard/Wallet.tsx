@@ -340,7 +340,7 @@ const Wallet = (props: { title: string }) => {
     <React.Fragment>
       <div>
         <Typography variant="h1" align="center" color="primary" gutterBottom>
-          My Care Wallet
+          My Work-Life Wallet
         </Typography>
 
         <Paper
@@ -355,7 +355,7 @@ const Wallet = (props: { title: string }) => {
             color="primary"
             fontWeight={'bold'}
             gutterBottom>
-            Personal Care Wallet Credit Breakdown
+            Personal Work-Life Wallet Credit Breakdown
           </Typography>
 
           <Divider

@@ -136,7 +136,7 @@ const WalletBalance = () => {
                     fontWeight: 600,
                     fontSize: '0.65rem'
                   }}>
-                  1000
+                  600
                 </Typography>{' '}
                 USD
               </Typography>
@@ -167,7 +167,7 @@ const WalletBalance = () => {
                     fontWeight: 600,
                     fontSize: '0.65rem'
                   }}>
-                  401
+                  280
                 </Typography>{' '}
                 USD
               </Typography>
