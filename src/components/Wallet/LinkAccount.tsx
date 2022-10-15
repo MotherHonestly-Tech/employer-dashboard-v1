@@ -38,8 +38,7 @@ const LinkAccount = ({
     isOauth,
     generateLinkToken,
     exchangeToken,
-    removeLinkToken,
-    setModalAction
+    removeLinkToken
   } = linkCtx;
 
   const notificationCtx = React.useContext(NotificationContext);
@@ -81,8 +80,7 @@ const LinkAccount = ({
 
   React.useEffect(() => {
     generateLinkToken();
-    setModalAction('linkAccountOpen');
-  }, [generateLinkToken, setModalAction]);
+  }, [generateLinkToken]);
 
   React.useEffect(() => {
     if (ready) {

@@ -33,7 +33,6 @@
     "serve": "^14.0.0",
     "slick-carousel": "^1.8.1",
     "typescript": "^4.7.4",
-    "web-component-load": "^1.0.1",
     "web-vitals": "^2.1.4"
   },
   "eslintConfig": {

@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import { HttpResponse } from '../models/api.interface';
 import { LinkSuccessMetadata } from '../models/plaid.model';
-import { ModalID } from '../pages/Dashboard/Wallet';
 
 type TokenExchange = {
   exchangePublicToken: (
@@ -23,7 +22,6 @@ export type PlaidLinkContextShape = {
   generateLinkToken: () => void;
   exchangeToken: TokenExchange;
   removeLinkToken: () => void;
-  setModalAction: (modalAction: ModalID) => void;
   //   publicKey: string;
   //   env: 'sandbox' | 'development' | 'production';
   //   product: 'auth' | 'transactions';
@@ -47,7 +45,6 @@ const PlaidLinkContext = React.createContext<PlaidLinkContextShape>({
     ) => {}
   },
   removeLinkToken: () => {},
-  setModalAction: (modalAction: ModalID) => {}
   //   publicKey: '',
   //   env: 'sandbox',
   //   product: 'auth',
@@ -135,10 +132,6 @@ export const PlaidLinkContextProvider = ({
     [exchangeTokens, removeLinkToken]
   );
 
-  const setModalAction = React.useCallback((modalAction: ModalID) => {
-    localStorage.setItem('modal_action', modalAction);
-  }, []);
-
   const contextValue = {
     isOauth: isOauth.current,
     linkToken,
@@ -148,8 +141,7 @@ export const PlaidLinkContextProvider = ({
       loading: exchangingPublicToken,
       error: errorExchangingPubToken
     },
-    removeLinkToken,
-    setModalAction
+    removeLinkToken
   };
 
   return (

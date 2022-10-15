@@ -7,7 +7,6 @@ import NotFound from '../pages/Error/404';
 
 import AuthContext from "../store/context/auth-context";
 import { FnComponent } from "../models/component.model";
-import OnboardingNavigator from "./OnboardingNavigator";
 
 const AppNavigator: FnComponent<{}> = (props) => {
   const authCtx = React.useContext(AuthContext);
@@ -39,15 +38,6 @@ const AppNavigator: FnComponent<{}> = (props) => {
 
         <Route path="/auth">
           <AuthNavigator />
-        </Route>
-
-        {/* <Route path={`/onboarding`} component={OnboardingNavigator} exact /> */}
-        <Route path="/onboarding">
-          {authCtx.isAuthenticated ? (
-            <OnboardingNavigator />
-          ) : (
-            <Redirect to="/auth" />
-          )}
         </Route>
 
         <Route path="/organization">

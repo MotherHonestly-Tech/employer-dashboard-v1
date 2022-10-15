@@ -42,8 +42,7 @@ const PayoutAccount = ({
     linkToken,
     isOauth,
     generateLinkToken,
-    exchangeToken,
-    setModalAction
+    exchangeToken
   } = linkCtx;
 
   const onSuccess = React.useCallback(
@@ -80,8 +79,7 @@ const PayoutAccount = ({
 
   React.useEffect(() => {
     generateLinkToken();
-    setModalAction('uploadReceiptOpen');
-  }, [generateLinkToken, setModalAction]);
+  }, [generateLinkToken]);
 
   React.useEffect(() => {
     if (ready && !isAccountLinked) {
