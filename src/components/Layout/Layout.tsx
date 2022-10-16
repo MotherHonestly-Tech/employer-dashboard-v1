@@ -7,7 +7,6 @@ import Toolbar from '@mui/material/Toolbar';
 
 import AppBar from './AppBar';
 import Sidebar from './MainSidebar';
-import SecondarySidebar from './SecondarySidebar';
 
 import { FnComponent } from '../../models/component.model';
 
@@ -56,8 +55,6 @@ const Layout: FnComponent = (props) => {
           <Toolbar />
           {props.children}
         </Box>
-
-        {renderSecSidebar() && <SecondarySidebar />}
       </Stack>
     </Box>
   );

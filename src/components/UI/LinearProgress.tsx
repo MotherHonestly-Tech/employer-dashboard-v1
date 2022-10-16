@@ -5,14 +5,14 @@ import { styled } from '@mui/material/styles';
 
 const BorderLinearProgress = styled(LinearProgress)<{ barcolor: string }>(
   ({ theme, color, barcolor }) => ({
-    height: 7,
-    borderRadius: 5,
+    height: 10,
+    width: '100%',
     [`&.${linearProgressClasses.colorPrimary}`]: {
       backgroundColor:
         theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
     },
     [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
+      // borderRadius: 5,
       backgroundColor: barcolor
     },
     [`&.${linearProgressClasses.root}::before`]: {

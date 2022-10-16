@@ -150,14 +150,16 @@ const SignIn: FnComponent<{
   return (
     <React.Fragment>
       <Box
+        bgcolor="common.white"
+        px={8}
+        py={4}
+        width='100%'
         sx={{
-          px: 8,
-          width: '100%',
-          boxShadow: 'none'
+          boxShadow: '0px 10px 16px rgba(154, 154, 154, 0.13)'
         }}>
         <Box
           sx={{
-            my: 4
+            mb: 4
           }}>
           <Typography variant="h1" component="div" gutterBottom mb={1.5}>
             Welcome back
@@ -229,9 +231,9 @@ const SignIn: FnComponent<{
             }}
             mb={3}
             onClick={preventDefault}>
-            <MuiLink component={Link} href="" to="/auth/forgot-password">
+            {/* <MuiLink component={Link} href="" to="/auth/forgot-password">
               Forgot password?
-            </MuiLink>
+            </MuiLink> */}
           </Box>
 
           <MHButton sx={{}} type="submit" loading={loading} fullWidth>

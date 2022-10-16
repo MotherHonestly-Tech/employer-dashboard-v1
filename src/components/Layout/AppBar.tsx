@@ -65,12 +65,13 @@ const AppBar = () => {
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={6}>
-            <SearchField
-              icon={<ArrowRightIcon />}
-              placeholder="Select an interest"
-            />
-
-            <BellIcon title="notification" width="1.3rem" />
+            <div className="relative">
+              <BellIcon title="notification" width="1.3rem" />
+              <span className="absolute flex h-3 w-3 -top-0.5 -right-0.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F2EC2C] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F2EC2C]"></span>
+              </span>
+            </div>
 
             <IconButtonUnstyled
               id="basic-button"
@@ -93,6 +94,7 @@ const AppBar = () => {
                 <CaretDownIcon />
               </Stack>
             </IconButtonUnstyled>
+
             <Menu
               id="app-bar-menu"
               anchorEl={anchorEl}

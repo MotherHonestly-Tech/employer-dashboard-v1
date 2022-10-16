@@ -45,7 +45,7 @@ export const getURLWithQueryParams = (
   return `${base}?${query}`;
 };
 
-export const formatAmount = (amount: number) => {
+export const formatAmount = (amount: number, precision: number = 2) => {
   if (typeof amount === 'string') {
     amount = parseFloat(amount);
   }
@@ -57,7 +57,7 @@ export const formatAmount = (amount: number) => {
   const options = {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 2
+    minimumFractionDigits: precision
   };
 
   return new Intl.NumberFormat('en-US', options).format(amount);

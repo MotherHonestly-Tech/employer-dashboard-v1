@@ -48,13 +48,13 @@ const AuthNavigator: FnComponent = () => {
 
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={0} sx={{ minHeight: '100vh' }}>
+      <Box sx={{ flexGrow: 1 }} bgcolor="#FAFAFA">
+        <Grid container spacing={0} sx={{ minHeight: '100vh' }} justifyContent="center">
           <Grid
             item
             xs={6}
             sx={{
-              backgroundColor: backgroundColor.current,
+              // backgroundColor: backgroundColor.current,
               position: 'relative'
             }}>
             <Stack
@@ -116,33 +116,6 @@ const AuthNavigator: FnComponent = () => {
                 />
               </Typography>
             </Stack>
-          </Grid>
-
-          <Grid
-            item
-            xs={6}
-            position="sticky"
-            height="100vh"
-            sx={{
-              top: 0
-            }}>
-            <Box
-              component="div"
-              sx={{
-                height: '100vh',
-                overflow: 'hidden'
-              }}>
-              <img
-                src={image.imageSrc}
-                alt={image.imageAlt}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center'
-                }}
-              />
-            </Box>
           </Grid>
         </Grid>
       </Box>

@@ -110,7 +110,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#FFFFFF',
-          boxShadow: '0px 10px 16px 0px rgba(154, 154, 154, 0.13)'
+          boxShadow: '0px 5px 26px rgba(197, 216, 222, 0.25)'
         }
       },
       defaultProps: {
@@ -142,24 +142,24 @@ export const theme = createTheme({
         subtitle1: {
           fontSize: '1rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: '#6F6F6F',
+          color: primaryColor,
           fontWeight: 300
         },
         subtitle2: {
           fontSize: '1rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: '#B9B9B9',
+          color: primaryColor,
           fontWeight: 300
         },
         body1: {
           fontSize: '0.8rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: '#717171'
+          color: primaryColor
         },
         body2: {
           fontSize: '0.8rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: '#717171',
+          color: primaryColor,
           fontWeight: 300
         }
       },

@@ -9,12 +9,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 
-import { ReactComponent as DashboardIcon } from '../../static/svg/dashboard.svg';
-import { ReactComponent as WalletIcon } from '../../static/svg/wallet.svg';
-import { ReactComponent as MerchantIcon } from '../../static/svg/merchant.svg';
+import { ReactComponent as InsightsIcon } from '../../static/svg/insights.svg';
+import { ReactComponent as CloudUploadIcon } from '../../static/svg/cloud-upload.svg';
+import { ReactComponent as MemberIcon } from '../../static/svg/member.svg';
 import { ReactComponent as ResourcesIcon } from '../../static/svg/resources.svg';
-import { ReactComponent as CoachingIcon } from '../../static/svg/coaching.svg';
-import { ReactComponent as ConnectIcon } from '../../static/svg/connect.svg';
 import { DRAWER_WIDTH } from '../../utils/constants';
 import { FnComponent } from '../../models/component.model';
 
@@ -33,7 +31,7 @@ const SideDrawer = styled(MuiDrawer, {
     width: DRAWER_WIDTH,
     height: '100vh',
     paddingTop: theme.spacing(5),
-    background: theme.palette.common.white,
+    background: '#F8F8F8',
     borderWidth: 0,
     boxShadow: '2px 4px 4px 0px #B7B7B740',
     transition: theme.transitions.create('width', {
@@ -84,31 +82,31 @@ const Indicator = styled('div')(({ theme }) => ({
   position: 'absolute',
   height: 52,
   display: 'block',
-  left: 0,
+  left: '50%',
   top: 0,
-  width: 5,
-  backgroundColor: theme.palette.primary.main,
-  borderTopRightRadius: '.4rem',
-  borderBottomRightRadius: '.4rem',
+  width: '90%',
+  backgroundColor: theme.palette.common.white,
+  zIndex: -10,
+  borderRadius: '.4rem',
   transition: '0.5s',
-  transform: 'translateY(0)',
+  transform: 'translate(-50%, 0)',
   '.MuiListItem-root.active:nth-of-type(2) ~ &': {
-    transform: `translateY(${52}px)`
+    transform: `translate(0, ${52}px)`
   },
   '.MuiListItem-root.active:nth-of-type(3) ~ &': {
-    transform: `translateY(${52 * 2}px)`
+    transform: `translate(0, ${52 * 2}px)`
   },
   '.MuiListItem-root.active:nth-of-type(4) ~ &': {
-    transform: `translateY(${52 * 3}px)`
+    transform: `translate(0, ${52 * 3}px)`
   },
   '.MuiListItem-root.active:nth-of-type(5) ~ &': {
-    transform: `translateY(${52 * 4}px)`
+    transform: `translate(0, ${52 * 4}px)`
   },
   '.MuiListItem-root.active:nth-of-type(6) ~ &': {
-    transform: `translateY(${52 * 5}px)`
+    transform: `translate(0, ${52 * 5}px)`
   },
   '.MuiListItem-root.active:nth-of-type(7) ~ &': {
-    transform: `translateY(${52 * 6}px)`
+    transform: `translate(0, ${52 * 6}px)`
   }
 }));
 
@@ -130,6 +128,7 @@ const RouterLink = (props: RouterLinkProps) => {
       to={to}
       alignItems="center"
       sx={{
+        px: 3,
         '& svg': {
           color: 'secondary.light',
           transition: '0.5s',
@@ -187,34 +186,24 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
         {/* <ListItem component={NavLink} to="/organization/dashboard"></ListItem> */}
 
         <RouterLink
-          icon={<DashboardIcon />}
-          primary="Dashboard"
+          icon={<InsightsIcon />}
+          primary="Employee Insights"
           to="/organization/dashboard"
         />
         <RouterLink
-          icon={<WalletIcon />}
-          primary="Work-Life Wallet"
+          icon={<CloudUploadIcon />}
+          primary="Upload Employees"
           to="/organization/wallet"
         />
         <RouterLink
-          icon={<MerchantIcon />}
-          primary="Merchants"
+          icon={<MemberIcon />}
+          primary="Members"
           to="/organization/merchants"
         />
         <RouterLink
           icon={<ResourcesIcon />}
           primary="Resources"
           to="/organization/resources"
-        />
-        <RouterLink
-          icon={<CoachingIcon />}
-          primary="1:1 Coaching"
-          to="/organization/coaching"
-        />
-        <RouterLink
-          icon={<ConnectIcon />}
-          primary="1:1 Connect"
-          to="/organization/connect"
         />
         {/* <RouterLink icon={<WalletIcon />} primary="Wallet" to="/wallet" /> */}
         <Indicator />

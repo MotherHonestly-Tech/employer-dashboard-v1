@@ -10,15 +10,14 @@ const RoundedLogoIcon: FnComponent<{ sx?: object }> = (props) => {
       component="div"
       sx={{
         borderRadius: '50%',
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         backgroundColor: (theme) => theme.palette.grey[600],
         border: 'none',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        mx: 'auto',
         ...props.sx
       }}>
       {props.children}
