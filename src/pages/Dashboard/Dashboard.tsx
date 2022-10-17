@@ -138,7 +138,7 @@ const Dashboard = () => {
 
         <Box>
           <Typography variant="h1" align="center" my={2} gutterBottom>
-            Employee Insight
+            Employee Insights
           </Typography>
 
           <Grid container spacing={2}>

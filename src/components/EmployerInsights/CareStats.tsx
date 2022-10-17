@@ -127,7 +127,7 @@ const STATS: CareStatProps[] = [
     averageStat: 'Avg of $10,000 spent on care expenses'
   },
   {
-    value: 25,
+    value: 73,
     color: '#9CAC94',
     caption: 'of your workforce are employee caregivers',
     type: 'increase',
@@ -168,7 +168,7 @@ const CareStats = () => {
             justifyContent: 'center'
           }}>
           <Typography variant="h1" fontSize="2.4rem" align="center">
-            $16,000
+            $38,500
           </Typography>
           <Typography variant="body1" align="center" color="#8D8D8D" my={3}>
             Avg. care related expenses per employee per year
