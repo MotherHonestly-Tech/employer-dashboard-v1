@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 
 import SearchField from '../Form/SearchField';
 import MHPrimaryLogo from '../../theme/icons/MHPrimaryLogo';
+import MHLogo from '../../theme/icons/MHLogo';
 import IconButtonUnstyled from '../Button/IconButtonStyled';
 
 import { ReactComponent as OrgLogo } from '../../static/svg/unilever-logo.svg';
@@ -61,7 +62,7 @@ const AppBar = () => {
         <Toolbar>
           <Box aria-label="menu" sx={{ ml: 5 }} flexGrow={1}>
             {/* <MHPrimaryLogo className="mx-0" /> */}
-            <OrgLogo />
+            <MHLogo style={{ width: '3.4rem' }} />
           </Box>
 
           <Stack direction="row" alignItems="center" spacing={6}>
