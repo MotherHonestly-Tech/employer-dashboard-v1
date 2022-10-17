@@ -64,7 +64,8 @@ const AuthNavigator: FnComponent = () => {
               sx={{ minHeight: '100vh', px: 6 }}>
               <Box position="relative" top={-25}>
                 {/* <MHLogoIcon /> */}
-                <OrgLogo />
+                {/* <OrgLogo /> */}
+                <MHLogo style={{ width: '3.4rem' }} />
               </Box>
               <TransitionGroup style={{ width: '100%' }}>
                 <CSSTransition
