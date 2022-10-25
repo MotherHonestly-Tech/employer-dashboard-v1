@@ -91,22 +91,13 @@ const Indicator = styled('div')(({ theme }) => ({
   transition: '0.5s',
   transform: 'translate(-50%, 0)',
   '.MuiListItem-root.active:nth-of-type(2) ~ &': {
-    transform: `translate(0, ${52}px)`
+    transform: `translate(-50%, ${52}px)`
   },
   '.MuiListItem-root.active:nth-of-type(3) ~ &': {
-    transform: `translate(0, ${52 * 2}px)`
+    transform: `translate(-50%, ${52 * 2}px)`
   },
   '.MuiListItem-root.active:nth-of-type(4) ~ &': {
-    transform: `translate(0, ${52 * 3}px)`
-  },
-  '.MuiListItem-root.active:nth-of-type(5) ~ &': {
-    transform: `translate(0, ${52 * 4}px)`
-  },
-  '.MuiListItem-root.active:nth-of-type(6) ~ &': {
-    transform: `translate(0, ${52 * 5}px)`
-  },
-  '.MuiListItem-root.active:nth-of-type(7) ~ &': {
-    transform: `translate(0, ${52 * 6}px)`
+    transform: `translate(-50%, ${52 * 3}px)`
   }
 }));
 
@@ -193,12 +184,12 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
         <RouterLink
           icon={<CloudUploadIcon />}
           primary="Upload Employees"
-          to="/organization/wallet"
+          to="/organization/upload-employees"
         />
         <RouterLink
           icon={<MemberIcon />}
           primary="Members"
-          to="/organization/merchants"
+          to="/organization/team-members"
         />
         <RouterLink
           icon={<ResourcesIcon />}

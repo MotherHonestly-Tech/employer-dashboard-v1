@@ -12,6 +12,9 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 
+import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
+import AbsolutePositionedContainer from '../UI/AbsolutePositionedContainer';
+
 import { ReactComponent as ChildCareIcon } from '../../static/svg/categories/child-care.svg';
 import { ReactComponent as ChoiceFamilyIcon } from '../../static/svg/categories/choice-family.svg';
 import { ReactComponent as ElderCareIcon } from '../../static/svg/categories/elder-care.svg';
@@ -21,7 +24,6 @@ import { ReactComponent as PetCareIcon } from '../../static/svg/categories/pet-c
 import { ReactComponent as SelfCareIcon } from '../../static/svg/categories/self-care.svg';
 import { ReactComponent as WorkLifeIcon } from '../../static/svg/categories/work-life.svg';
 import { formatAmount } from '../../utils/utils';
-import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 
 const Container = styled(Box)(({ theme }) => ({
   backgroundColor: '#F9F9F9',
@@ -152,13 +154,6 @@ const ExpenseCategory = (props: ExpenseCategoryProps) => {
     </ListItem>
   );
 };
-
-const AbsolutePositionedContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)'
-}));
 
 const Category = (category: ExpenseCategoryProps) => {
   return (

@@ -10,6 +10,7 @@ import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import CoachingInsights from '../../components/EmployerInsights/CoachingInsights';
 import EmployeeExpenditure from '../../components/EmployerInsights/EmployeeExpenditure';
 import CareStats from '../../components/EmployerInsights/CareStats';
+import ResourceStats from '../../components/EmployerInsights/ResourceStats';
 
 import AuthContext from '../../store/context/auth-context';
 import { ReactComponent as UsersGroupIcon } from '../../static/svg/users-group.svg';
@@ -160,6 +161,8 @@ const Dashboard = () => {
         </Box>
 
         <CareStats />
+
+        <ResourceStats />
       </Box>
     </React.Fragment>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import './index.scss';
 import './App.module.scss';
 
 import ScrollToTop from './components/Layout/ScrollToTop';

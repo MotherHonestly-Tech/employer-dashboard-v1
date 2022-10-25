@@ -2,14 +2,22 @@ import React from 'react';
 
 import Stack from '@mui/material/Stack';
 
-import { ReactComponent as ArrowLeftIcon } from '../../static/svg/arrow-left-lg.svg';
-import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right-lg.svg';
+import { ReactComponent as ArrowLeftStretchedIcon } from '../../static/svg/arrow-left-stretched.svg';
+import { ReactComponent as ArrowRightStretchedIcon } from '../../static/svg/arrow-right-stretched.svg';
 
-const ArrowPanelBar = () => {
+const ArrowPanelBar = ({ onLeft, onRight } : { onLeft: () => void; onRight: () => void;}) => {
   return (
-    <Stack direction="row" spacing={2}>
-      <ArrowLeftIcon />
-      <ArrowRightIcon />
+    <Stack
+      direction="row"
+      spacing={2}
+      justifyContent="center"
+      sx={{
+        '& > svg': {
+          cursor: 'pointer'
+        }
+      }}>
+      <ArrowLeftStretchedIcon onClick={onLeft} />
+      <ArrowRightStretchedIcon onClick={onRight} />
     </Stack>
   );
 };

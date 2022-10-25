@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import { styled } from '@mui/material/styles';
 
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
+import AbsolutePositionedContainer from '../UI/AbsolutePositionedContainer';
 
 import { ReactComponent as ArrowUpMdIcon } from '../../static/svg/arrow-up-md.svg';
 import { ReactComponent as ArrowDownMdIcon } from '../../static/svg/arrow-down-md.svg';
@@ -23,13 +23,6 @@ type CareStatProps = {
   percentStat: string;
   averageStat: string;
 };
-
-const AbsolutePositionedContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)'
-}));
 
 const CareStat = (props: CareStatProps) => {
   return (
