@@ -1,3 +1,4 @@
+import React from 'react';
 import { SelectOption } from '@mui/base';
 
 export type Form = {
@@ -18,6 +19,7 @@ export type Validator = {
 
 export interface SelectProps<T> {
   options: SelectOption<T>[];
+  optionRenderer?: (option: SelectOption<T>) => React.ReactNode;
   placeholder?: string;
   label?: string;
   value: T;

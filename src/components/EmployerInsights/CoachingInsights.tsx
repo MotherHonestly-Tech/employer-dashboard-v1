@@ -33,7 +33,7 @@ const CoachingHours = (props: CoachingHoursProps) => {
     <Stack direction="row" spacing={2} alignItems="center" mb={1.4}>
       <Box width={120} overflow="hidden">
         <Typography
-          variant="subtitle1"
+          variant="body1"
           fontSize=".8rem"
           textOverflow="ellipsis">
           {props.category}
@@ -45,7 +45,7 @@ const CoachingHours = (props: CoachingHoursProps) => {
         barcolor={props.color}
       />
       <Box width={30}>
-        <Typography variant="subtitle2" fontSize=".75rem" color="#B7B7B7">
+        <Typography variant="body2" fontSize=".75rem" color="#B7B7B7">
           {props.hours}hrs
         </Typography>
       </Box>

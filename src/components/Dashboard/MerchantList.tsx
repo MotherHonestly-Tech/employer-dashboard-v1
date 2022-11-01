@@ -86,7 +86,7 @@ export const MerchantList = () => {
             </ListItemAvatar>
             <ListItemText>
               <Typography
-                variant="subtitle1"
+                variant="body2"
                 className=""
                 color="#28404A"
                 sx={{ fontSize: '12px' }}>

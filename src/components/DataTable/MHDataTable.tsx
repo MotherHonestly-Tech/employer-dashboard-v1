@@ -58,14 +58,14 @@ const rows = [
   )
 ];
 
-export type GridColDef = {
+export type GridColDef<T> = {
   field: string;
   headerName: string;
   width: number;
   type: 'number' | 'text' | 'date';
   align?: 'left' | 'right' | 'center';
-  valueGetter?: (params: any) => any;
-  cellRenderer?: (params: any) => any;
+  valueGetter?: (params: T) => any;
+  cellRenderer?: (params: T) => React.ReactNode;
   description?: string;
 };
 
@@ -99,13 +99,15 @@ const StyledTableCell = styled(TableCell)<{
   headerstyles?: object;
   bodystyles?: object;
 }>(({ theme, headerstyles, bodystyles }) => ({
-  fontFamily: theme.typography.fontFamily,
+  fontFamily: theme.typography.body1.fontFamily,
   padding: 10,
   borderBottom: '1px solid rgb(241 245 249)',
+  borderRight: '1px solid rgb(241 245 249)',
   //   mb: 3,
   [`&.${tableCellClasses.head}`]: {
-    borderTop: '10px solid #fbf78d',
-    background: '#fff',
+  fontFamily: theme.typography.subtitle2.fontFamily,
+  // borderTop: '10px solid #fbf78d',
+    background: '#EEEEEE',
     color: '#A1A1A1',
     fontSize: '0.8rem',
     ...(headerstyles && headerstyles)
@@ -207,14 +209,14 @@ const PaginationItem = styled('li')(({ theme }) => ({
   borderRadius: '4px'
 }));
 
-export default function MHDataTable({
+export default function MHDataTable<T>({
   rows,
   columns,
   frontEndPagination,
   ...props
 }: {
   rows: any[];
-  columns: GridColDef[];
+  columns: GridColDef<T>[];
   frontEndPagination: boolean;
   containerStyles?: object;
   headerStyles?: object;
@@ -296,6 +298,7 @@ export default function MHDataTable({
             ))}
           </TableBody>
         </Table>
+
         {slicedRows.length === 0 && (
           <Stack
             justifyContent="center"

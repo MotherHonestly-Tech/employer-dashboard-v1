@@ -40,7 +40,8 @@ const CustomizedDialogTitle = (props: DialogTitleProps & ModalTitleProps) => {
     <DialogTitle
       sx={{ m: 0, p: 1.8 }}
       id={id}
-      fontFamily="Area-Normal-Bold"
+      fontFamily="Area-Normal-Black"
+      fontSize="1.2rem"
       {...rest}>
       {children}
       {onClose ? (

@@ -94,7 +94,7 @@ const ForgotPassword: FnComponent<{
           </Typography>
 
           <Typography
-            variant="subtitle1"
+            variant="body2"
             color="#6F6F6F"
             component={'div'}
             gutterBottom

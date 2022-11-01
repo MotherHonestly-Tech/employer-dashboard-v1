@@ -6,6 +6,17 @@ export const DEFAULT_NOTIFICATION_DURATION: number = 12000;
 
 export const EMAIL_FROM = 'noreply@motherhonestly.com';
 
+export const ROLES: SelectOption<string>[] = [
+  {
+    value: 'Admin',
+    label: 'Admin'
+  },
+  {
+    value: 'Member',
+    label: 'Member'
+  }
+];
+
 export const RELATIONSHIP_STATUS_OPTIONS: SelectOption<string>[] = [
   {
     value: 'single',

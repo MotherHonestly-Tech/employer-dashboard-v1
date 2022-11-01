@@ -11,20 +11,19 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import SignIn from '../pages/Auth/SignIn';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
 import ResetLinkSuccess from '../pages/Auth/ResetLinkSuccess';
 import PasswordReset from '../pages/Auth/PasswordReset';
 import ResetSuccess from '../pages/Auth/ResetSuccess';
+
 import MHLogo from '../theme/icons/MHLogo';
-
 import { ReactComponent as OrgLogo } from '../static/svg/unilever-logo.svg';
-
 import { FnComponent } from '../models/component.model';
 import { theme } from '../theme/mui/dashboard.theme';
 import { BGImage } from '../models/background-image.model';
-import { Typography } from '@mui/material';
 
 const AuthNavigator: FnComponent = () => {
   const [image, setImage] = React.useState<BGImage>({} as BGImage);

@@ -17,7 +17,7 @@ import { ReactComponent as UsersGroupIcon } from '../../static/svg/users-group.s
 import { ReactComponent as UsersIcon } from '../../static/svg/users.svg';
 import { ReactComponent as UsersCancelledIcon } from '../../static/svg/users-cancelled.svg';
 import { ReactComponent as BinIcon } from '../../static/svg/bin.svg';
-
+import IconWithText from '../../components/UI/IconWithText';
 
 type EmployeeStatProps = {
   theme: 'dark' | 'light';
@@ -93,10 +93,8 @@ const EmployeeStatsGrid = () => {
           </Grid>
         ))}
       </Grid>
-      <Stack
-        direction="row"
+      <IconWithText
         justifyContent="flex-end"
-        alignItems="center"
         spacing={1}
         mt={1}>
         <BinIcon width=".9rem" />
@@ -115,7 +113,7 @@ const EmployeeStatsGrid = () => {
             4
           </Typography>
         </RoundedLogoIcon>
-      </Stack>
+      </IconWithText>
     </React.Fragment>
   );
 };
@@ -128,7 +126,6 @@ const Dashboard = () => {
       <Box mb={4}>
         <Typography
           variant="subtitle1"
-          fontFamily="Area-Normal-Black"
           fontSize="1.25rem"
           my={1}
           gutterBottom>

@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { red, common } from '@mui/material/colors';
-import { buttonClasses } from '@mui/material/Button';
+import { buttonClasses,  } from '@mui/material/Button';
 
 const primaryColor = '#28404A';
 
@@ -43,7 +43,19 @@ export const theme = createTheme({
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
-    fontWeightBold: 700
+    fontWeightBold: 700,
+    h1: {
+      fontFamily: 'Columbia-Sans'
+    },
+    subtitle1: {
+      fontFamily: 'Area-Normal-Black'
+    },
+    subtitle2: {
+      fontFamily: 'Area-Normal-Bold'
+    },
+    body1: {
+      fontFamily: 'Area-Normal-Semibold'
+    },
   },
   components: {
     // Name of the component
@@ -58,6 +70,7 @@ export const theme = createTheme({
           textTransform: 'none',
           padding: '6px 12px',
           letterSpacing: '0.05em',
+          borderStyle: 'solid',
           ':hover': {
             backgroundColor: '#F2EC2C',
             color: primaryColor
@@ -80,26 +93,48 @@ export const theme = createTheme({
             }
           },
           ...{
-            [`&.${buttonClasses.outlinedSecondary}`]: {
+            [`&.${buttonClasses.containedSecondary}`]: {
               backgroundColor: '#F2EC2C',
               borderColor: '#F2EC2C',
-              color: primaryColor
+              color: primaryColor,
+              borderWidth: 1
             }
           },
           ...{
-            [`&.${buttonClasses.outlinedSecondary}:hover`]: {
+            [`&.${buttonClasses.containedSecondary}:hover`]: {
               backgroundColor: 'transparent',
               color: primaryColor,
               borderColor: '#F2EC2C'
             }
           },
           ...{
-            [`&.${buttonClasses.outlinedSecondary}:active`]: {
+            [`&.${buttonClasses.containedSecondary}:active`]: {
               backgroundColor: 'transparent',
               color: primaryColor,
               borderColor: '#F2EC2C'
             }
-          }
+          },
+          ...{
+            [`&.${buttonClasses.containedError}`]: {
+              // borderColor: ,
+              // color: primaryColor,
+              borderWidth: 1
+            }
+          },
+          ...{
+            [`&.${buttonClasses.containedError}:hover`]: {
+              backgroundColor: 'transparent',
+              color: '#ff1744',
+              borderColor: '#ff1744'
+            }
+          },
+          ...{
+            [`&.${buttonClasses.containedError}:active`]: {
+              backgroundColor: 'transparent',
+              color: '#ff1744',
+              borderColor: '#ff1744'
+            }
+          },
         }
       },
       defaultProps: {
@@ -141,13 +176,13 @@ export const theme = createTheme({
         },
         subtitle1: {
           fontSize: '1rem',
-          fontFamily: 'Area-Normal-Semibold',
+          fontFamily: 'Area-Normal-Black',
           color: primaryColor,
           fontWeight: 300
         },
         subtitle2: {
           fontSize: '1rem',
-          fontFamily: 'Area-Normal-Semibold',
+          fontFamily: 'Area-Normal-Bold',
           color: primaryColor,
           fontWeight: 300
         },

@@ -8,7 +8,7 @@ import { Employee, Token, User } from '../../models/user.model';
 import { decrypt, encrypt } from '../../utils/utils';
 
 const AUTH_LOCATION = 'Sn61y6yYDiIxkur0JT';
-const TOKEN_VALIDITY = 720 * 60000;
+const TOKEN_VALIDITY = 720 * 60000; // 12 hrs
 let expirationTimer: any;
 
 type StoredToken = {
@@ -93,8 +93,7 @@ export const AuthContextProvider = ({
   const { sendHttpRequest: resetToken } = useHttp();
 
   const logoutHandler = React.useCallback(() => {
-    setToken(null);
-    setUser(null);
+    resetUser();
 
     if (expirationTimer) {
       clearTimeout(expirationTimer);
@@ -115,7 +114,7 @@ export const AuthContextProvider = ({
       },
       () => {}
     );
-  }, [user, logout]);
+  }, [user, logout, history]);
 
   const loginHandler = (token: Token, uuid: number) => {
     resetUser();
@@ -135,12 +134,12 @@ export const AuthContextProvider = ({
 
   const setExpirationTimer = React.useCallback(
     (expirationTime: Date) => {
-      if (tokenData)
-        expirationTimer = setTimeout(() => {
-          logoutHandler();
-        }, computeExpirationInMilliSecs(expirationTime));
+      // if (tokenData)
+      expirationTimer = setTimeout(() => {
+        logoutHandler();
+      }, computeExpirationInMilliSecs(expirationTime));
     },
-    [logoutHandler, tokenData]
+    [logoutHandler]
   );
 
   const resetUser = () => {
@@ -150,7 +149,9 @@ export const AuthContextProvider = ({
   };
 
   React.useEffect(() => {
-    setExpirationTimer(tokenData?.tokenExpirationDate as Date);
+    if (tokenData) {
+      setExpirationTimer(tokenData?.tokenExpirationDate as Date);
+    }
   }, [tokenData, setExpirationTimer]);
 
   const generateNewToken = React.useCallback(

@@ -89,6 +89,7 @@ const Indicator = styled('div')(({ theme }) => ({
   zIndex: -10,
   borderRadius: '.4rem',
   transition: '0.5s',
+  boxShadow: '0px 1px 4px rgba(203, 203, 203, 0.25)',
   transform: 'translate(-50%, 0)',
   '.MuiListItem-root.active:nth-of-type(2) ~ &': {
     transform: `translate(-50%, ${52}px)`

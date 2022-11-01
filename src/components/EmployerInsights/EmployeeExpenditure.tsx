@@ -143,7 +143,7 @@ const ExpenseCategory = (props: ExpenseCategoryProps) => {
       <ListItemText>
         <Stack color={props.color} spacing={0.8}>
           <Typography
-            variant="subtitle1"
+            variant="subtitle2"
             fontSize="12px"
             color="primary.main"
             fontFamily="Area-Normal-Bold">
@@ -182,7 +182,6 @@ const EmployeeExpenditure = () => {
     <Container>
       <Typography
         variant="subtitle1"
-        fontFamily="Area-Normal-Black"
         sx={{
           mb: 1.4
         }}>

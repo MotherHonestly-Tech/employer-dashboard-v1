@@ -168,7 +168,9 @@ const RESOURCE_STATS: Array<ResourceStatShape> = [
 
 const ResourceStats = () => {
   return (
-    <Container>
+    <Container sx={{
+      mt: 7
+    }}>
       <Stack direction="row">
         <Box width={180} mt={2}>
           <Typography

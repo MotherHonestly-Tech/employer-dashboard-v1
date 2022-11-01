@@ -281,7 +281,7 @@ export function MHSelect(props: SelectProps<string>) {
        >
         {props.options.map((opt) => (
           <StyledOption key={opt.value} value={opt.value}>
-            {opt.label}
+            {props.optionRenderer ? props.optionRenderer(opt) : opt.label}
           </StyledOption>
         ))}
       </CustomSelect>
