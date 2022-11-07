@@ -42,6 +42,7 @@ module.exports = {
           700: "#C27171",
         },
         navy: {
+          100: "#B4B2D7B2",
           900: "#194049",
         },
         green: {
@@ -60,5 +61,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

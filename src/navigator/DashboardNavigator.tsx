@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 import {
   Switch,
   Route,
   useRouteMatch,
   Redirect,
-  useLocation
-} from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+  useLocation,
+} from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import Layout from '../components/Layout/Layout';
-import Startup from '../components/Dashboard/Startup';
-import Dashboard from '../pages/Dashboard/Dashboard';
-import UploadEmployees from '../pages/Dashboard/UploadEmployees';
-import TeamMembers from '../pages/Dashboard/TeamMembers';
-import Resources from '../pages/Dashboard/Resources';
+import Layout from "../components/Layout/Layout";
+import Startup from "../components/Dashboard/Startup";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import UploadEmployees from "../pages/Dashboard/UploadEmployees";
+import TeamMembers from "../pages/Dashboard/TeamMembers";
 
-import { DashboardContextProvider } from '../store/context/dashboard.context';
-import AuthContext from '../store/context/auth-context';
-import { User } from '../models/user.model';
-import { styled } from '@mui/material/styles';
+import { DashboardContextProvider } from "../store/context/dashboard.context";
+import AuthContext from "../store/context/auth-context";
+import { User } from "../models/user.model";
+import { styled } from "@mui/material/styles";
+import ResourcesNavigator from "./ResourcesNavigator";
 
-const Wrapper = styled('div')(
+const Wrapper = styled("div")(
   ({ theme }) => `
     padding: ${theme.spacing(3)};
   `
@@ -40,8 +40,8 @@ const DashboardNavigator = () => {
     return (
       <Redirect
         to={{
-          pathname: '/onboarding/employee',
-          state: { from: { pathname: '/dashboard' } }
+          pathname: "/onboarding/employee",
+          state: { from: { pathname: "/dashboard" } },
         }}
       />
     );
@@ -55,31 +55,32 @@ const DashboardNavigator = () => {
             unmountOnExit
             key={location.pathname}
             classNames="fade"
-            timeout={400}>
+            timeout={400}
+          >
             <Switch location={location}>
               <Route path={`${path}/dashboard`} exact>
                 <Wrapper>
                   <Dashboard />
                 </Wrapper>
-              </Route>  
-              
+              </Route>
+
               <Route path={`${path}/upload-employees`} exact>
                 <Wrapper>
                   <UploadEmployees />
                 </Wrapper>
-              </Route>  
+              </Route>
 
               <Route path={`${path}/team-members`} exact>
                 <Wrapper>
                   <TeamMembers />
                 </Wrapper>
-              </Route>  
+              </Route>
 
-              <Route path={`${path}/resources`} exact>
+              <Route path={`${path}/resources`}>
                 <Wrapper>
-                  <Resources />
+                  <ResourcesNavigator />
                 </Wrapper>
-              </Route>  
+              </Route>
             </Switch>
           </CSSTransition>
         </TransitionGroup>
