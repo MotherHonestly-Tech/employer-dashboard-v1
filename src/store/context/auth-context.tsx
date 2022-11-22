@@ -175,12 +175,13 @@ export const AuthContextProvider = ({
 
   const synchronizeUser = React.useCallback(
     (responseData: Employee) => {
-      const { firstName, lastName, workEmail } = responseData;
+      const { firstName, lastName, workEmail, employerRefId } = responseData;
       const user = new User(
         Number(userId),
         firstName,
         lastName,
         workEmail,
+        employerRefId,
         tokenData?.token as Token,
         tokenData?.tokenExpirationDate as Date
       );
@@ -191,12 +192,13 @@ export const AuthContextProvider = ({
 
   const updateUserData = React.useCallback(
     ({ firstName, lastName }: { firstName: string; lastName: string }) => {
-      const { email } = user as User;
+      const { email, employerRefId } = user as User;
       const updatedUser = new User(
         Number(userId),
         firstName,
         lastName,
         email,
+        employerRefId,
         tokenData?.token as Token,
         tokenData?.tokenExpirationDate as Date
       );

@@ -11,33 +11,6 @@ import Sidebar from './MainSidebar';
 import { FnComponent } from '../../models/component.model';
 
 const Layout: FnComponent = (props) => {
-  const resourcePathMatch = matchPath(window.location.pathname, {
-    path: '/organization/resources',
-    exact: false,
-    strict: false
-  });
-
-  const merchantsPathMatch = matchPath(window.location.pathname, {
-    path: '/organization/merchants',
-    exact: false,
-    strict: false
-  });
-
-  const coachingBookingPathMatch = matchPath(window.location.pathname, {
-    path: '/organization/coaching',
-    exact: false,
-    strict: false
-  });
-
-  const unallowedPathMatches = [resourcePathMatch, merchantsPathMatch, coachingBookingPathMatch];
-
-  const renderSecSidebar = function (): boolean {
-    if (unallowedPathMatches.some((match) => match)) {
-      return false;
-    }
-    return true;
-  };
-
   return (
     <Box>
       <AppBar />
@@ -50,7 +23,8 @@ const Layout: FnComponent = (props) => {
             // backgroundColor: (theme) => '#fefefe',
             backgroundColor: (theme) => '#ffffff',
             flexGrow: 1,
-            overflow: 'auto'
+            overflowY: 'auto',
+            overflowX: 'hidden'
           }}>
           <Toolbar />
           {props.children}

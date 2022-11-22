@@ -84,7 +84,7 @@ const WalletBalance = () => {
             variant="body1"
             gutterBottom
             sx={{
-              color: '#28404A',
+              color: '#194049',
               fontWeight: 600,
               fontSize: '1rem'
             }}>
@@ -95,7 +95,7 @@ const WalletBalance = () => {
             variant="body1"
             gutterBottom
             sx={{
-              color: '#28404A',
+              color: '#194049',
               fontWeight: 600,
               fontSize: '1.5rem'
             }}>

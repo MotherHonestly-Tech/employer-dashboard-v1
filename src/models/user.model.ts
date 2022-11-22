@@ -4,6 +4,7 @@ export class User {
     public firstName: string,
     public lastName: string,
     public email: string,
+    public employerRefId: number,
     private _token: Token,
     private _tokenExpirationDate: Date
   ) {}
@@ -28,4 +29,5 @@ export type Employee = {
   lastName: string;
   workEmail: string;
   role: string;
+  employerRefId: number;
 }

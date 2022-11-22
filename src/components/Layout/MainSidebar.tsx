@@ -184,7 +184,7 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
         />
         <RouterLink
           icon={<CloudUploadIcon />}
-          primary="Upload Employees"
+          primary="Employees"
           to="/organization/upload-employees"
         />
         <RouterLink

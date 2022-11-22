@@ -32,10 +32,7 @@ const CoachingHours = (props: CoachingHoursProps) => {
   return (
     <Stack direction="row" spacing={2} alignItems="center" mb={1.4}>
       <Box width={120} overflow="hidden">
-        <Typography
-          variant="body1"
-          fontSize=".8rem"
-          textOverflow="ellipsis">
+        <Typography variant="body1" fontSize=".8rem" textOverflow="ellipsis">
           {props.category}
         </Typography>
       </Box>
@@ -105,7 +102,7 @@ const CoachingInsights = () => {
       </RoundedStat>
 
       <RoundedStat
-        bgcolor="#28404A"
+        bgcolor="#194049"
         sx={{
           width: 160,
           height: 160,

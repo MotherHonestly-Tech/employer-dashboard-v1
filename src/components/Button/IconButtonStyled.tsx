@@ -8,7 +8,6 @@ const IconButtonStyled = styled(ButtonUnstyled)(
   justify-content: center;
   border: none;
   background: inherit;
-  cursor: pointer;
 
   &:focus{
     outline: none;

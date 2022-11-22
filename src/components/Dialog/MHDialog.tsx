@@ -54,7 +54,7 @@ const CustomizedDialogTitle = (props: DialogTitleProps & ModalTitleProps) => {
             top: 12,
             zIndex: 99999
           }}>
-          <CloseIcon width="1.6em" color={rest.iconcolor || '#28404a'} />
+          <CloseIcon width="1.6em" color={rest.iconcolor || '#194049'} />
         </IconButtonStyled>
       ) : null}
     </DialogTitle>
@@ -72,7 +72,7 @@ const MHDialog = ({
   title: string;
   handleClose: () => void;
   actions?: React.ReactElement | null;
-  closeiconcolor?: string
+  closeiconcolor?: string;
 }) => {
   const onDialogClose = (
     event: {},

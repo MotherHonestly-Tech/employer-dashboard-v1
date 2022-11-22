@@ -36,16 +36,16 @@ const DashboardNavigator = () => {
     return <Startup />;
   }
 
-  if (!authCtx.isOnboarded(authCtx.user as User)) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/onboarding/employee',
-          state: { from: { pathname: '/dashboard' } }
-        }}
-      />
-    );
-  }
+  // if (!authCtx.isOnboarded(authCtx.user as User)) {
+    // return (
+    //   <Redirect
+    //     to={{
+    //       pathname: '/onboarding/employer',
+    //       state: { from: { pathname: '/dashboard' } }
+    //     }}
+    //   />
+    // );
+  // }
 
   return (
     <DashboardContextProvider>

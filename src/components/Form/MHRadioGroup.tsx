@@ -1,9 +1,10 @@
 import React from 'react';
 
-import Radio from '@mui/material/Radio';
+import Radio, { RadioProps, radioClasses } from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { SxProps, Theme } from '@mui/material/styles'
 
 import Label from '../Form/Label';
 
@@ -23,6 +24,25 @@ type RadioButtonProps = {
     | undefined;
   value: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, value: any) => void;
+  controlSx?: SxProps<Theme>
+};
+
+const MHRadio = (props: RadioProps) => {
+  return (
+    <Radio
+      color={props.color || 'secondary'}
+      sx={{
+        p: 0.5,
+        [`&.${radioClasses.root}`]: {
+          color: '#dadad8'
+        },
+        [`&.${radioClasses.checked}`]: {
+          color: theme => theme.palette.primary.main
+        },
+      }}
+      {...props}
+    />
+  );
 };
 
 const MHRadioGroup = ({
@@ -32,10 +52,11 @@ const MHRadioGroup = ({
   color,
   options,
   value,
-  onChange
+  onChange,
+  controlSx
 }: RadioButtonProps) => {
   return (
-    <FormControl>
+    <FormControl fullWidth>
       {label && <Label id={id}>{label}</Label>}
       <RadioGroup
         aria-labelledby="radio-buttons-group-label"
@@ -43,21 +64,15 @@ const MHRadioGroup = ({
         value={value}
         onChange={onChange}
         sx={{
-          mb: 2
+          mb: 2,
         }}>
         {options.map((option) => (
           <FormControlLabel
             key={option.value}
             value={option.value}
             label={option.label}
-            control={
-              <Radio
-                color={color || 'secondary'}
-                sx={{
-                  p: 0.5
-                }}
-              />
-            }
+            control={<MHRadio color={color} />}
+            sx={controlSx}
           />
         ))}
       </RadioGroup>

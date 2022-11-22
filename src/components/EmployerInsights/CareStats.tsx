@@ -145,7 +145,7 @@ const CareStats = () => {
       <Stack direction="row" spacing={2}>
         <Grid container spacing={5}>
           {STATS.map((stat) => (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={stat.caption}>
               <CareStat {...stat} />
             </Grid>
           ))}

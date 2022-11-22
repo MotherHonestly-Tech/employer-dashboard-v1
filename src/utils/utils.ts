@@ -171,3 +171,41 @@ export const sortListByIdAsc = (list: any[]): any[] => {
 function get_random(list: any[]) {
   return list[Math.floor(Math.random() * list.length)];
 }
+
+export const roundToUpperPlaceValue = (figure: number) => (
+  nearestPlace: number
+) => {
+  if (!figure || !nearestPlace) {
+    return 0;
+  }
+
+  if (isNaN(figure) || isNaN(nearestPlace)) {
+    return 0;
+  }
+
+  return Math.ceil(figure / nearestPlace) * nearestPlace;
+};
+
+export const getPlaceValue = (
+  figure: number
+): number => {
+  let place = 1;
+
+  if (figure < 1) {
+    place = 1;
+  } else if (figure > 1 && figure < 10) {
+    place = 1;
+  } else if (figure > 10 && figure < 100) {
+    place = 10;
+  } else if (figure > 100 && figure < 1000) {
+    place = 100;
+  } else if (figure > 1000 && figure < 10000) {
+    place = 1000;
+  } else if (figure > 10000 && figure < 100000) {
+    place = 10000;
+  }
+
+  return place;
+};
+
+const roundToCeiling = () => () => {};

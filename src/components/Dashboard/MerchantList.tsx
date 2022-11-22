@@ -88,7 +88,7 @@ export const MerchantList = () => {
               <Typography
                 variant="body2"
                 className=""
-                color="#28404A"
+                color="#194049"
                 sx={{ fontSize: '12px' }}>
                 {merchant.merchantName}
               </Typography>

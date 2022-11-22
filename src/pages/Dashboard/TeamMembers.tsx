@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 import MHButton from '../../components/Button/MHButton';
 import MHDataTable, {
@@ -14,7 +15,7 @@ import { ReactComponent as PlusIcon } from '../../static/svg/plus.svg';
 import AddMember from '../../components/TeamMembers/AddMember';
 import StyledActionButton from '../../components/Button/StyledActionButton';
 
-type MEMBER_SHAPE = {
+type MemberShape = {
   id: number;
   email: string;
   firstName: string;
@@ -23,7 +24,7 @@ type MEMBER_SHAPE = {
 };
 
 const TeamMembers = () => {
-  const MEMBERS: MEMBER_SHAPE[] = [
+  const MEMBERS: MemberShape[] = [
     {
       id: 1,
       firstName: 'Killian',
@@ -47,13 +48,13 @@ const TeamMembers = () => {
     }
   ];
 
-  const columns: GridColDef<MEMBER_SHAPE>[] = [
+  const columns: GridColDef<MemberShape>[] = [
     {
       headerName: 'Member',
       type: 'text',
       field: 'email',
       width: 300,
-      valueGetter: (row: MEMBER_SHAPE) => `${row.firstName} ${row.lastName}`
+      valueGetter: (row: MemberShape) => `${row.firstName} ${row.lastName}`
     },
     {
       headerName: 'Role',
@@ -67,7 +68,7 @@ const TeamMembers = () => {
       field: '',
       width: 150,
       align: 'center',
-      cellRenderer: (row: MEMBER_SHAPE) => (
+      cellRenderer: (row: MemberShape) => (
         <Stack direction="row" spacing={3} justifyContent="center">
           <StyledActionButton
             color="secondary"
@@ -75,6 +76,7 @@ const TeamMembers = () => {
             >
             View
           </StyledActionButton>
+          <Divider light flexItem />
           <StyledActionButton color="error" variant="contained" >
             Remove
           </StyledActionButton>

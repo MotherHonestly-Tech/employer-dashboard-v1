@@ -64,7 +64,7 @@ const Consultant: FnComponent<{
           />
           <Typography
             variant="body1"
-            color="#28404A"
+            color="#194049"
             sx={{
               fontWeight: 400,
               fontSize: '0.75rem'

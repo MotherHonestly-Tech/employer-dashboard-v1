@@ -4,20 +4,20 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 import CoachingInsights from '../../components/EmployerInsights/CoachingInsights';
 import EmployeeExpenditure from '../../components/EmployerInsights/EmployeeExpenditure';
 import CareStats from '../../components/EmployerInsights/CareStats';
+import ExpenseOverview from '../../components/EmployerInsights/ExpenseOverview';
 import ResourceStats from '../../components/EmployerInsights/ResourceStats';
+import IconWithText from '../../components/UI/IconWithText';
 
 import AuthContext from '../../store/context/auth-context';
 import { ReactComponent as UsersGroupIcon } from '../../static/svg/users-group.svg';
 import { ReactComponent as UsersIcon } from '../../static/svg/users.svg';
 import { ReactComponent as UsersCancelledIcon } from '../../static/svg/users-cancelled.svg';
 import { ReactComponent as BinIcon } from '../../static/svg/bin.svg';
-import IconWithText from '../../components/UI/IconWithText';
 
 type EmployeeStatProps = {
   theme: 'dark' | 'light';
@@ -158,6 +158,8 @@ const Dashboard = () => {
         </Box>
 
         <CareStats />
+
+        <ExpenseOverview />
 
         <ResourceStats />
       </Box>

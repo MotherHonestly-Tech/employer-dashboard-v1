@@ -1,8 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 import { red, common } from '@mui/material/colors';
-import { buttonClasses,  } from '@mui/material/Button';
+import { buttonClasses } from '@mui/material/Button';
 
-const primaryColor = '#28404A';
+const primaryColor = '#194049';
 
 export const theme = createTheme({
   palette: {
@@ -55,7 +55,7 @@ export const theme = createTheme({
     },
     body1: {
       fontFamily: 'Area-Normal-Semibold'
-    },
+    }
   },
   components: {
     // Name of the component
@@ -134,7 +134,7 @@ export const theme = createTheme({
               color: '#ff1744',
               borderColor: '#ff1744'
             }
-          },
+          }
         }
       },
       defaultProps: {

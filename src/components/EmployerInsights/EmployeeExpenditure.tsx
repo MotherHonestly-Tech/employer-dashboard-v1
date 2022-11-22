@@ -216,7 +216,7 @@ const EmployeeExpenditure = () => {
 
         <Grid container spacing={1} flexGrow={1}>
           {EXPENSE_CATEGORIES.map((category) => (
-            <Grid item xs={6}>
+            <Grid item xs={6} key={category.title}>
               <ExpenseCategory {...category} />
             </Grid>
           ))}
@@ -231,7 +231,7 @@ const EmployeeExpenditure = () => {
         spacing={2}
         mt={7}>
         {EXPENSE_CATEGORIES.map((category) => (
-          <Category {...category} />
+          <Category key={category.title} {...category} />
         ))}
       </Stack>
     </Container>

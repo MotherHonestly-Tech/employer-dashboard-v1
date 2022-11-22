@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 import AuthNavigator from './AuthNavigator';
 import DashboardNavigator from './DashboardNavigator';
+import OnboardingNavigator from "./OnboardingNavigator";
 import NotFound from '../pages/Error/404';
 
 import AuthContext from "../store/context/auth-context";
@@ -38,6 +39,14 @@ const AppNavigator: FnComponent<{}> = (props) => {
 
         <Route path="/auth">
           <AuthNavigator />
+        </Route>
+
+        <Route path="/onboarding">
+          {authCtx.isAuthenticated ? (
+            <OnboardingNavigator />
+          ) : (
+            <Redirect to="/auth" />
+          )}
         </Route>
 
         <Route path="/organization">

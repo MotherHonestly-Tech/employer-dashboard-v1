@@ -1,10 +1,20 @@
 import { SelectOption } from '@mui/base';
+import { SxProps, Theme } from '@mui/material/styles';
 
 export const DRAWER_WIDTH: number = 220;
+
+export const MAX_CHART_PLOT_POINTS = 5;
 
 export const DEFAULT_NOTIFICATION_DURATION: number = 12000;
 
 export const EMAIL_FROM = 'noreply@motherhonestly.com';
+
+export const BACKGROUND_IMAGE_SX: SxProps<Theme> = {
+  backgroundRepeat: 'no-repeat',
+  backgroundColor: 'background.default',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover'
+};
 
 export const ROLES: SelectOption<string>[] = [
   {

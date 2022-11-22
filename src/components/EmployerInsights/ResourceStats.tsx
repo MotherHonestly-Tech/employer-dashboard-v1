@@ -137,28 +137,28 @@ const RESOURCE_STATS: Array<ResourceStatShape> = [
     statFigure: 100
   },
   {
-    resource: 'Articles',
-    title: 'How Mothers Bounce Back At Home And In The Workplace',
+    resource: 'Videos',
+    title: 'Your Guide To Running A Tight Ship ...',
     icon: <ArticleIcon />,
     statType: 'view',
     statFigure: 100
   },
   {
-    resource: 'Articles',
-    title: 'How Mothers Bounce Back At Home And In The Workplace',
+    resource: 'Toolkit',
+    title: 'How to Make the Most of Flexible Child Care',
     icon: <ArticleIcon />,
     statType: 'view',
     statFigure: 100
   },
   {
-    resource: 'Articles',
-    title: 'How Mothers Bounce Back At Home And In The Workplace',
+    resource: 'Podcast',
+    title: 'How To Support Your Aging Parent',
     icon: <ArticleIcon />,
     statType: 'view',
     statFigure: 100
   },
   {
-    resource: 'Articles',
+    resource: 'Event',
     title: 'How Mothers Bounce Back At Home And In The Workplace',
     icon: <ArticleIcon />,
     statType: 'view',
@@ -171,7 +171,7 @@ const ResourceStats = () => {
     <Container sx={{
       mt: 7
     }}>
-      <Stack direction="row">
+      <Stack direction="row" overflow="hidden">
         <Box width={180} mt={2}>
           <Typography
             variant="body1"
@@ -186,9 +186,9 @@ const ResourceStats = () => {
         </Box>
 
         <Box flexGrow={1}>
-          <Stack direction="row" mb={3}>
-            {RESOURCE_STATS.map((stat) => (
-              <Box px={1}>
+          <Stack direction="row" mb={3} overflow="hidden">
+            {RESOURCE_STATS.map((stat, i) => (
+              <Box key={i} px={1}>
                 <ResourceStat {...stat} />
               </Box>
             ))}

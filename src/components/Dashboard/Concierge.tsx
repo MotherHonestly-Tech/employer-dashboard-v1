@@ -127,10 +127,9 @@ const Concierge = () => {
           height={250}
           borderRadius={(theme) => theme.shape.borderRadius}
           position="relative"
-          overflow={"hidden"}
+          overflow={'hidden'}
           zIndex={1}
-          className="overflow-visible"
-        >
+          className="overflow-visible">
           <BackgroundOverlay />
 
           <Box position="relative" className="overflow-visible">
@@ -138,7 +137,7 @@ const Concierge = () => {
               align="center"
               variant="body1"
               sx={{
-                color: '#28404A',
+                color: '#194049',
                 fontWeight: 600,
                 fontSize: '34px',
                 float: 'left',
@@ -150,7 +149,7 @@ const Concierge = () => {
               variant="body1"
               className="mt-[110px] -ml-[310px]"
               sx={{
-                color: '#28404A',
+                color: '#194049',
                 fontWeight: 500,
                 fontSize: '14px',
                 float: 'left'

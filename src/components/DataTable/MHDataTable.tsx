@@ -107,9 +107,10 @@ const StyledTableCell = styled(TableCell)<{
   [`&.${tableCellClasses.head}`]: {
   fontFamily: theme.typography.subtitle2.fontFamily,
   // borderTop: '10px solid #fbf78d',
-    background: '#EEEEEE',
+    background: '#F1F1F1',
     color: '#A1A1A1',
     fontSize: '0.8rem',
+    borderColor: '#e9e7e7',
     ...(headerstyles && headerstyles)
   },
   [`&.${tableCellClasses.body}`]: {
