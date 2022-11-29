@@ -66,8 +66,8 @@ const ResEvent = (props: ResProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     speed: 500,
-    autoplay: true,
-    autoplaySpeed: 1300,
+    autoplay: false,
+    // autoplaySpeed: 1300,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -140,16 +140,16 @@ const ResEvent = (props: ResProps) => {
           Events & Conferences
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-2 relative">
-          <Grid container spacing={2}>
+        <Box className="mx-auto pt-10 bg-white px-12 relative">
+          <Grid container spacing={4}>
             <Box className="w-[95%] bg-white mx-auto ">
               <Slider {...settings}>
                 {resources.map((res, index) => (
                   <Grid item xs={12} md={6} lg={3} key={index}>
                     <ResCard
-                      cardClass="relative w-[270px] h-[355px] shadow-none object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[260px] h-[350px] shadow-none object-cover bg-cream-100 rounded-md"
                       iconClass="hidden"
-                      imgBg="bg-pink-700  h-[265px]"
+                      imgBg="bg-pink-700  h-[260px]"
                       bodyBg="bg-cream-100"
                       top={moment(res.startTime!).format("MMMM D, h:mma")}
                       imageSrc={res.thumbNailImageSrc}

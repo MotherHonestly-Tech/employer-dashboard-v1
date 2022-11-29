@@ -86,7 +86,7 @@ const ViewPodcast = (props: ComponentProps) => {
     <Fragment>
       <ViewHeader
         titles={data.title}
-        description={data.description}
+        description="This is an episode of our podcast, Listen and enjoy!"
         imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
         categoryOne="Career"
         categoryTwo={data.interests}
@@ -95,9 +95,9 @@ const ViewPodcast = (props: ComponentProps) => {
         date={data.date}
         ticketClassName="py-6 hidden"
         timeClassName="hidden"
-        podClassName="mt-10 flex gap-32"
+        podClassName="bottom-32 absolute flex gap-32"
         dateClassName="hidden text-left pb-2 w-3/4 text-base font-areaSemi"
-        episodeClassName=" text-left pb-2 w-3/4 text-base font-areaSemi"
+        episodeClassName=" text-left pb-2 w-3/4 text-[22px] font-areaSemi"
         episode={data.episode}
         season={data.season}
         authorClassName="hidden"
@@ -117,18 +117,22 @@ const ViewPodcast = (props: ComponentProps) => {
           spotifyUrl={data.source}
         />
       </Box>
-      <Box className="px-40 py-10 bg-white">
+      <Box className="px-12 py-10 bg-white">
         <Box className="mt-8">
-          <Box className="flex mb-4">
-            {/* <Box className="font-areaExt bg-yellow-100 px-2 pt-1 text-sm rounded-full">
-              1
-            </Box> */}
+          <Typography
+            variant="h3"
+            color="primary"
+            className="text-2xl md:text-3xl mb-4 text-left font-columbia font-[500]"
+          >
+            Shownote:
+          </Typography>
+          <Box className="flex">
             <Typography
               variant="h3"
               color="primary"
-              className="text-base px-24 uppercase font-areaNorm"
+              className="text-base font-areaNorm"
             >
-              {data.keypoint}
+              {data.description}
             </Typography>
           </Box>
           <Typography

@@ -80,17 +80,17 @@ const ArticlesPage = (props: ResProps) => {
         boxClassName="place-content-center overscroll-x-hidden gap-2 flex pb-4"
         title="Articles"
         titleInfo="Read The Latest Articles + Interviews"
-        titleInfoclassName="text-left -ml-12 my-2 w-screen font-columbia text-4xl capitalize font-[500]"
+        titleInfoclassName="text-left -ml-14 line-clamp-3 my-2 w-screen font-columbia text-4xl capitalize font-[500]"
         pageInfo="  Achieve your personal and professional goals with personalized
-      solutions from our specialized experts in career, care, and s
+      solutions from our specialized experts in career, care, and
       wellbeing."
-        pageInfoClassName="font-semibold w-fit text-[14px] font-areaSemi"
+        pageInfoClassName="font-semibold line-clamp-3 w-fit text-[14px] font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_1_h2qjf3.png"
-        BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661880068/image_1_rgia4z.png"
+        BgUrl="https://res.cloudinary.com/kehinde-motherhoneestly/image/upload/v1668532869/MHresources/image_bdm0lx.png"
       >
         {/* <ResToolkitIcon className="" height="24px" width="25px" /> */}
         <BgOverlay
-          className="overflow-hidden absolute top-12 -right-20"
+          className="overflow-hidden absolute -bottom-12 -right-20"
           height="400px"
           width="400px"
         />
@@ -107,7 +107,7 @@ const ArticlesPage = (props: ResProps) => {
                 <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
-                      className={`relative w-auto h-auto object-cover bg-pink-700 rounded-md`}
+                      className={`relative w-auto h-[450px] object-cover bg-pink-700 rounded-md`}
                     >
                       <IconButton
                         disabled
@@ -163,12 +163,12 @@ const ArticlesPage = (props: ResProps) => {
               ) : count >= 2 ? (
                 <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
-                    cardClass="relative w-[280px] mb-10 h-auto object-cover bg-cream-100 rounded-md shadow-sm"
+                    cardClass="relative w-[280px] mb-10 h-[450px] object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
-                    imgBg="bg-navy-100 h-[265px]"
+                    imgBg="bg-navy-100 h-[280px]"
                     bodyBg="bg-cream-100"
                     imageSrc={res.image}
-                    top={res.tops}
+                    // top={res.tops}
                     title={res.titles}
                     text={res.texts}
                     podTop="hidden"

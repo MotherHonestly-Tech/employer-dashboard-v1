@@ -74,11 +74,11 @@ const ToolkitsPage = (props: ResProps) => {
         boxClassName="place-content-center overscroll-x-hidden gap-2 flex pb-4"
         title="Toolkits & Guides"
         titleInfo="Download Our Helpful Toolkits"
-        titleInfoclassName="text-center my-2 font-columbia text-4xl capitalize font-[500]"
+        titleInfoclassName="text-center my-2 font-columbia line-clamp-3 text-[30px] capitalize font-[500]"
         pageInfo="  Achieve your personal and professional goals with personalized
       solutions from our specialized experts in career, care, and
       wellbeing."
-        pageInfoClassName="font-semibold w-fit text-[14px] font-areaSemi"
+        pageInfoClassName="font-semibold w-fit text-[12px] line-clamp-3 font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661643245/image_lqxpea.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639768/image_bfore8.png"
       >
@@ -97,9 +97,9 @@ const ToolkitsPage = (props: ResProps) => {
           {currentPosts.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[270px] h-[400px] object-cover bg-cream-100 rounded-md"
+                cardClass="relative mb-10 w-[260px] h-[400px] object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"
-                imgBg="bg-cream-200 h-[265px]"
+                imgBg="bg-cream-200 h-[260px]"
                 bodyBg="bg-cream-100"
                 imageSrc={res.thumbNailImageSrc}
                 // top={res.interests}

@@ -70,8 +70,8 @@ const ResArticle = (props: ResProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     speed: 500,
-    autoplay: true,
-    autoplaySpeed: 1400,
+    autoplay: false,
+    // autoplaySpeed: 1400,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -134,16 +134,16 @@ const ResArticle = (props: ResProps) => {
           Over 456+ Articles on All Things Caregiving
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-0 relative">
-          <Grid container spacing={1}>
+        <Box className="mx-auto pt-10 bg-white px-12 relative">
+          <Grid container spacing={4}>
             <Box className="w-[95%] bg-white mx-auto ">
               <Slider {...settings}>
                 {resources.map((res, index) => (
                   <Grid item xs={12} md={6} lg={3} key={index}>
                     <ResCard
-                      cardClass="relative w-[280px] h-[440px] shadow-none object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[260px] h-[440px] shadow-none object-cover bg-cream-100 rounded-md"
                       iconClass="hidden"
-                      imgBg="bg-navy-100 h-[265px]"
+                      imgBg="bg-navy-100 h-[260px]"
                       bodyBg="bg-cream-100"
                       podTop="hidden"
                       imageSrc={res.image}
@@ -166,7 +166,7 @@ const ResArticle = (props: ResProps) => {
             </MHButton>
           </div>
 
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
+          <Box className="bg-gray-300 h-[2px] w-[97%] -ml-1 mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>

@@ -158,9 +158,9 @@ const ViewEvent = (props: ComponentProps) => {
           {slice.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[270px] h-[360px] object-cover bg-cream-100 rounded-md"
+                cardClass="relative mb-10 w-[270px] h-[350px] object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"
-                imgBg="bg-pink-700 h-[265px]"
+                imgBg="bg-pink-700 h-[270px]"
                 bodyBg="bg-cream-100"
                 top={moment(res.startTime!).format("MMMM D, h:mma")}
                 imageSrc={res.thumbNailImageSrc}

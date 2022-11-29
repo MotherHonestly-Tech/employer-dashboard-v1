@@ -60,8 +60,8 @@ const ResToolkit = (props: ResProps) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     speed: 500,
-    autoplay: true,
-    autoplaySpeed: 1100,
+    autoplay: false,
+    // autoplaySpeed: 1100,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -105,7 +105,7 @@ const ResToolkit = (props: ResProps) => {
 
   return (
     <Box bgcolor="#F6F8F5" paddingTop={5}>
-      <Box display="flex" paddingX={3} className=" overscroll-x-hidden gap-2">
+      <Box display="flex" paddingX={6} className=" overscroll-x-hidden gap-2">
         <ResToolkitIcon className="" height="24px" width="25px" />
         <Typography
           variant="body2"
@@ -121,7 +121,7 @@ const ResToolkit = (props: ResProps) => {
       </Box>
       <Typography
         variant="h3"
-        className="text-left my-2 px-8"
+        className="text-left my-2 px-12"
         color="primary"
         sx={{
           fontWeight: 500,
@@ -132,16 +132,16 @@ const ResToolkit = (props: ResProps) => {
         Resources To Make Life Easier
       </Typography>
 
-      <Box className="mx-auto pt-10 px-20 relative">
+      <Box className="mx-auto pt-10 px-5 relative">
         <Grid container spacing={0}>
           <Box className="w-[95%] mx-auto ">
             <Slider {...settings}>
               {resources.map((res, index, arr) => (
                 <Grid item xs={3} key={index}>
                   <ResCard
-                    cardClass="relative w-[300px] shadow-none h-[420px] object-cover bg-cream-100"
+                    cardClass="relative w-[340px] mt-2 shadow-none h-[522px] rounded-md object-cover bg-cream-100"
                     iconClass="hidden"
-                    imgBg="bg-cream-200 h-[265px]"
+                    imgBg="bg-cream-200 h-[340px]"
                     bodyBg="bg-white h-16"
                     podTop="hidden"
                     imageSrc={res.thumbNailImageSrc}

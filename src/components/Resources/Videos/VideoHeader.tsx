@@ -15,17 +15,17 @@ type HeaderProps = {
 const VideoHeader = (props: HeaderProps) => {
   return (
     <Fragment>
-      <Box className="bg-lilac-200 h-96 px-40 text-center mx-auto pt-16">
+      <Box className="bg-lilac-300 h-[450px] px-40 text-center mx-auto pt-16">
         <Typography
           variant="body2"
           color="primary"
-          className="text-center  my-6 w-full font-columbia text-4xl capitalize font-[500]"
+          className="text-center line-clamp-3 my-6 w-full font-columbia text-4xl capitalize font-[500]"
         >
           {props.title}
         </Typography>
         <Typography
           variant="body2"
-          className="text-center line-clamp-6  w-full text-[16px] font-areaSemi"
+          className="text-center line-clamp-6 pt-4 w-full text-[16px] font-areaSemi"
           color="primary"
         >
           {props.description}

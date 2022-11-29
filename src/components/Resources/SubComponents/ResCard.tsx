@@ -39,6 +39,7 @@ const ResCard = (props: CardProps) => {
           <CardMedia
             className={props.imgBg}
             component="img"
+            // image="https://res.cloudinary.com/mother-honestly/image/upload/v1665657584/employers-banner_xbxbyu.png"
             image={props.imageSrc}
             alt="Resource Image"
           />

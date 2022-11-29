@@ -1,35 +1,40 @@
-import React from 'react';
-import { matchPath } from 'react-router-dom';
+import React from "react";
+import { matchPath } from "react-router-dom";
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
 
-import AppBar from './AppBar';
-import Sidebar from './MainSidebar';
+import AppBar from "./AppBar";
+import Sidebar from "./MainSidebar";
 
-import { FnComponent } from '../../models/component.model';
+import { FnComponent } from "../../models/component.model";
+import ScrollToTop from "./ScrollToTop";
 
 const Layout: FnComponent = (props) => {
   const resourcePathMatch = matchPath(window.location.pathname, {
-    path: '/organization/resources',
+    path: "/organization/resources",
     exact: false,
-    strict: false
+    strict: false,
   });
 
   const merchantsPathMatch = matchPath(window.location.pathname, {
-    path: '/organization/merchants',
+    path: "/organization/merchants",
     exact: false,
-    strict: false
+    strict: false,
   });
 
   const coachingBookingPathMatch = matchPath(window.location.pathname, {
-    path: '/organization/coaching',
+    path: "/organization/coaching",
     exact: false,
-    strict: false
+    strict: false,
   });
 
-  const unallowedPathMatches = [resourcePathMatch, merchantsPathMatch, coachingBookingPathMatch];
+  const unallowedPathMatches = [
+    resourcePathMatch,
+    merchantsPathMatch,
+    coachingBookingPathMatch,
+  ];
 
   const renderSecSidebar = function (): boolean {
     if (unallowedPathMatches.some((match) => match)) {
@@ -40,18 +45,20 @@ const Layout: FnComponent = (props) => {
 
   return (
     <Box>
+      {ScrollToTop()}
       <AppBar />
 
-      <Stack direction="row" component={'main'}>
+      <Stack direction="row" component={"main"}>
         <Sidebar />
 
         <Box
           sx={{
             // backgroundColor: (theme) => '#fefefe',
-            backgroundColor: (theme) => '#ffffff',
+            backgroundColor: (theme) => "#ffffff",
             flexGrow: 1,
-            overflow: 'auto'
-          }}>
+            overflow: "auto",
+          }}
+        >
           <Toolbar />
           {props.children}
         </Box>

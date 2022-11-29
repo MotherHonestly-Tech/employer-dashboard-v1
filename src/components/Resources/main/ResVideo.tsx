@@ -69,8 +69,8 @@ const ResVideo = (props: ResProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     speed: 500,
-    autoplay: true,
-    autoplaySpeed: 1200,
+    autoplay: false,
+    // autoplaySpeed: 1200,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
@@ -135,16 +135,16 @@ const ResVideo = (props: ResProps) => {
           On-Demand Resources
         </Typography>
 
-        <Box className="mx-auto pt-10 bg-white px-2 relative">
-          <Grid container spacing={2}>
+        <Box className="mx-auto pt-10 bg-white px-12 relative">
+          <Grid container spacing={4}>
             <Box className="w-[95%] bg-white mx-auto ">
               <Slider {...settings}>
                 {resources.map((res, index) => (
                   <Grid item xs={12} md={6} lg={3} key={index}>
                     <ResCard
-                      cardClass="relative w-[270px] shadow-none h-[400px] object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[260px] shadow-none h-[400px] object-cover bg-cream-100 rounded-md"
                       iconClass="absolute top-14 left-24 mt-12 w-20 h-20"
-                      imgBg="bg-sky-400 h-[265px] "
+                      imgBg="bg-sky-400 h-[260px] "
                       bodyBg="bg-cream-100"
                       imageSrc={res.thumbNailImageSrc}
                       podTop="hidden"
@@ -166,7 +166,7 @@ const ResVideo = (props: ResProps) => {
             </MHButton>
           </div>
 
-          <Box className="bg-gray-300 h-[2px] w-[98%] mx-auto"></Box>
+          <Box className="bg-gray-300 h-[2px] w-[97%] -ml-1 mx-auto"></Box>
         </Box>
       </Box>
     </Fragment>

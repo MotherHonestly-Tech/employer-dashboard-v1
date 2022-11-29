@@ -229,9 +229,9 @@ const ViewArticle = (props: ComponentProps) => {
           {slice.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[270px] h-[450px] object-cover bg-cream-100 rounded-md"
-                iconClass="hidden"
-                imgBg="bg-navy-100 "
+                cardClass="relative w-[270px] mb-10 h-[450px] object-cover bg-cream-100 rounded-md shadow-sm"
+                iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
+                imgBg="bg-navy-100 h-[270px]"
                 bodyBg="bg-cream-100"
                 imageSrc={res.image}
                 top={res.tops}

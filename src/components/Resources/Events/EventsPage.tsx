@@ -83,18 +83,18 @@ const EventsPage = (props: ResProps) => {
         title="Events"
         titleInfo="Events & Conferences"
         titleExt="Find the Event for You"
-        titleInfoclassName="text-left my-2 w-full font-columbia text-4xl capitalize font-[500]"
+        titleInfoclassName="text-left my-2 w-full line-clamp-3 font-columbia text-5xl capitalize font-[500]"
         pageInfo="Achieve your personal and professional goals with personalized
         solutions from our specialized experts in career, care, and s
         wellbeing."
-        pageInfoClassName="font-semibold text-left w-fit text-[14px] font-areaSemi"
+        pageInfoClassName="font-semibold text-left w-fit text-[14px] line-clamp-3 font-areaSemi"
         ResIconUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661645343/image_3_woz2ng.png"
         BgUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661822837/image_wc3zxh.png"
       >
         <BgOverlay
-          className="overflow-hidden absolute top-28 right-0"
-          height="400px"
-          width="400px"
+          className="overflow-hidden absolute bottom-0 -right-10"
+          height="200px"
+          width="200px"
         />
       </AllresHeader>
       <EventSort />
@@ -109,7 +109,7 @@ const EventsPage = (props: ResProps) => {
                 <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
-                      className={`relative w-auto h-[370px] object-cover bg-sky-400 rounded-md`}
+                      className={`relative w-auto h-[350px] object-cover bg-sky-400 rounded-md`}
                     >
                       <IconButton
                         disabled
@@ -165,7 +165,7 @@ const EventsPage = (props: ResProps) => {
               ) : count >= 2 ? (
                 <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
-                    cardClass="relative w-[280px] mb-10 h-[370px] object-cover bg-cream-100 rounded-md shadow-sm"
+                    cardClass="relative w-[280px] mb-10 h-[350px] object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
                     imgBg="bg-pink-700 h-[280px]"
                     bodyBg="bg-cream-100"

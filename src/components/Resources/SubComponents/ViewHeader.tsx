@@ -34,7 +34,7 @@ const ViewHeader = (props: HeaderProps) => {
     <Fragment>
       <Grid container spacing={0} className=" h-[550px]">
         <Grid item xs={12} md={6} lg={6}>
-          <Box className="bg-lilac-200 h-full pt-3 pl-12 relative">
+          <Box className="bg-lilac-300 h-full pt-3 pl-12 relative">
             <Typography
               variant="body2"
               color="primary"
@@ -54,7 +54,13 @@ const ViewHeader = (props: HeaderProps) => {
               >
                 Season {props.season} - Episode {props.episode}
               </Typography>
-              {props.titles}
+              <Typography
+                variant="body2"
+                color="primary"
+                className="text-left line-clamp-3 py-2 font-columbia text-4xl capitalize font-[500]"
+              >
+                {props.titles}
+              </Typography>
             </Typography>
             <Typography
               variant="body2"

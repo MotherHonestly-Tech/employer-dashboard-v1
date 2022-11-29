@@ -89,7 +89,7 @@ const ViewToolkit = (props: ComponentProps) => {
         imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639776/image_2_lqcgpe.png"
         categoryTwo={data.interests}
         downloadLink={data.source}
-        downloadClassName="flex cursor-pointer -ml-4 my-8"
+        downloadClassName="flex cursor-pointer absolute bottom-28 -ml-6 my-8"
         date={moment(data.date).format("DD/MM/YYYY h:mm")}
         dateTwo={moment(data.date).format("MMMM D, YYYY")}
         ticketClassName="py-6 hidden"
@@ -129,9 +129,9 @@ const ViewToolkit = (props: ComponentProps) => {
           {slice.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={res.id}>
               <ResCard
-                cardClass="relative mb-10 w-[270px] h-[400px] object-cover bg-cream-100 rounded-md"
+                cardClass="relative mb-10 w-[260px] h-[400px] object-cover bg-cream-100 rounded-md"
                 iconClass="hidden"
-                imgBg="bg-cream-200 h-[265px]"
+                imgBg="bg-cream-200 h-[260px]"
                 bodyBg="bg-cream-100"
                 imageSrc={res.thumbNailImageSrc}
                 // top={res.interests}
