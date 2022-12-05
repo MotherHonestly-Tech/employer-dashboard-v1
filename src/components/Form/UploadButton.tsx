@@ -9,7 +9,6 @@ import MHButton from '../Button/MHButton';
 import { formatFileSize } from '../../utils/utils';
 import { ReactComponent as CheckMarkIcon } from '../../static/svg/check-mark-md.svg';
 
-/* eslint-disable */
 type UploadProps = {
   element: React.ReactElement;
   htmlFor?: string;
@@ -29,9 +28,7 @@ type UploadRef = {
   uploadEl: React.RefObject<HTMLInputElement>;
 };
 
-const UploadWrapper = styled('div')<{
-  isdragactive: boolean;
-}>(({ theme, isdragactive }) => ({
+const UploadWrapper = styled('div')<{ isdragactive: number }>(({ theme, isdragactive }) => ({
   border: 2,
   borderColor: '#ADADAD',
   padding: theme.spacing(2),
@@ -164,7 +161,7 @@ export default React.forwardRef(
           onDragOver={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}>
-          <UploadWrapper isdragactive={isDragActive as boolean}>
+          <UploadWrapper isdragactive={isDragActive ? 1 : 0}>
             {element}
           </UploadWrapper>
           <UploadInput

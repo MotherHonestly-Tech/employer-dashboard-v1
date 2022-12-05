@@ -9,6 +9,15 @@ export const DEFAULT_NOTIFICATION_DURATION: number = 12000;
 
 export const EMAIL_FROM = 'noreply@motherhonestly.com';
 
+export const ALLOCATION_FIELDS = [
+  'Wellbeing',
+  'Learning & Development',
+  'Caregiving',
+  'Remote & Hybrid',
+  'Rewards & Recognition',
+  'Family Building'
+];
+
 export const BACKGROUND_IMAGE_SX: SxProps<Theme> = {
   backgroundRepeat: 'no-repeat',
   backgroundColor: 'background.default',

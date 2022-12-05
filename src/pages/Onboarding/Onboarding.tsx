@@ -48,7 +48,7 @@ const Onboarding = () => {
   };
 
   const mergeClosedHandler = React.useCallback(() => {
-    // setMergeOpen(false);
+    setMergeOpen(false);
   }, []);
 
   return (
@@ -113,7 +113,7 @@ const Onboarding = () => {
         </Box>
       </Container>
 
-      {mergeOpen && <ConnectProvider />}
+      {mergeOpen && <ConnectProvider onMergeExit={mergeClosedHandler} />}
       {/* onMergeClose={mergeClosedHandler}  */}
     </Stack>
   );

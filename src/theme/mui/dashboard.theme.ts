@@ -157,48 +157,39 @@ export const theme = createTheme({
         h1: {
           fontSize: '1.8rem',
           fontFamily: 'Columbia-Sans',
-          color: primaryColor
         },
         h2: {
           fontSize: '1.4rem',
           fontFamily: 'Columbia-Sans',
-          color: primaryColor
         },
         h3: {
           fontSize: '1.2rem',
           fontFamily: 'Columbia-Sans',
-          color: primaryColor
         },
         h4: {
           fontSize: '1rem',
           fontFamily: 'Columbia-Sans',
-          color: primaryColor
         },
         subtitle1: {
           fontSize: '1rem',
           fontFamily: 'Area-Normal-Black',
-          color: primaryColor,
-          fontWeight: 300
         },
         subtitle2: {
           fontSize: '1rem',
           fontFamily: 'Area-Normal-Bold',
-          color: primaryColor,
-          fontWeight: 300
         },
         body1: {
           fontSize: '0.8rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: primaryColor
         },
         body2: {
           fontSize: '0.8rem',
           fontFamily: 'Area-Normal-Semibold',
-          color: primaryColor,
-          fontWeight: 300
         }
       },
-      defaultProps: {}
+      defaultProps: {
+        color: primaryColor
+      }
     },
     MuiAppBar: {
       styleOverrides: {
@@ -222,6 +213,15 @@ export const theme = createTheme({
         root: {
           fontSize: '0.8rem',
           lineHeight: 1.5
+        }
+      }
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        popper: {
+          backgroundColor: '#ffffff',
+          boxShadow: '0px 4px 4px rgba(211, 211, 211, 0.25)',
+          borderRadius: '6px'
         }
       }
     }

@@ -11,7 +11,9 @@ import EmployeeExpenditure from '../../components/EmployerInsights/EmployeeExpen
 import CareStats from '../../components/EmployerInsights/CareStats';
 import ExpenseOverview from '../../components/EmployerInsights/ExpenseOverview';
 import ResourceStats from '../../components/EmployerInsights/ResourceStats';
-import IconWithText from '../../components/UI/IconWithText';
+import EmployeesList from '../../components/EmployerInsights/EmployeesList';
+import IconWithText from '../../components/UI/StackedIconWithText';
+import EmployeeStat, { EmployeeStatProps } from '../../components/EmployerInsights/EmployeeStat';
 
 import AuthContext from '../../store/context/auth-context';
 import { ReactComponent as UsersGroupIcon } from '../../static/svg/users-group.svg';
@@ -19,38 +21,18 @@ import { ReactComponent as UsersIcon } from '../../static/svg/users.svg';
 import { ReactComponent as UsersCancelledIcon } from '../../static/svg/users-cancelled.svg';
 import { ReactComponent as BinIcon } from '../../static/svg/bin.svg';
 
-type EmployeeStatProps = {
-  theme: 'dark' | 'light';
-  icon: React.ReactElement;
-  title: string;
-  stat: number;
-};
-
-const EmployeeStat = ({ theme, icon, title, stat }: EmployeeStatProps) => {
-  return (
-    <Box
-      p={3}
-      bgcolor={theme === 'dark' ? 'primary.main' : 'common.white'}
-      borderRadius={2}
-      boxShadow="0px 5px 26px rgba(197, 216, 222, 0.25)"
-      minHeight={180}>
-      {icon}
-      <Typography
-        variant="body2"
-        color={theme === 'dark' ? 'common.white' : 'primary.main'}
-        gutterBottom>
-        {title}
-      </Typography>
-      <Typography
-        variant="h1"
-        color={theme === 'dark' ? 'common.white' : 'primary.main'}>
-        {stat}
-      </Typography>
-    </Box>
-  );
-};
 
 const EmployeeStatsGrid = () => {
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
   const STATS: EmployeeStatProps[] = [
     {
       theme: 'dark',
@@ -88,15 +70,19 @@ const EmployeeStatsGrid = () => {
     <React.Fragment>
       <Grid container spacing={2}>
         {STATS.map((stat) => (
-          <Grid item xs={4} key={stat.title}>
+          <Grid
+            item
+            xs={4}
+            key={stat.title}
+            onClick={handleOpen}
+            sx={{
+              cursor: 'pointer'
+            }}>
             <EmployeeStat {...stat} />
           </Grid>
         ))}
       </Grid>
-      <IconWithText
-        justifyContent="flex-end"
-        spacing={1}
-        mt={1}>
+      <IconWithText justifyContent="flex-end" spacing={1} mt={1}>
         <BinIcon width=".9rem" />
         <RoundedLogoIcon
           sx={{
@@ -114,6 +100,8 @@ const EmployeeStatsGrid = () => {
           </Typography>
         </RoundedLogoIcon>
       </IconWithText>
+
+      <EmployeesList open={openModal} onClose={handleClose} />
     </React.Fragment>
   );
 };
@@ -124,11 +112,7 @@ const Dashboard = () => {
   return (
     <React.Fragment>
       <Box mb={4}>
-        <Typography
-          variant="subtitle1"
-          fontSize="1.25rem"
-          my={1}
-          gutterBottom>
+        <Typography variant="subtitle1" fontSize="1.25rem" my={1} gutterBottom>
           Welcome {authCtx.user?.firstName}!
         </Typography>
 

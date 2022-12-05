@@ -8,6 +8,12 @@ import AbsolutePositionedContainer from './AbsolutePositionedContainer';
 import { getPlaceValue, roundToUpperPlaceValue } from '../../utils/utils';
 import { MAX_CHART_PLOT_POINTS } from '../../utils/constants';
 
+import Popper, { PopperPlacementType } from '@mui/material/Popper';
+import Typography from '@mui/material/Typography';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
+import MHTooltip from '../Popper/Tooltip';
+
 type ChartDataPoint = {
   value: number;
   label: string;
@@ -93,11 +99,13 @@ const ChartBar = (props: {
 
   return (
     <ChartBarContainer label={props.label}>
-      <ChartBarFill
-        sx={{
-          height: barFillHeight
-        }}
-      />
+      <MHTooltip title={props.value}>
+        <ChartBarFill
+          sx={{
+            height: barFillHeight
+          }}
+        />
+      </MHTooltip>
     </ChartBarContainer>
   );
 };
@@ -112,8 +120,11 @@ const Chart = (props: ChartDataProps) => {
 
   // rounded to nearest 10, 100, 1000 depending on placeValue
   const upperPlotPoint = roundToUpperPlaceValue(maxValue)(placeValue);
-  
-  const numberOfPlotPoints = Math.min((upperPlotPoint / placeValue), MAX_CHART_PLOT_POINTS);
+
+  const numberOfPlotPoints = Math.min(
+    upperPlotPoint / placeValue,
+    MAX_CHART_PLOT_POINTS
+  );
   const lowerPlotPoint = upperPlotPoint / numberOfPlotPoints;
 
   const getPlotPoints = (): number[] => {
@@ -124,7 +135,7 @@ const Chart = (props: ChartDataProps) => {
       plotPoints.push(element);
     }
     return plotPoints;
-  }
+  };
 
   return (
     <ChartContainerStack direction="row">

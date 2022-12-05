@@ -38,6 +38,8 @@ type InputProps = {
   minLength?: number;
   maxLength?: number;
   readOnly?: boolean;
+  precision?: number;
+  autoComplete?: string;
 };
 
 const Label = styled(
@@ -153,7 +155,8 @@ const MHFormControl = (props: InputProps) => {
     min,
     max,
     onChange,
-    onBlur
+    onBlur,
+    ...others
   } = props;
 
   return (
@@ -178,6 +181,7 @@ const MHFormControl = (props: InputProps) => {
         rows={rows}
         minRows={minRows}
         maxRows={maxRows}
+        precision={others.precision}
         componentsProps={{
           input: {
             min: min,

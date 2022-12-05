@@ -9,9 +9,27 @@ import Chart from '../UI/Chart';
 
 const DUMMY_EXPENSES = [
   {
+    id: 'e7',
+    title: 'Car Insurance',
+    amount: 694.67,
+    date: new Date(2021, 0, 28)
+  },
+  {
+    id: 'e5',
+    title: 'Car Insurance',
+    amount: 294.67,
+    date: new Date(2021, 1, 28)
+  },
+  {
+    id: 'e6',
+    title: 'Car Insurance',
+    amount: 294.67,
+    date: new Date(2021, 3, 28)
+  },
+  {
     id: 'e1',
     title: 'Toilet Paper',
-    amount: 94.12,
+    amount: 194.12,
     date: new Date(2020, 7, 14)
   },
   {
@@ -49,7 +67,7 @@ const ExpenseOverview = () => {
     chartDataOptions[expenseMonthIndex].value = expense.amount;
   }
 
-  console.log(chartDataOptions);
+  // console.log(chartDataOptions);
 
   return (
     <Box py={4} px={3} my={4} bgcolor="#F9F9F9">

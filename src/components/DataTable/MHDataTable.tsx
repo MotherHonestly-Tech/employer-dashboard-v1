@@ -88,8 +88,7 @@ const StyledTableContainer = styled(TableContainer)<{
   maxHeight: '100%',
   border: '1px solid #E0E0E0',
   borderRadius: '12px',
-  backgroundColor: '#fff',
-  ...(containerstyles && containerstyles)
+  backgroundColor: '#fff'
   // '&:last-child': {
   //     borderBottom: 'none'
   // }
@@ -100,24 +99,28 @@ const StyledTableCell = styled(TableCell)<{
   bodystyles?: object;
 }>(({ theme, headerstyles, bodystyles }) => ({
   fontFamily: theme.typography.body1.fontFamily,
-  padding: 10,
-  borderBottom: '1px solid rgb(241 245 249)',
-  borderRight: '1px solid rgb(241 245 249)',
+  paddingBlock: 3,
+  paddingInline: 10,
+  borderBottom: '1px solid #E0E0E0',
+  borderRightWidth: 0,
+  // borderRight: '1px solid rgb(241 245 249)',
   //   mb: 3,
   [`&.${tableCellClasses.head}`]: {
-  fontFamily: theme.typography.subtitle2.fontFamily,
-  // borderTop: '10px solid #fbf78d',
-    background: '#F1F1F1',
-    color: '#A1A1A1',
-    fontSize: '0.8rem',
-    borderColor: '#e9e7e7',
-    ...(headerstyles && headerstyles)
+    fontFamily: theme.typography.subtitle2.fontFamily,
+    background: '#FFFFFF',
+    color: '#6B6B6B',
+    fontSize: '0.75rem',
+    paddingBlock: 12,
+    paddingInline: 10
+    // borderTop: '10px solid #fbf78d',
+    // borderBottom: '#e9e7e7',
   },
   [`&.${tableCellClasses.body}`]: {
+    fontFamily: theme.typography.body2.fontFamily,
     background: theme.palette.common.white,
     fontSize: '0.75rem',
-    color: '#637075',
-    ...(bodystyles && bodystyles)
+    color: '#6B6B6B',
+    height: '55px'
   }
 }));
 
@@ -131,7 +134,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
   // hide last border
   '&:last-child td, &:last-child th': {
-    // border: 0
+    border: 0
   }
 }));
 
@@ -210,6 +213,38 @@ const PaginationItem = styled('li')(({ theme }) => ({
   borderRadius: '4px'
 }));
 
+type FilterProps = {
+  title: string;
+  showResults?: boolean;
+};
+
+const FilterBar = (props: FilterProps) => {
+  return (
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      p={2}
+      borderBottom={1}
+      bgcolor="#F2F2F2"
+      borderColor="#E0E0E0">
+      <Typography variant="subtitle1">{props.title}</Typography>
+      {props.showResults && (
+        <Stack>
+          <Typography
+            variant="body2"
+            fontSize=".7rem"
+            sx={{
+              opacity: 0.5
+            }}>
+            149 results
+          </Typography>
+        </Stack>
+      )}
+    </Stack>
+  );
+};
+
 export default function MHDataTable<T>({
   rows,
   columns,
@@ -219,9 +254,9 @@ export default function MHDataTable<T>({
   rows: any[];
   columns: GridColDef<T>[];
   frontEndPagination: boolean;
-  containerStyles?: object;
-  headerStyles?: object;
-  bodyStyles?: object;
+  title: string;
+  showResults?: boolean;
+  hidePagination?: boolean;
 }) {
   // Front end pagination is active by default
   // TO DO: Write logic for server side pagination
@@ -246,7 +281,8 @@ export default function MHDataTable<T>({
 
   return (
     <React.Fragment>
-      <StyledTableContainer containerstyles={props.containerStyles}>
+      <StyledTableContainer>
+        <FilterBar title={props.title} showResults={props.showResults} />
         <Table
           aria-label="transactions table"
           padding="none"
@@ -257,8 +293,7 @@ export default function MHDataTable<T>({
                 <StyledTableCell
                   key={headerName}
                   width={width}
-                  align={align || 'left'}
-                  headerstyles={props.headerStyles}>
+                  align={align || 'left'}>
                   {headerName}
                 </StyledTableCell>
               ))}
@@ -288,8 +323,7 @@ export default function MHDataTable<T>({
                       scope="row"
                       key={i}
                       width={width}
-                      align={align || 'left'}
-                      bodystyles={props.bodyStyles}>
+                      align={align || 'left'}>
                       {cellRenderer ? cellRenderer(row) : value}
                       {/* {description && <Typography variant="body2">{description}</Typography>} */}
                     </StyledTableCell>
@@ -314,7 +348,7 @@ export default function MHDataTable<T>({
         )}
       </StyledTableContainer>
 
-      {slicedRows.length > 0 && (
+      {slicedRows.length > 0 && !props.hidePagination && (
         <TablePaginationActions
           count={rows.length}
           rowsPerPage={rowsPerPage}

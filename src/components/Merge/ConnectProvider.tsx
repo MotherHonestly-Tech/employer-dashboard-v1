@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 
 import MHDialog from '../Dialog/MHDialog';
 import MHButton from '../Button/MHButton';
-import BackdropLoader from '../UI/BackdropLoader';
+import BackdropLoader from '../Loading/BackdropLoader';
 import useHttp from '../../hooks/use-http';
 
 import MergeLinkContext from '../../services/merge-link';
@@ -14,7 +14,7 @@ import { HttpResponse } from '../../models/api.interface';
 import MergeLink from './MergeLink';
 import AuthContext from '../../store/context/auth-context';
 
-const ConnectProvider = () => {
+const ConnectProvider = ({ onMergeExit }: { onMergeExit: () => void }) => {
   const [openModal, setOpenModal] = React.useState(false);
   const [isProviderConnected, setIsProviderConnected] = React.useState(false);
 
@@ -32,11 +32,13 @@ const ConnectProvider = () => {
 
   const handleClose = () => {
     setOpenModal(false);
+    onMergeExit();
   };
 
   React.useEffect(() => {
     handleOpen();
     generateLinkToken();
+    console.log('are you called?');
   }, []);
 
   const onSuccess = useCallback(
@@ -59,10 +61,13 @@ const ConnectProvider = () => {
         }
       );
     },
-    [exchangePublicToken]
+    [exchangePublicToken, user]
   );
 
-  const mergeExitHandler = () => {};
+  const mergeExitHandler = () => {
+    // handleClose();
+    // onMergeExit();
+  };
 
   return (
     <React.Fragment>
@@ -74,9 +79,7 @@ const ConnectProvider = () => {
         handleClose={handleClose}
         scroll="paper"
         actions={
-          isProviderConnected ? (
-            <MHButton fullWidth>Continue to Dashboard</MHButton>
-          ) : null
+          isProviderConnected ? <MHButton fullWidth>Continue</MHButton> : null
         }
         maxWidth={'xs'}
         fullWidth>

@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { ReactComponent as CaretDownIcon } from '../../static/svg/chevron-down.svg';
-import IconWithText from '../UI/IconWithText';
+import IconWithText from '../UI/StackedIconWithText';
 
 const Dropdown = () => {
   return (

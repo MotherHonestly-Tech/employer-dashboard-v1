@@ -12,6 +12,7 @@ import * as validators from '../../utils/validators';
 import { ReactComponent as PlusIcon } from '../../static/svg/plus.svg';
 import { ReactComponent as CancelIcon } from '../../static/svg/cancel.svg';
 import IconButtonStyled from '../Button/IconButtonStyled';
+import MHButton from '../Button/MHButton';
 
 const AddEmployees = ({
   open,
@@ -37,8 +38,11 @@ const AddEmployees = ({
       handleClose={onClose}
       maxWidth={'sm'}
       scroll="paper"
+      actions={<MHButton form="add-employee-form" fullWidth>
+        Invite
+      </MHButton>}
       fullWidth>
-      <Box component="form">
+      <Box component="form" id="add-employee-form" onSubmit={() => {}}>
         {inputFields.map((field, i) => (
           <Stack
             key={i}

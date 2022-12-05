@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 
 import { ReactComponent as InsightsIcon } from '../../static/svg/insights.svg';
 import { ReactComponent as CloudUploadIcon } from '../../static/svg/cloud-upload.svg';
+import { ReactComponent as WalletIcon } from '../../static/svg/wallet.svg';
 import { ReactComponent as MemberIcon } from '../../static/svg/member.svg';
 import { ReactComponent as ResourcesIcon } from '../../static/svg/resources.svg';
 import { DRAWER_WIDTH } from '../../utils/constants';
@@ -59,23 +60,6 @@ const ListStyled = styled(
 )<{
   component?: React.ElementType;
 }>(({ theme }) => ({
-  // '&:before': {
-  //   content: '""',
-  //   position: 'absolute',
-  //   height: 52,
-  //   display: 'block',
-  //   left: 0,
-  //   top: 0,
-  //   width: 6,
-  //   backgroundColor: theme.palette.primary.main,
-  //   borderTopRightRadius: '.4rem',
-  //   borderBottomRightRadius: '.4rem',
-  //   transition: '0.5s',
-  //   transform: 'translateY(0)'
-  // },
-  // '& .MuiListItem-root.active:nth-child(2) ~ &:after': {
-  //   transform: 'translateY(52px)'
-  // }
 }));
 
 const Indicator = styled('div')(({ theme }) => ({
@@ -179,13 +163,18 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
 
         <RouterLink
           icon={<InsightsIcon />}
-          primary="Employee Insights"
+          primary="Insights"
           to="/organization/dashboard"
         />
         <RouterLink
           icon={<CloudUploadIcon />}
           primary="Employees"
-          to="/organization/upload-employees"
+          to="/organization/employees"
+        />
+        <RouterLink
+          icon={<WalletIcon />}
+          primary="Wallet"
+          to="/organization/wallet"
         />
         <RouterLink
           icon={<MemberIcon />}

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
-import IconWithText from '../UI/IconWithText';
+import IconWithText from '../UI/StackedIconWithText';
 import { ReactComponent as ViewIcon } from '../../static/svg/view.svg';
 import { ReactComponent as DownloadIcon } from '../../static/svg/download.svg';
 import { ReactComponent as ArrowRightIcon } from '../../static/svg/arrow-right.svg';
@@ -168,9 +168,10 @@ const RESOURCE_STATS: Array<ResourceStatShape> = [
 
 const ResourceStats = () => {
   return (
-    <Container sx={{
-      mt: 7
-    }}>
+    <Container
+      sx={{
+        mt: 7
+      }}>
       <Stack direction="row" overflow="hidden">
         <Box width={180} mt={2}>
           <Typography

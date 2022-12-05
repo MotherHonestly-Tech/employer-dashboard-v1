@@ -6,7 +6,7 @@ import useHttp from '../../hooks/use-http';
 import { getURLWithQueryParams } from '../../utils/utils';
 import { Employee } from '../../models/user.model';
 import { HttpResponse } from '../../models/api.interface';
-import BackdropLoader from '../UI/BackdropLoader';
+import BackdropLoader from '../Loading/BackdropLoader';
 
 const Startup = () => {
   const authCtx = React.useContext(AuthContext);

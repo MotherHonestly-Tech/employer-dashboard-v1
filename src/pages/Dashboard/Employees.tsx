@@ -8,14 +8,17 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 import UploadButton from '../../components/Form/UploadButton';
-import AddEmployees from '../../components/UploadEmployees/AddEmployees';
+import AddEmployees from '../../components/Employees/AddEmployees';
 import RoundedLogoIcon from '../../theme/icons/RoundedLogo';
 
 import { ReactComponent as PlusIcon } from '../../static/svg/plus-lg.svg';
 import MHDataTable, {
   GridColDef
 } from '../../components/DataTable/MHDataTable';
-import Employees from '../../components/EmployerInsights/Employees';
+import EmployeesData from '../../components/Employees/Employees';
+import AbsolutePositionedContainer from '../../components/UI/AbsolutePositionedContainer';
+import MHButton from '../../components/Button/MHButton';
+import ConnectProvider from '../../components/Merge/ConnectProvider';
 
 type UploadHistoryType = {
   id: number;
@@ -50,13 +53,15 @@ const UploadWidget = () => (
   </Box>
 );
 
-const UploadEmployees = () => {
+const Employees = () => {
   const uploadBtnRef = React.useRef<any>(null);
 
   const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
-  const [isDragActive, setIsDragActive] = React.useState(false);
+  const [isDragActive, setIsDragActive] = React.useState<boolean>(false);
 
   const [open, setOpen] = React.useState(false);
+
+  const [mergeOpen, setMergeOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -64,6 +69,16 @@ const UploadEmployees = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleMergeOpen = () => {
+    console.log('open sesame')
+    setMergeOpen(true);
+  };
+
+  const handleMergeClose = () => {
+    console.log('close sesame')
+    setMergeOpen(false);
   };
 
   const uploadChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,13 +159,27 @@ const UploadEmployees = () => {
         sx={{
           pt: 3
         }}>
-        <Box mb={4}>
-          <Typography variant="h1" align="center" paragraph>
-            Upload Employees
+        <Box mb={4} position="relative">
+          <Typography variant="h1" paragraph>
+            Employees
           </Typography>
+
+          <AbsolutePositionedContainer defaultPos top={0} right={0}>
+            <MHButton onClick={handleMergeOpen}>
+              Connect HR/Payroll Provider
+            </MHButton>
+          </AbsolutePositionedContainer>
         </Box>
 
-        <Grid container mb={10}>
+        <Divider
+          orientation="horizontal"
+          sx={{
+            mb: 2
+          }}
+          light
+        />
+
+        <Grid container mb={7}>
           <Grid item xs={8.5} px={1}>
             <UploadButton
               htmlFor="csv-upload"
@@ -200,20 +229,21 @@ const UploadEmployees = () => {
           </Grid>
         </Grid>
 
-        <Typography variant="subtitle1" paragraph>Employees</Typography>
-        <Employees />
+        <EmployeesData />
 
-        <Typography variant="subtitle1" paragraph>Upload History</Typography>
-        <MHDataTable
+        {/* <Typography variant="subtitle1" paragraph>Upload History</Typography> */}
+        {/* <MHDataTable
           rows={UPLOAD_HISTORY}
           columns={columns}
           frontEndPagination
-        />
+        /> */}
       </Container>
+
+      {mergeOpen && <ConnectProvider onMergeExit={handleMergeClose} />}
 
       {open && <AddEmployees open={open} onClose={handleClose} />}
     </React.Fragment>
   );
 };
 
-export default UploadEmployees;
+export default Employees;

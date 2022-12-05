@@ -18,7 +18,7 @@ const MergeLink = ({
   }, []);
 
   const { open, isReady } = useMergeLink({
-    linkToken: linkToken as string, // Replace ADD_GENERATED_LINK_TOKEN with the token retrieved from your backend (Step 1)
+    linkToken: linkToken, // Replace ADD_GENERATED_LINK_TOKEN with the token retrieved from your backend (Step 1)
     onSuccess,
     onExit
     // tenantConfig: {

@@ -8,17 +8,18 @@ import {
 } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import { styled } from '@mui/material/styles';
 import Layout from '../components/Layout/Layout';
 import Startup from '../components/Dashboard/Startup';
 import Dashboard from '../pages/Dashboard/Dashboard';
-import UploadEmployees from '../pages/Dashboard/UploadEmployees';
+import Employees from '../pages/Dashboard/Employees';
+import Allocation from '../pages/Dashboard/Wallet';
 import TeamMembers from '../pages/Dashboard/TeamMembers';
 import Resources from '../pages/Dashboard/Resources';
 
 import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
 import { User } from '../models/user.model';
-import { styled } from '@mui/material/styles';
 
 const Wrapper = styled('div')(
   ({ theme }) => `
@@ -63,9 +64,15 @@ const DashboardNavigator = () => {
                 </Wrapper>
               </Route>  
               
-              <Route path={`${path}/upload-employees`} exact>
+              <Route path={`${path}/employees`} exact>
                 <Wrapper>
-                  <UploadEmployees />
+                  <Employees />
+                </Wrapper>
+              </Route>  
+
+              <Route path={`${path}/wallet`} exact>
+                <Wrapper>
+                  <Allocation />
                 </Wrapper>
               </Route>  
 

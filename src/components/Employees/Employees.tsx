@@ -3,19 +3,13 @@ import React from 'react';
 import MuiLink from '@mui/material/Link';
 
 import MHDataTable, { GridColDef } from '../DataTable/MHDataTable';
-
-type Employee = {
-  id: number;
-  name: string;
-  title: string;
-  totalPayout: number;
-  recentPayout: number;
-  recentPayoutDate: string;
-  recentPayoutCareCategory: string;
-};
+import { EmployeeData } from '../../models/employee.model';
+import EmployeeModal from './EmployeeModal';
 
 const Employees = () => {
-  const EMPLOYEES: Employee[] = [
+  const [selectedEmployee, setSelectedEmployee] = React.useState<any>(null);
+
+  const EMPLOYEES: EmployeeData[] = [
     {
       id: 1,
       name: 'Sarah Jane',
@@ -69,10 +63,10 @@ const Employees = () => {
       recentPayout: 120,
       recentPayoutDate: '12/11/2022',
       recentPayoutCareCategory: 'Child care'
-    },
+    }
   ];
 
-  const columns: GridColDef<Employee>[] = [
+  const columns: GridColDef<EmployeeData>[] = [
     {
       headerName: 'Name',
       type: 'text',
@@ -104,7 +98,7 @@ const Employees = () => {
       width: 200
     },
     {
-      headerName: 'Recent Payout Care Category',
+      headerName: 'Recent Payout Category',
       type: 'text',
       field: 'recentPayoutCareCategory',
       width: 200
@@ -115,21 +109,48 @@ const Employees = () => {
       field: '',
       width: 150,
       align: 'center',
-      cellRenderer: (row: Employee) => (
+      cellRenderer: (row: EmployeeData) => (
         <MuiLink
+          color="#3C72FF"
           sx={{
             display: 'block',
-            cursor: 'pointer',
-            my: 2
+            cursor: 'pointer'
+            // my: 2
           }}
-          onClick={() => {}}>
+          onClick={handleOpen.bind(null, row)}>
           View
         </MuiLink>
       )
     }
   ];
 
-  return <MHDataTable rows={EMPLOYEES} columns={columns} frontEndPagination />;
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = (employee: any) => {
+    setOpen(true);
+    setSelectedEmployee(employee);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <MHDataTable
+        title="Employee Details"
+        rows={EMPLOYEES}
+        columns={columns}
+        frontEndPagination
+      />
+
+      <EmployeeModal
+        open={open}
+        onClose={handleClose}
+        employee={selectedEmployee}
+      />
+    </React.Fragment>
+  );
 };
 
 export default Employees;

@@ -9,9 +9,6 @@ const Label = styled('label')(
     min-width: 320px;
     margin-bottom: 4px;
     color: #21392E;
-    ...({
-        ...style
-    })
   `
 );
 

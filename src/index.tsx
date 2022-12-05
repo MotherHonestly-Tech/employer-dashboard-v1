@@ -17,9 +17,9 @@ root.render(
   <BrowserRouter>
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
-        <React.StrictMode>
+        {/* <React.StrictMode> */}
           <App />
-        </React.StrictMode>
+        {/* </React.StrictMode> */}
       </ThemeProvider>
     </AuthContextProvider>
   </BrowserRouter>

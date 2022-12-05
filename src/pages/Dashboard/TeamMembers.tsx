@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import MuiLink from '@mui/material/Link';
 
 import MHButton from '../../components/Button/MHButton';
 import MHDataTable, {
@@ -50,11 +51,18 @@ const TeamMembers = () => {
 
   const columns: GridColDef<MemberShape>[] = [
     {
-      headerName: 'Member',
+      headerName: 'Name',
       type: 'text',
       field: 'email',
       width: 300,
       valueGetter: (row: MemberShape) => `${row.firstName} ${row.lastName}`
+    },
+    {
+      headerName: 'Email',
+      type: 'text',
+      field: 'email',
+      width: 300,
+      valueGetter: (row: MemberShape) => `${row.email}`
     },
     {
       headerName: 'Role',
@@ -69,18 +77,29 @@ const TeamMembers = () => {
       width: 150,
       align: 'center',
       cellRenderer: (row: MemberShape) => (
-        <Stack direction="row" spacing={3} justifyContent="center">
-          <StyledActionButton
-            color="secondary"
-            variant="contained"
-            >
-            View
-          </StyledActionButton>
-          <Divider light flexItem />
-          <StyledActionButton color="error" variant="contained" >
-            Remove
-          </StyledActionButton>
-        </Stack>
+        <MuiLink
+          color="#3C72FF"
+          sx={{
+            display: 'block',
+            cursor: 'pointer',
+            my: 2
+          }}
+          onClick={() => {}}>
+          View
+        </MuiLink>
+        // buttons with different variants
+        // <Stack direction="row" spacing={3} justifyContent="center">
+        //   <StyledActionButton
+        //     color="secondary"
+        //     variant="contained"
+        //     >
+        //     View
+        //   </StyledActionButton>
+        //   <Divider light flexItem />
+        //   <StyledActionButton color="error" variant="contained" >
+        //     Remove
+        //   </StyledActionButton>
+        // </Stack>
       )
     }
   ];
@@ -123,7 +142,7 @@ const TeamMembers = () => {
         </MHButton>
       </Stack>
 
-      <MHDataTable rows={MEMBERS} columns={columns} frontEndPagination />
+      <MHDataTable title="Members" rows={MEMBERS} columns={columns} frontEndPagination />
 
       {open && <AddMember open={open} onClose={handleClose} />}
     </Container>

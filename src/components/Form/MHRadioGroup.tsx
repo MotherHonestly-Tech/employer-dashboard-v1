@@ -4,7 +4,7 @@ import Radio, { RadioProps, radioClasses } from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { SxProps, Theme } from '@mui/material/styles'
+import { SxProps, Theme } from '@mui/material/styles';
 
 import Label from '../Form/Label';
 
@@ -24,7 +24,8 @@ type RadioButtonProps = {
     | undefined;
   value: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, value: any) => void;
-  controlSx?: SxProps<Theme>
+  controlSx?: SxProps<Theme>;
+  row?: boolean;
 };
 
 const MHRadio = (props: RadioProps) => {
@@ -37,8 +38,8 @@ const MHRadio = (props: RadioProps) => {
           color: '#dadad8'
         },
         [`&.${radioClasses.checked}`]: {
-          color: theme => theme.palette.primary.main
-        },
+          color: (theme) => theme.palette.primary.main
+        }
       }}
       {...props}
     />
@@ -53,18 +54,24 @@ const MHRadioGroup = ({
   options,
   value,
   onChange,
-  controlSx
+  controlSx,
+  row,
+  ...props
 }: RadioButtonProps) => {
   return (
     <FormControl fullWidth>
       {label && <Label id={id}>{label}</Label>}
       <RadioGroup
+        row={row || false}
         aria-labelledby="radio-buttons-group-label"
         name={name}
         value={value}
         onChange={onChange}
         sx={{
           mb: 2,
+          '&:last-child': {
+            mb: 1
+          }
         }}>
         {options.map((option) => (
           <FormControlLabel

@@ -63,6 +63,18 @@ export const formatAmount = (amount: number, precision: number = 2) => {
   return new Intl.NumberFormat('en-US', options).format(amount);
 };
 
+export const formatNumber = (figure: number, precision: number = 2) => {
+  if (typeof figure === 'string') {
+    figure = parseFloat(figure);
+  }
+
+  if (isNaN(figure)) {
+    return '0.00';
+  }
+
+  return new Intl.NumberFormat('en-US').format(figure);
+};
+
 export const constructHyphenatedDateFormat = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
@@ -76,6 +88,21 @@ export function constructSlashSeperatedDateFormat(date: Date): string {
   const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   return `${month}/${day}/${date.getFullYear()}`;
 }
+
+export const constructBillingDateFormat = (date: Date) => {
+  const day = date.getDate();
+  const month = date.toLocaleString('default', {
+    month: 'short'
+  });
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+
+export function addDaysToDate(date: Date, days: number) {
+  date = new Date(date.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+};
 
 export const convertFileSizeFromBytes = (size: number) => (
   unit: 'kb' | 'mb'
@@ -186,9 +213,7 @@ export const roundToUpperPlaceValue = (figure: number) => (
   return Math.ceil(figure / nearestPlace) * nearestPlace;
 };
 
-export const getPlaceValue = (
-  figure: number
-): number => {
+export const getPlaceValue = (figure: number): number => {
   let place = 1;
 
   if (figure < 1) {

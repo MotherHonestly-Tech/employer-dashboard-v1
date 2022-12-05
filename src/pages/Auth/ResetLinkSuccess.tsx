@@ -15,7 +15,7 @@ import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import { HttpResponse } from '../../models/api.interface';
 import NotificationContext from '../../store/context/notifications.context';
-import BackdropLoader from '../../components/UI/BackdropLoader';
+import BackdropLoader from '../../components/Loading/BackdropLoader';
 import Notification from '../../components/UI/Notification';
 
 const ResetLinkSuccess: FnComponent<{

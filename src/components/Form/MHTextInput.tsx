@@ -6,7 +6,8 @@ import InputUnstyled, {
 } from '@mui/base/InputUnstyled';
 import { useFormControlUnstyledContext } from '@mui/base/FormControlUnstyled';
 import { styled } from '@mui/system';
-import { parseAmount } from '../../utils/utils';
+
+import { formatNumber, parseAmount } from '../../utils/utils';
 
 const grey = {
   50: '#F3F6F9',
@@ -85,8 +86,12 @@ const StyledTextareaElement = styled(
 `
 );
 
+type NumberInputProps = {
+  precision?: number;
+};
+
 const MHTextInput = React.forwardRef(
-  (props: InputUnstyledProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+  (props: InputUnstyledProps & NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
     const { components, rows, ...others } = props;
 
     // const formControlContext = useFormControlUnstyledContext();
@@ -99,18 +104,29 @@ const MHTextInput = React.forwardRef(
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
       others.onChange && others.onChange(event);
     };
-
+    
     const inputBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-      if (others.type === 'number' && event.target.value) {
-        let formattedValue = parseFloat(parseAmount(event.target.value))
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        event.target.value = formattedValue;
-        others.onChange &&
-          others.onChange(event as React.ChangeEvent<HTMLInputElement>);
-      }
+      formatNumberType(event);
       others.onBlur && others.onBlur(event);
     };
+
+    const formatNumberType = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (others.type !== 'number' || !e.target.value) {
+        return;
+      }
+
+      let formattedValue =
+        others.precision && others.precision > 0
+          ? parseFloat(parseAmount(e.target.value))
+              .toFixed(2)
+              .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+          : formatNumber(+parseAmount(e.target.value));
+
+      e.target.value = formattedValue;
+      others.onChange &&
+        others.onChange(e as React.ChangeEvent<HTMLInputElement>);
+    };
+
 
     React.useImperativeHandle(ref, () => ({} as any));
 

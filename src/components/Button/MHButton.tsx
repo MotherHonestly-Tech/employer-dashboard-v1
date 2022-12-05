@@ -3,7 +3,7 @@ import React from 'react';
 import Button, { buttonClasses, ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/system';
 
-import LoadingIndicator from '../UI/LoadingIndicator';
+import LoadingIndicator from '../Loading/LoadingIndicator';
 import { FnComponent } from '../../models/component.model';
 
 type MHButtonProps = {
