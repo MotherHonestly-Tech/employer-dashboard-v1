@@ -14,11 +14,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/employer-dashboard-v1">
     <AuthContextProvider>
       <ThemeProvider theme={theme}>
         {/* <React.StrictMode> */}
-          <App />
+        <App />
         {/* </React.StrictMode> */}
       </ThemeProvider>
     </AuthContextProvider>
