@@ -148,6 +148,7 @@ const ResVideo = (props: ResProps) => {
                       bodyBg="bg-cream-100"
                       imageSrc={res.thumbNailImageSrc}
                       podTop="hidden"
+                      top={res.itemList ? res.itemList[0] : ""}
                       title={res.title}
                       category={res.itemList ? res.itemList[0] : ""}
                       categoryTwo={res.itemList ? res.itemList[1] : ""}

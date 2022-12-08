@@ -30,7 +30,7 @@ const ViewToolkit = (props: ComponentProps) => {
   // console.log(params.id!);
 
   var resUrl = `${process.env.REACT_APP_RES_TOOLKIT_URL}`;
-  var viewUrl = `${process.env.REACT_APP_RES_TOOLKIT_VIEW_URL}${params.id}`;
+  var viewUrl = `${process.env.REACT_APP_ALL_RES_VIEW_URL}${params.id}`;
 
   const getResource = async () => {
     try {
@@ -49,7 +49,7 @@ const ViewToolkit = (props: ComponentProps) => {
   };
 
   console.log(resources, "resources");
-  const [noOfElement, setnoOfElement] = useState(8);
+  const [noOfElement, setnoOfElement] = useState(4);
   const slice = resources.slice(0, noOfElement);
 
   const [data, setData] = useState<any>("");
@@ -86,12 +86,15 @@ const ViewToolkit = (props: ComponentProps) => {
       <ViewHeader
         titles={data.title}
         description="Here's everything you need to know about this toolkit and why it's worth it."
-        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661639776/image_2_lqcgpe.png"
-        categoryTwo={data.interests}
+        imageUrl={data.thumbNailImageSrc}
+        headerDateClass="text-center block md:hidden mt-12 text-[12px] uppercase font-areaExt"
+        categoryClassName="md:bottom-6 md:absolute"
+        categoryOne={data.itemList ? data.itemList[0] : ""}
+        categoryTwo={data.itemList ? data.itemList[1] : ""}
         downloadLink={data.source}
-        downloadClassName="flex cursor-pointer absolute bottom-28 -ml-6 my-8"
+        downloadClassName="flex cursor-pointer md:-ml-4 my-8 md:my-3 lg:my-8 px-6 md:pt-0 lg:pt-6 pt-6 md:px-0"
         date={moment(data.date).format("DD/MM/YYYY h:mm")}
-        dateTwo={moment(data.date).format("MMMM D, YYYY")}
+        dateTwo={moment(data.date).format("MMM D, YYYY")}
         ticketClassName="py-6 hidden"
         timeClassName="hidden"
         podClassName="mt-10 flex gap-32 hidden"
@@ -104,18 +107,21 @@ const ViewToolkit = (props: ComponentProps) => {
         <Typography
           variant="h3"
           color="primary"
-          className="text-3xl font-columbia font-[500]"
+          className="text-2xl md:text-3xl w-[90%] text-left font-columbia font-[500]"
         >
-          Description:
+          When you’re a full-time working parent, your time isn’t just valuable,
+          it’s priceless.
         </Typography>
         <Typography
           variant="body2"
           color="primary"
-          className="text-[13px] mt-6 leading-[200%] font-areaSemi"
+          className="text-[18px] text-left mt-6 leading-[200%] font-areaSemi"
         >
           {data.description}
         </Typography>
       </Box>
+
+      <Box className="bg-gray-300 h-[1px] w-[91.4%] opacity-50 overflow-hidden mx-auto"></Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
         <Typography

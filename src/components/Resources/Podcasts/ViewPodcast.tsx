@@ -25,7 +25,7 @@ const ViewPodcast = (props: ComponentProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ComponentProps[]>([]);
 
-  const [noOfElement, setnoOfElement] = useState(8);
+  const [noOfElement, setnoOfElement] = useState(4);
   const slice = resources.slice(0, noOfElement);
 
   var resUrl = `${process.env.REACT_APP_RES_PODCAST_URL}`;
@@ -55,7 +55,7 @@ const ViewPodcast = (props: ComponentProps) => {
   const params = useParams<any>();
   console.log(params.id!);
 
-  var viewUrl = `${process.env.REACT_APP_RES_PODCAST_VIEW_URL}${params.id}`;
+  var viewUrl = `${process.env.REACT_APP_ALL_RES_VIEW_URL}${params.id}`;
 
   const getData = async () => {
     try {
@@ -87,15 +87,17 @@ const ViewPodcast = (props: ComponentProps) => {
       <ViewHeader
         titles={data.title}
         description="This is an episode of our podcast, Listen and enjoy!"
-        imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
-        categoryOne="Career"
-        categoryTwo={data.interests}
+        imageUrl={data.thumbNailImageSrc}
+        // imageUrl="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
+        categoryClassName="md:bottom-0 lg:-bottom-5 md:absolute"
+        categoryOne={data.itemList ? data.itemList[0] : ""}
+        categoryTwo={data.itemList ? data.itemList[1] : ""}
         downloadLink="https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkLnBvZGJlYW4uY29tL21vdGhlcmhvbmVzdGx5L2ZlZWQueG1s"
         downloadClassName="flex -ml-4 my-8 hidden"
         date={data.date}
         ticketClassName="py-6 hidden"
         timeClassName="hidden"
-        podClassName="bottom-32 absolute flex gap-32"
+        podClassName="md:bottom-12 lg:bottom-[210px] md:absolute md:flex podClass gap-32 md:gap-24 lg:gap-32 py-14 md:py-0"
         dateClassName="hidden text-left pb-2 w-3/4 text-base font-areaSemi"
         episodeClassName=" text-left pb-2 w-3/4 text-[22px] font-areaSemi"
         episode={data.episode}
@@ -117,33 +119,21 @@ const ViewPodcast = (props: ComponentProps) => {
           spotifyUrl={data.source}
         />
       </Box>
-      <Box className="px-12 py-10 bg-white">
-        <Box className="mt-8">
-          <Typography
-            variant="h3"
-            color="primary"
-            className="text-2xl md:text-3xl mb-4 text-left font-columbia font-[500]"
-          >
-            Shownote:
-          </Typography>
-          <Box className="flex">
-            <Typography
-              variant="h3"
-              color="primary"
-              className="text-base font-areaNorm"
-            >
-              {data.description}
-            </Typography>
-          </Box>
-          <Typography
-            variant="body2"
-            color="primary"
-            className="text-[13px] px-24 my-4 leading-[200%] font-areaSemi"
-          >
-            {data.keynote}
-          </Typography>
+      <Box className="px-6 w-full md:px-20 lg:px-48 pb-6 bg-white">
+        <Typography
+          variant="h3"
+          color="primary"
+          className="text-[22px] mb-4 text-left font-areaSemi font-[500]"
+        >
+          Key Takeaways:
+        </Typography>
+        <Box className="flex">
+          {/* Content */}
+          <div dangerouslySetInnerHTML={{ __html: data.description }} />
         </Box>
       </Box>
+
+      <Box className="bg-gray-300 h-[1px] w-[91.4%] opacity-50 overflow-hidden mx-auto"></Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
         <Typography

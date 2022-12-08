@@ -144,6 +144,7 @@ const ResToolkit = (props: ResProps) => {
                     imgBg="bg-cream-200 h-[340px]"
                     bodyBg="bg-white h-16"
                     podTop="hidden"
+                    top={res.itemList ? res.itemList[0] : ""}
                     imageSrc={res.thumbNailImageSrc}
                     title={res.title}
                     category={res.itemList ? res.itemList[0] : ""}

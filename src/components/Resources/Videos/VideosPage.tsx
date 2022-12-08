@@ -96,12 +96,12 @@ const VideosPage = (props: ResProps) => {
           {currentPosts.map((res, index) => (
             <Grid item xs={12} md={6} lg={3} key={index}>
               <ResCard
-                cardClass="relative mb-10 w-[260px] h-[390px] object-cover bg-cream-100 rounded-md"
+                cardClass="relative mb-10 w-[260px] h-[400px] object-cover bg-cream-100 rounded-md"
                 iconClass="absolute top-10 ml-20 mt-12 w-20 h-20"
                 imgBg="bg-sky-400 h-[260px]"
                 bodyBg="bg-cream-100"
                 imageSrc={res.thumbNailImageSrc}
-                // top={res.interests}
+                top={res.itemList ? res.itemList[0] : ""}
                 podTop="hidden"
                 title={res.title}
                 category={res.itemList ? res.itemList[0] : ""}

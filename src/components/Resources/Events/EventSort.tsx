@@ -20,7 +20,7 @@ const EventSort = (props: Props) => {
         method: "GET",
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");

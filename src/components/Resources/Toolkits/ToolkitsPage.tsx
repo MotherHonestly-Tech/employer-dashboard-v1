@@ -102,7 +102,7 @@ const ToolkitsPage = (props: ResProps) => {
                 imgBg="bg-cream-200 h-[260px]"
                 bodyBg="bg-cream-100"
                 imageSrc={res.thumbNailImageSrc}
-                // top={res.interests}
+                top={res.itemList ? res.itemList[0] : ""}
                 title={res.title}
                 podTop="hidden"
                 category={res.itemList ? res.itemList[0] : ""}

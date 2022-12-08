@@ -13,13 +13,14 @@ import { ReactComponent as RightBtn } from "../../../static/svg/right-btn.svg";
 import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
-  texts?: string;
+  thumbNailImageSrc?: string;
+  itemList?: string[];
+  title?: string;
+  author?: string;
+  CatchPhrase?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -86,7 +87,7 @@ const ResArticle = (props: ResProps) => {
         },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       // console.log(resources);
     } catch (err) {
       // console.error("Cannot find Data");
@@ -146,14 +147,14 @@ const ResArticle = (props: ResProps) => {
                       imgBg="bg-navy-100 h-[260px]"
                       bodyBg="bg-cream-100"
                       podTop="hidden"
-                      imageSrc={res.image}
-                      top=""
-                      title={res.titles}
-                      text={res.texts}
-                      category={res.categ}
-                      categoryTwo={res.categ}
-                      titleUrl={`${location.pathname}/articles/${res.slugs}`}
-                      playUrl={`${location.pathname}/articles/${res.slugs}`}
+                      imageSrc={res.thumbNailImageSrc}
+                      top={res.itemList ? res.itemList[0] : ""}
+                      title={res.title}
+                      text={res.CatchPhrase}
+                      category={res.itemList ? res.itemList[0] : ""}
+                      categoryTwo={res.itemList ? res.itemList[1] : ""}
+                      titleUrl={`${location.pathname}/articles/${res.slug}/${res.id}`}
+                      playUrl={`${location.pathname}/articles/${res.slug}/${res.id}`}
                     />
                   </Grid>
                 ))}

@@ -147,7 +147,7 @@ const ResEvent = (props: ResProps) => {
                 {resources.map((res, index) => (
                   <Grid item xs={12} md={6} lg={3} key={index}>
                     <ResCard
-                      cardClass="relative w-[260px] h-[350px] shadow-none object-cover bg-cream-100 rounded-md"
+                      cardClass="relative w-[260px] h-[400px] shadow-none object-cover bg-cream-100 rounded-md"
                       iconClass="hidden"
                       imgBg="bg-pink-700  h-[260px]"
                       bodyBg="bg-cream-100"
@@ -155,8 +155,6 @@ const ResEvent = (props: ResProps) => {
                       imageSrc={res.thumbNailImageSrc}
                       title={res.title}
                       podTop="hidden"
-                      // category={res.itemList ? res.itemList.join(", ") : ""}
-
                       category={res.itemList ? res.itemList[0] : ""}
                       categoryTwo={res.itemList ? res.itemList[1] : ""}
                       titleUrl={`${location.pathname}/events/${res.slug}/${res.id}`}

@@ -5,6 +5,7 @@ import ResCard from "../SubComponents/ResCard";
 import { useLocation, useParams } from "react-router-dom";
 import VideoHeader from "./VideoHeader";
 import AuthContext from "../../../store/context/auth-context";
+import { Socials } from "../SubComponents/Socials";
 
 type ComponentProps = {
   thumbNailImageSrc?: string;
@@ -22,7 +23,7 @@ const ViewVideo = (props: ComponentProps) => {
   const location = useLocation();
   const [resources, setResources] = useState<ComponentProps[]>([]);
 
-  const [noOfElement, setnoOfElement] = useState(8);
+  const [noOfElement, setnoOfElement] = useState(4);
   const slice = resources.slice(0, noOfElement);
 
   const authCtx = React.useContext(AuthContext);
@@ -51,7 +52,7 @@ const ViewVideo = (props: ComponentProps) => {
   const params = useParams<any>();
   // console.log(params.id!);
 
-  var viewUrl = `${process.env.REACT_APP_RES_VIDEO_VIEW_URL}${params.id}`;
+  var viewUrl = `${process.env.REACT_APP_ALL_RES_VIEW_URL}${params.id}`;
 
   const getData = async () => {
     try {
@@ -82,9 +83,10 @@ const ViewVideo = (props: ComponentProps) => {
     <Fragment>
       <VideoHeader
         title={data.title}
-        description={data.description}
+        description="Achieve your personal and professional goals with personalized solutions from our specialized experts in career, care, and wellbeing."
         imageUrl={data.thumbNailImageSrc}
-        categoryTwo={data.interests}
+        categoryOne={data.itemList ? data.itemList[0] : ""}
+        categoryTwo={data.itemList ? data.itemList[2] : ""}
         downloadClassName="hidden flex -ml-4 my-6"
       />
 
@@ -116,28 +118,24 @@ const ViewVideo = (props: ComponentProps) => {
           ></iframe>
         </Box>
 
-        <Box className="mt-8">
-          <Box className="flex mb-4">
-            {/* <Box className="font-areaExt bg-yellow-100 px-2 pt-1 text-sm rounded-full">
-              2
-            </Box> */}
-            <Typography
-              variant="h3"
-              color="primary"
-              className="text-base px-24 uppercase font-areaNorm"
-            >
-              {/* {data.keypoint} */}
-            </Typography>
-          </Box>
+        <Socials SocialClass="block py-12" />
+
+        <Box className="px-12 pb-6 bg-white">
           <Typography
-            variant="body2"
+            variant="h3"
             color="primary"
-            className="text-[13px] px-24 my-4 leading-[200%] font-areaSemi"
+            className="text-[22px] mb-4 text-left font-areaSemi font-[500]"
           >
-            {/* {data.keynote} */}
+            Key Takeaways:
           </Typography>
+          <Box className="flex">
+            {/* Content */}
+            <div dangerouslySetInnerHTML={{ __html: data.description }} />
+          </Box>
         </Box>
       </Box>
+
+      <Box className="bg-gray-300 h-[1px] w-[91.4%] opacity-50 overflow-hidden mx-auto"></Box>
 
       <Box className="mx-auto pt-10 bg-white px-12 py-4">
         <Typography

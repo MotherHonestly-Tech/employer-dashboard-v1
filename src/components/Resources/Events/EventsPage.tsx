@@ -109,7 +109,7 @@ const EventsPage = (props: ResProps) => {
                 <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
-                      className={`relative w-auto h-[350px] object-cover bg-sky-400 rounded-md`}
+                      className={`relative w-auto h-[420px] object-cover bg-sky-400 rounded-md`}
                     >
                       <IconButton
                         disabled
@@ -129,11 +129,16 @@ const EventsPage = (props: ResProps) => {
                         <Typography className=" capitalize  w-4/5 font-columbia text-[28px] leading-[143%] tracking-[-0.04rem] font-[500] text-white">
                           {res.title}
                         </Typography>
+
                         <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
                           {moment(res.startTime!).format("MMMM D, h:mma")}
                         </Typography>
                         <Typography className="pt-4  w-3/4 font-areaSemi line-clamp-3 text-[15px] font-[700] leading-[200%] tracking-[0.02rem]  text-white">
-                          {res.texts}
+                          CatchPhrase Lorem, ipsum dolor sit amet consectetur
+                          adipisicing elit. Fugit eveniet cumque sunt laboriosam
+                          asperiores exercitationem ipsa veritatis itaque quidem
+                          expedita? Voluptates adipisci illo, quaerat tempora
+                          modi veniam eius quae officia.
                         </Typography>
 
                         <Box className="pt-12 space-x-4">
@@ -154,9 +159,10 @@ const EventsPage = (props: ResProps) => {
                         </Box>
                       </Box>
                       <CardMedia
-                        className="object-cover h-[422px]"
+                        className="object-cover h-[420px]"
                         component="img"
-                        image="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
+                        image={res.thumbNailImageSrc}
+                        // image="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
                         alt="Resource Image"
                       />
                     </Card>
@@ -165,7 +171,7 @@ const EventsPage = (props: ResProps) => {
               ) : count >= 2 ? (
                 <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
-                    cardClass="relative w-[280px] mb-10 h-[350px] object-cover bg-cream-100 rounded-md shadow-sm"
+                    cardClass="relative w-[280px] mb-10 h-[420px] object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
                     imgBg="bg-pink-700 h-[280px]"
                     bodyBg="bg-cream-100"
@@ -174,8 +180,8 @@ const EventsPage = (props: ResProps) => {
                     podTop="hidden"
                     // top={res.interests}
                     title={res.title}
-                    category={res.itemList ? res.itemList[0] : ""}
-                    categoryTwo={res.itemList ? res.itemList[1] : ""}
+                    category={res.itemList ? res.itemList[0] : "career"}
+                    categoryTwo={res.itemList ? res.itemList[1] : "career"}
                     titleUrl={`/organization/resources/events/${res.slug}/${res.id}`}
                     playUrl={`/organization/resources/events/${res.slug}/${res.id}`}
                   />

@@ -19,13 +19,13 @@ const VideoHeader = (props: HeaderProps) => {
         <Typography
           variant="body2"
           color="primary"
-          className="text-center line-clamp-3 my-6 w-full font-columbia text-4xl capitalize font-[500]"
+          className="text-center h-20 leading-10 line-clamp-3 my-6 w-full font-columbia text-3xl md:text-[40px] capitalize font-[500]"
         >
           {props.title}
         </Typography>
         <Typography
           variant="body2"
-          className="text-center line-clamp-6 pt-4 w-full text-[16px] font-areaSemi"
+          className="text-center py-6 line-clamp-6 w-[70%] mx-auto text-[16px] font-areaSemi"
           color="primary"
         >
           {props.description}
@@ -33,11 +33,28 @@ const VideoHeader = (props: HeaderProps) => {
 
         <Box className="py-12">
           <Typography
+            className="text-[11px] text-center font-areaExt uppercase text-navy-900"
+            gutterBottom
+            variant="h5"
+            component="p"
+          >
+            {props.categoryOne}
+          </Typography>
+          <Typography
             variant="body2"
             className="text-center mt-1 text-[12px] opacity-50 capitalize font-areaSemi"
             color="primary"
           >
-            {props.categoryTwo}
+            {props.categoryOne ? (
+              <div
+                className="text-xs capitalize p-2 truncate text-navy-900 font-areaSemi"
+                // size="small"
+                // disabled
+              >
+                {props.categoryOne} {props.categoryTwo ? ", " : null}
+                {props.categoryTwo}
+              </div>
+            ) : null}
           </Typography>
         </Box>
       </Box>

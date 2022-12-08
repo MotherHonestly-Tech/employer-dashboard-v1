@@ -21,13 +21,14 @@ import ArticleSort from "./ArticleSort";
 import AuthContext from "../../../store/context/auth-context";
 
 type ResProps = {
-  image?: string;
-  tops?: string;
-  titles?: string;
-  texts?: string;
+  thumbNailImageSrc?: string;
+  itemList?: string[];
+  title?: string;
+  author?: string;
+  CatchPhrase?: string;
   categ?: string;
   id?: number;
-  slugs?: string;
+  slug?: string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -59,7 +60,7 @@ const ArticlesPage = (props: ResProps) => {
         },
       });
       const jsonData = await response.json();
-      setResources(jsonData);
+      setResources(jsonData.data);
       console.log(resources);
     } catch (err) {
       console.error("Cannot find Data");
@@ -107,7 +108,7 @@ const ArticlesPage = (props: ResProps) => {
                 <Grid item xs={12} md={12} lg={6}>
                   <Zoom in style={{ transitionDelay: "200ms" }}>
                     <Card
-                      className={`relative w-auto h-[450px] object-cover bg-pink-700 rounded-md`}
+                      className={`relative w-auto h-[460px] object-cover bg-pink-700 rounded-md`}
                     >
                       <IconButton
                         disabled
@@ -125,7 +126,7 @@ const ArticlesPage = (props: ResProps) => {
                       </IconButton>
                       <Box className="  absolute top-[20%] left-[6%]">
                         <Typography className=" capitalize  w-4/5 font-areaSemi text-[22px] leading-[150%] tracking-[-0.04rem] font-[600] text-white">
-                          {res.titles}
+                          {res.title}
                         </Typography>
                         {/* <Typography className="pt-4 uppercase w-full font-areaNorm text-[11px] font-[900] leading-[102%] tracking-[0.1rem] text-white">
                          {res.createdAt}
@@ -136,7 +137,7 @@ const ArticlesPage = (props: ResProps) => {
 
                         <Box className="pt-12 space-x-4">
                           <Link
-                            to={`${location.pathname}/${res.slugs}
+                            to={`${location.pathname}/${res.slug}/${res.id}
                      `}
                             className="bg-white w-[108px] no-underline  px-6 py-4 h-[45px] text-navy-900 font-areaSemi not-italic text-[12px] font-[700] leading-[102%] tracking-[0.05rem]"
                           >
@@ -152,9 +153,10 @@ const ArticlesPage = (props: ResProps) => {
                         </Box>
                       </Box>
                       <CardMedia
-                        className="object-cover h-[466px]"
+                        className="object-cover h-[460px]"
                         component="img"
-                        image="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
+                        image={res.thumbNailImageSrc}
+                        // image="https://res.cloudinary.com/mother-honestly/image/upload/v1661545700/image_hsichu.png"
                         alt="Resource Image"
                       />
                     </Card>
@@ -163,19 +165,19 @@ const ArticlesPage = (props: ResProps) => {
               ) : count >= 2 ? (
                 <Grid item xs={12} md={6} lg={3} key={index}>
                   <ResCard
-                    cardClass="relative w-[280px] mb-10 h-[450px] object-cover bg-cream-100 rounded-md shadow-sm"
+                    cardClass="relative w-[280px] mb-10 h-[460px] object-cover bg-cream-100 rounded-md shadow-sm"
                     iconClass="hidden absolute top-10 ml-20 mt-12 w-20 h-20" //absolute top-10 ml-20 mt-12 w-20 h-20
                     imgBg="bg-navy-100 h-[280px]"
                     bodyBg="bg-cream-100"
-                    imageSrc={res.image}
-                    // top={res.tops}
-                    title={res.titles}
-                    text={res.texts}
+                    imageSrc={res.thumbNailImageSrc}
                     podTop="hidden"
-                    category={res.categ}
-                    categoryTwo={res.categ}
-                    titleUrl={`${location.pathname}/toolkits/${res.slugs}`}
-                    playUrl={`${location.pathname}/${res.slugs}`}
+                    top={res.itemList ? res.itemList[0] : ""}
+                    title={res.title}
+                    text={res.CatchPhrase}
+                    category={res.itemList ? res.itemList[0] : ""}
+                    categoryTwo={res.itemList ? res.itemList[1] : ""}
+                    titleUrl={`/organization/resources/articles/${res.slug}/${res.id}`}
+                    playUrl={`/organization/resources/articles/${res.slug}/${res.id}`}
                   />
                 </Grid>
               ) : null}

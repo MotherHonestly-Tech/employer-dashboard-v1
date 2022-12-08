@@ -95,6 +95,88 @@ h6 {
   font-family: 'Columbia-Sans', sans-serif;
 }
 
+
+.text-huge {
+  font-size: 16px;
+  font-family: 'Area-Extended', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 102%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #194049;
+}
+
+.text-big {
+  font-size: 18px;
+  font-family: 'Area-Normal-Semibold', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 200%;
+  letter-spacing: 0.03em;
+  color: #194049;
+}
+.text-small {
+  font-size: 15px;
+  font-family: 'Area-Normal-Semibold', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 200%;
+  letter-spacing: 0.02em;
+  color: #194049;
+}
+.text-tiny {
+  font-family: 'Area-Normal-Semibold', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 200%;
+  letter-spacing: 0.02em;
+  color: #194049;
+}
+
+
+blockquote {
+  border-left-width: 8px;
+  --tw-border-opacity: 1;
+  border-color: #FFFC9B;
+  height: 100%;
+  left:0px;
+  padding-left: 20px;
+  // position: absolute;
+  }
+
+  .text-small strong{
+  font-size: 15px;
+  font-family: 'Area-Normal', sans-serif;
+  font-style: normal;
+  // font-weight: 900;
+  font-size: 15px;
+  line-height: 200%;
+  letter-spacing: 0.02em;
+  color: #194049;
+  }
+
+
+  ol li {
+    list-style-type: decimal;
+    padding: 10px !important;
+    font-size: 15px;
+    font-family: 'Area-Normal', sans-serif;
+    font-style: normal;
+  }
+
+
+  li ul li {
+    list-style-type: disc;
+    padding: 5px !important;
+    font-size: 15px;
+    font-family: 'Area-Normal', sans-serif;
+    font-style: normal;
+  }
+
 ::-moz-selection {
   color: $primary-color;
   background: #f4ee46;
@@ -194,6 +276,7 @@ a:active {
 
 .loading-icon-container {
   width: 80px;
+
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -249,3 +332,7 @@ a:active {
 //   src: local('Gilroy-Regular'),
 //     url('./static/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
 // }
+
+.css-46bh2p-MuiCardContent-root{
+  padding-top: 12px !important;
+}
