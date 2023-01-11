@@ -22,12 +22,16 @@ import MHButton from '../../components/Button/MHButton';
 import InvoiceDialog from '../../components/Wallet/InvoiceDialog';
 import useInput from '../../hooks/use-input';
 import useInputArray from '../../hooks/use-input-array';
+import useHttp from '../../hooks/use-http';
 
 import { ReactComponent as UsersGroupIcon } from '../../static/svg/users-group.svg';
 import { ReactComponent as DollarIcon } from '../../static/svg/dollar.svg';
-import * as validators from '../../utils/validators';
-import { resolveErrorMessage } from '../../utils/utils';
+import { parseAmount, resolveErrorMessage } from '../../utils/utils';
 import { ALLOCATION_FIELDS } from '../../utils/constants';
+import * as validators from '../../utils/validators';
+import { HttpResponse } from '../../models/api.interface';
+import { Category } from '../../models/wallet.model';
+import DashboardContext from '../../store/context/dashboard.context';
 
 type AllocationPeriod = 'monthly' | 'quarterly';
 
@@ -43,6 +47,14 @@ const PERIOD_OPTIONS = [
 ];
 
 const Allocation = () => {
+  const [monthlyAllocation, setMonthlyAllocation] = React.useState(0);
+  const [quarterlyAllocation, setQuarterlyAllocation] = React.useState(0);
+
+  const dashboardCtx = React.useContext(DashboardContext);
+  const { staticDataCacheMap: dataCacheMap, organization } = dashboardCtx;
+
+  const { loading, error, sendHttpRequest } = useHttp();
+
   const EMPLOYEE_STAT: EmployeeStatProps = {
     theme: 'dark',
     icon: (
@@ -75,7 +87,11 @@ const Allocation = () => {
 
   const [allocationDuration, setAllocationDuration] = React.useState<
     AllocationPeriod
-  >('monthly');
+  >('quarterly');
+
+  const [allocationBuckets, setAllocationBuckets] = React.useState<
+    readonly Category[]
+  >(dataCacheMap.get('categories') ? dataCacheMap.get('categories')! : []);
 
   const allocationDurationChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -83,16 +99,28 @@ const Allocation = () => {
     setAllocationDuration(e.target.value as AllocationPeriod);
   };
 
+  let SUB_ALLOCATION_BUCKETS = React.useRef(
+    allocationBuckets.filter((category) => !isCategoryAnythingBucket(category))
+  );
+
   React.useEffect(() => {
-    ALLOCATION_FIELDS.forEach((field) => {
+    if (dataCacheMap.get('categories')) {
+      setAllocationBuckets(dataCacheMap.get('categories')!);
+
+      SUB_ALLOCATION_BUCKETS.current = allocationBuckets.filter(
+        (category) => !isCategoryAnythingBucket(category)
+      );
+    }
+
+    SUB_ALLOCATION_BUCKETS.current.forEach((field) => {
       addField();
     });
-  }, []);
+  }, [dataCacheMap, addField]);
 
-  const computeAllocation = (e: React.ChangeEvent<HTMLInputElement>) => {
-    allocationInputChangeHandler(e);
-    // computeAllocation(+parseAmount(e.target.value));
-  };
+    
+  // React.useEffect(() => {
+  //   console.log(dashboardCtx);
+  // }, [dashboardCtx]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -104,9 +132,66 @@ const Allocation = () => {
     setOpen(false);
   };
 
+  function isCategoryAnythingBucket(category: Category): boolean {
+    if (!category || !category.categoryName) {
+      return false;
+    } else if (category.categoryName.toLowerCase().trim() === 'anything') {
+      return true;
+    }
+    return false;
+  }
+
+  const computeAllocation = () => {
+    const employeePopulation = 160;
+
+    setAllocationBuckets((buckets) => {
+      const modifiedSubBuckets = SUB_ALLOCATION_BUCKETS.current.map((bucket, i) => ({
+        ...bucket,
+        allocation: inputFields.length ? +parseAmount(inputFields[i].value) : 0
+      }));
+
+      let [anythingBucket] = buckets.filter((bucket) =>
+        isCategoryAnythingBucket(bucket)
+      );
+      anythingBucket = {
+        ...anythingBucket,
+        allocation: +parseAmount(enteredAllocation)
+      };
+
+      return [...[anythingBucket], ...modifiedSubBuckets];
+    });
+
+    const totalAmount =
+      inputFields.reduce(
+        (prev, current, index) => prev + +parseAmount(current.value),
+        0
+      ) + +parseAmount(enteredAllocation);
+
+    const allocationPerMonth = employeePopulation * totalAmount;
+    setMonthlyAllocation(allocationPerMonth);
+    setQuarterlyAllocation(allocationPerMonth * 3);
+  };
+
   const submitHandler = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleOpen();
+
+    sendHttpRequest(
+      process.env.REACT_APP_API_BASE_URL + 'employer/dashboard/employer',
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          employerRefId: organization?.employer.employerRefId,
+          allocationList: allocationBuckets.map(bucket => ({
+            catReferenceId: bucket.catReferenceId,
+            categoryName: bucket.categoryName,
+            allocationAmount: bucket.allocation
+          }))
+        })
+      },
+      (response: HttpResponse<unknown>) => {
+        handleOpen();
+      }
+    );
   };
 
   return (
@@ -151,8 +236,11 @@ const Allocation = () => {
                 label={'Monthly stipend Per Employee ($)'}
                 placeholder="Amount ($)"
                 value={enteredAllocation}
-                onChange={computeAllocation}
-                onBlur={allocationInputBlurHandler}
+                onChange={allocationInputChangeHandler}
+                onBlur={() => {
+                  allocationInputBlurHandler();
+                  computeAllocation();
+                }}
                 precision={2}
                 startAdornment={
                   <InputAdornment>
@@ -189,6 +277,7 @@ const Allocation = () => {
                     placeholder="Amount ($)"
                     value={field.value}
                     onChange={(e) => onChange(e, i)}
+                    onBlur={computeAllocation}
                     precision={2}
                     startAdornment={
                       <InputAdornment>
@@ -204,7 +293,10 @@ const Allocation = () => {
         </Grid>
 
         <Grid item xs={7}>
-          <AllocationPerPeriod />
+          <AllocationPerPeriod
+            monthlyAllocation={monthlyAllocation}
+            quarterlyAllocation={quarterlyAllocation}
+          />
 
           <StackedContainer
             direction="column"
@@ -230,13 +322,14 @@ const Allocation = () => {
             />
           </StackedContainer>
 
-          <AllocationSummary />
+          <AllocationSummary allocationFields={allocationBuckets} />
 
           <BillingPeriod />
 
           <MHButton
             type="submit"
             form="allocation-form"
+            loading={loading}
             sx={{
               mt: 2
             }}
@@ -246,7 +339,11 @@ const Allocation = () => {
         </Grid>
       </Grid>
 
-      <InvoiceDialog open={open} onClose={handleClose} />
+      <InvoiceDialog
+        open={open}
+        onClose={handleClose}
+        allocationBuckets={allocationBuckets}
+      />
     </React.Fragment>
   );
 };

@@ -1,13 +1,16 @@
 import React from 'react';
+import { Category } from '../../models/wallet.model';
 import MHDialog from '../Dialog/MHDialog';
 import Invoice from './Invoice';
 
 const InvoiceDialog = ({
   open,
-  onClose
+  onClose,
+  allocationBuckets
 }: {
   open: boolean;
   onClose: () => void;
+  allocationBuckets: readonly Category[]
 }) => {
   return (
     <MHDialog
@@ -17,7 +20,7 @@ const InvoiceDialog = ({
       maxWidth="md"
       actions={null}
       scroll="paper">
-      <Invoice />
+      <Invoice allocationBuckets={allocationBuckets} />
     </MHDialog>
   );
 };

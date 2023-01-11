@@ -33,6 +33,8 @@ const ResetSuccess: FnComponent<{
   }, [onRouteChange]);
 
   if (!location.state || !location.state.token) {
+    console.log(location.state);
+    
     return (
       <Redirect
         to={{
@@ -48,18 +50,18 @@ const ResetSuccess: FnComponent<{
       <Paper
         sx={{
           p: 8,
-          width: '100%',
-          maxWidth: 'sm'
+          width: '100%'
+          // maxWidth: 'sm'
         }}>
         <Box
           sx={{
             textAlign: 'center'
           }}>
-          <RoundedLogoIcon>
+          <RoundedLogoIcon sx={{ mx: 'auto' }}>
             <CheckmarkIcon width="1rem" />
           </RoundedLogoIcon>
 
-          <Typography variant="h3" my={1} gutterBottom>
+          <Typography variant="h3" my={3} gutterBottom>
             Password reset
           </Typography>
 
@@ -94,9 +96,10 @@ const ResetSuccess: FnComponent<{
             spacing={1}
             justifyContent="center"
             alignItems="center">
-            <ArrowLeftIcon />
+            {/* <ArrowLeftIcon /> */}
             <MuiLink
               component={Link}
+              underline="always"
               href=""
               to={getURLWithQueryParams('/auth/sign-in', {
                 verify: '1'

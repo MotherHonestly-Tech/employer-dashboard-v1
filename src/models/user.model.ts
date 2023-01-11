@@ -23,11 +23,25 @@ export interface Token {
   refreshToken: string;
 }
 
-export type Employee = {
-  uuid: number;
-  firstName: string;
-  lastName: string;
-  workEmail: string;
-  role: string;
-  employerRefId: number;
+export type Employee =  {
+  id:               number;
+  uuid:             number;
+  firstName:        string;
+  lastName:         string;
+  company:          string;
+  workDepartment:   string;
+  userId:           number;
+  employerId:       number;
+  employerRefId:    number;
+  workEmail:        string;
+  position:         string;
+  jobTitle:         string;
+  onboarded:        boolean;
+  status:           string;
+  verified:         boolean;
+  password:         string;
+  createdDate:      Date;
+  createdBy:        string;
+  lastActivityBy:   string;
+  lastActivityDate: Date;
 }

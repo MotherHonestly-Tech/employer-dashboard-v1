@@ -17,9 +17,9 @@ import Allocation from '../pages/Dashboard/Wallet';
 import TeamMembers from '../pages/Dashboard/TeamMembers';
 import Resources from '../pages/Dashboard/Resources';
 
-import { DashboardContextProvider } from '../store/context/dashboard.context';
 import AuthContext from '../store/context/auth-context';
 import { User } from '../models/user.model';
+import Accounting from '../pages/Dashboard/Accounting';
 
 const Wrapper = styled('div')(
   ({ theme }) => `
@@ -33,65 +33,67 @@ const DashboardNavigator = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
 
-  if (!authCtx.user) {
-    return <Startup />;
-  }
+  // if (!authCtx.user) {
+  //   return <Startup />;
+  // }
 
   // if (!authCtx.isOnboarded(authCtx.user as User)) {
-    // return (
-    //   <Redirect
-    //     to={{
-    //       pathname: '/onboarding/employer',
-    //       state: { from: { pathname: '/dashboard' } }
-    //     }}
-    //   />
-    // );
+  // return (
+  //   <Redirect
+  //     to={{
+  //       pathname: '/onboarding/employer',
+  //       state: { from: { pathname: '/dashboard' } }
+  //     }}
+  //   />
+  // );
   // }
 
   return (
-    <DashboardContextProvider>
-      <Layout>
-        <TransitionGroup>
-          <CSSTransition
-            unmountOnExit
-            key={location.pathname}
-            classNames="fade"
-            timeout={400}>
-            <Switch location={location}>
-              <Route path={`${path}/dashboard`} exact>
-                <Wrapper>
-                  <Dashboard />
-                </Wrapper>
-              </Route>  
-              
-              <Route path={`${path}/employees`} exact>
-                <Wrapper>
-                  <Employees />
-                </Wrapper>
-              </Route>  
+    <Layout>
+      <TransitionGroup>
+        <CSSTransition
+          unmountOnExit
+          key={location.pathname}
+          classNames="fade"
+          timeout={400}>
+          <Switch location={location}>
+            <Route path={`${path}/dashboard`} exact>
+              <Wrapper>
+                <Dashboard />
+              </Wrapper>
+            </Route>
 
-              <Route path={`${path}/wallet`} exact>
-                <Wrapper>
-                  <Allocation />
-                </Wrapper>
-              </Route>  
+            <Route path={`${path}/employees`} exact>
+              <Wrapper>
+                <Employees />
+              </Wrapper>
+            </Route>
 
-              <Route path={`${path}/team-members`} exact>
-                <Wrapper>
-                  <TeamMembers />
-                </Wrapper>
-              </Route>  
+            <Route path={`${path}/wallet`} exact>
+              <Wrapper>
+                <Allocation />
+              </Wrapper>
+            </Route>
 
-              <Route path={`${path}/resources`} exact>
-                <Wrapper>
-                  <Resources />
-                </Wrapper>
-              </Route>  
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
-      </Layout>
-    </DashboardContextProvider>
+            <Route path={`${path}/accounting`} exact>
+              <Accounting />
+            </Route>
+
+            <Route path={`${path}/team-members`} exact>
+              <Wrapper>
+                <TeamMembers />
+              </Wrapper>
+            </Route>
+
+            <Route path={`${path}/resources`} exact>
+              <Wrapper>
+                <Resources />
+              </Wrapper>
+            </Route>
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
+    </Layout>
   );
 };
 

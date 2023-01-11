@@ -1,8 +1,12 @@
 export interface Category {
     id:               number;
     categoryName:     string;
+    catReferenceId:   number;
     colorCode:        string;
     icon:             string;
+    allocation:       number;
+    value:            string;
+    label:            string;
     expensePercent:   number;
 }
 

@@ -16,7 +16,7 @@ import { ReactComponent as KeyIcon } from '../../static/svg/key.svg';
 import { FnComponent } from '../../models/component.model';
 import { BGImage } from '../../models/background-image.model';
 import * as validators from '../../utils/validators';
-import { getURLWithQueryParams } from '../../utils/utils';
+import { generateRandomString, getURLWithQueryParams } from '../../utils/utils';
 
 const PasswordReset: FnComponent<{
   onRouteChange: (image: BGImage) => void;
@@ -115,9 +115,7 @@ const PasswordReset: FnComponent<{
       },
       (data: any) => {
         history.push({
-          pathname: getURLWithQueryParams('/auth/reset-password/jdd/success', {
-            verify: '1'
-          }),
+          pathname: `/auth/reset-password/${generateRandomString({ length: 7 })}/success`,
           state: {
             token: token
           }
@@ -135,11 +133,11 @@ const PasswordReset: FnComponent<{
           width: '100%'
         }}>
         <Box sx={{}}>
-          <RoundedLogoIcon>
+          <RoundedLogoIcon sx={{ mx: 'auto' }}>
             <KeyIcon width="1rem" />
           </RoundedLogoIcon>
 
-          <Typography variant="h3" my={4} align="center" gutterBottom>
+          <Typography variant="h3" my={3} align="center" gutterBottom>
             Set new password
           </Typography>
 

@@ -65,7 +65,7 @@ export type GridColDef<T> = {
   type: 'number' | 'text' | 'date';
   align?: 'left' | 'right' | 'center';
   valueGetter?: (params: T) => any;
-  cellRenderer?: (params: T) => React.ReactNode;
+  cellRenderer?: (params: T) => any;
   description?: string;
 };
 
@@ -79,16 +79,12 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
-const StyledTableContainer = styled(TableContainer)<{
-  containerstyles?: object;
-}>(({ theme, containerstyles }) => ({
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   width: '100%',
   overflowX: 'auto',
   overflowY: 'auto',
   maxHeight: '100%',
-  border: '1px solid #E0E0E0',
-  borderRadius: '12px',
-  backgroundColor: '#fff'
+  backgroundColor: '#fff',
   // '&:last-child': {
   //     borderBottom: 'none'
   // }
@@ -97,30 +93,21 @@ const StyledTableContainer = styled(TableContainer)<{
 const StyledTableCell = styled(TableCell)<{
   headerstyles?: object;
   bodystyles?: object;
-}>(({ theme, headerstyles, bodystyles }) => ({
-  fontFamily: theme.typography.body1.fontFamily,
-  paddingBlock: 3,
-  paddingInline: 10,
-  borderBottom: '1px solid #E0E0E0',
-  borderRightWidth: 0,
-  // borderRight: '1px solid rgb(241 245 249)',
+}>(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
+  padding: 10,
+  borderBottom: '1px solid #E1E1E1',
   //   mb: 3,
   [`&.${tableCellClasses.head}`]: {
-    fontFamily: theme.typography.subtitle2.fontFamily,
-    background: '#FFFFFF',
-    color: '#6B6B6B',
-    fontSize: '0.75rem',
-    paddingBlock: 12,
-    paddingInline: 10
-    // borderTop: '10px solid #fbf78d',
-    // borderBottom: '#e9e7e7',
+    borderTop: '1px solid #E1E1E1',
+    background: '#fff',
+    color: '#A1A1A1',
+    fontSize: '0.8rem',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontFamily: theme.typography.body2.fontFamily,
     background: theme.palette.common.white,
     fontSize: '0.75rem',
-    color: '#6B6B6B',
-    height: '55px'
+    color: '#637075',
   }
 }));
 
@@ -134,7 +121,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
   // hide last border
   '&:last-child td, &:last-child th': {
-    border: 0
+    // border: 0
   }
 }));
 
@@ -142,7 +129,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
-  const pageLimit = Math.ceil(count / rowsPerPage);
+  const pageLimit = 5;
   const pages: Array<number> =
     count / rowsPerPage > 1
       ? Array.from(Array(Math.ceil(count / rowsPerPage)).keys())
@@ -152,8 +139,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     let start = Math.floor(page / pageLimit) * pageLimit;
     return new Array(pageLimit).fill(0).map((_, idx) => start + idx);
   };
-
-  // console.log(getPaginationGroup());
 
   return (
     <Stack
@@ -213,38 +198,6 @@ const PaginationItem = styled('li')(({ theme }) => ({
   borderRadius: '4px'
 }));
 
-type FilterProps = {
-  title: string;
-  showResults?: boolean;
-};
-
-const FilterBar = (props: FilterProps) => {
-  return (
-    <Stack
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-      p={2}
-      borderBottom={1}
-      bgcolor="#F2F2F2"
-      borderColor="#E0E0E0">
-      <Typography variant="subtitle1">{props.title}</Typography>
-      {props.showResults && (
-        <Stack>
-          <Typography
-            variant="body2"
-            fontSize=".7rem"
-            sx={{
-              opacity: 0.5
-            }}>
-            149 results
-          </Typography>
-        </Stack>
-      )}
-    </Stack>
-  );
-};
-
 export default function MHDataTable<T>({
   rows,
   columns,
@@ -253,13 +206,8 @@ export default function MHDataTable<T>({
 }: {
   rows: any[];
   columns: GridColDef<T>[];
-  frontEndPagination: boolean;
-  title: string;
-  showResults?: boolean;
-  hidePagination?: boolean;
+  frontEndPagination?: boolean;
 }) {
-  // Front end pagination is active by default
-  // TO DO: Write logic for server side pagination
   const [page, setPage] = React.useState(0);
   const rowsPerPage = 10;
 
@@ -282,7 +230,6 @@ export default function MHDataTable<T>({
   return (
     <React.Fragment>
       <StyledTableContainer>
-        <FilterBar title={props.title} showResults={props.showResults} />
         <Table
           aria-label="transactions table"
           padding="none"
@@ -323,7 +270,10 @@ export default function MHDataTable<T>({
                       scope="row"
                       key={i}
                       width={width}
-                      align={align || 'left'}>
+                      align={align || 'left'}
+                      sx={{
+                        fontFamily: 'Area-Normal-Bold'
+                      }}>
                       {cellRenderer ? cellRenderer(row) : value}
                       {/* {description && <Typography variant="body2">{description}</Typography>} */}
                     </StyledTableCell>
@@ -342,20 +292,20 @@ export default function MHDataTable<T>({
             minWidth="100%">
             <EmptyDataIcon />
             <Typography variant="body2" mt={2}>
-              No transactions data
+              No data
             </Typography>
           </Stack>
         )}
       </StyledTableContainer>
 
-      {slicedRows.length > 0 && !props.hidePagination && (
+      {/* {slicedRows.length > 0 && (
         <TablePaginationActions
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
         />
-      )}
+      )} */}
     </React.Fragment>
   );
 }
@@ -378,7 +328,7 @@ export default function MHDataTable<T>({
 //   onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
 // };
 
-
+{
   /* <IconButtonStyled
 onClick={handleFirstPageButtonClick}
 disabled={page === 0}
@@ -403,9 +353,9 @@ disabled={page >= Math.ceil(count / rowsPerPage) - 1}
 aria-label="last page">
 {theme.direction === 'rtl' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
 </IconButtonStyled> */
+}
 
-
-
+{
   /* <Box sx={{ flexShrink: 0, ml: 2.5 }}>
 <Typography variant="caption">
   {`${page * rowsPerPage + 1}-${
@@ -415,4 +365,4 @@ aria-label="last page">
   } of ${count}`}
 </Typography>
 </Box> */
-
+}

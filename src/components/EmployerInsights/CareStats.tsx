@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import { PieChart as DonutChart } from 'react-minimal-pie-chart';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -32,7 +32,7 @@ const CareStat = (props: CareStatProps) => {
         justifyContent="center"
         alignItems="center"
         position="relative">
-        <PieChart
+        <DonutChart
           data={[{ value: props.value, key: 1, color: props.color }]}
           reveal={props.value}
           lineWidth={20}

@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 
 import StackedContainer from './StackedContainerStyled';
+import { formatAmount } from '../../utils/utils';
 
 const GridItem = styled(Box)(({ theme }) => ({
   // ...theme.typography.body2,
@@ -17,7 +18,13 @@ const GridItem = styled(Box)(({ theme }) => ({
   justifyContent: 'center'
 }));
 
-const AllocationPerPeriod = () => {
+const AllocationPerPeriod = ({
+  monthlyAllocation,
+  quarterlyAllocation
+}: {
+  monthlyAllocation: number;
+  quarterlyAllocation: number;
+}) => {
   return (
     <StackedContainer
       divider={
@@ -42,8 +49,7 @@ const AllocationPerPeriod = () => {
             fontSize={24}
             fontFamily="Area-Normal-Black"
             color="primary">
-            {/* {formatAmount(monthlyAllocation)} */}
-            $78,000
+            {formatAmount(monthlyAllocation)}
           </Typography>
         </Box>
       </GridItem>
@@ -57,8 +63,7 @@ const AllocationPerPeriod = () => {
             fontSize={24}
             fontFamily="Area-Normal-Black"
             color="primary">
-            {/* {formatAmount(quarterlyAllocation)} */}
-            $78,000
+            {formatAmount(quarterlyAllocation)}
           </Typography>
         </Box>
       </GridItem>

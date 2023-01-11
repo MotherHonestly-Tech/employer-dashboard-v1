@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { SxProps, Theme } from '@mui/material/styles';
+import { formatNumber } from '../../utils/utils';
 
 export type EmployeeStatProps = {
   theme: 'dark' | 'light';
@@ -33,7 +34,7 @@ const EmployeeStat = ({ theme, icon, title, stat, ...props }: EmployeeStatProps)
       <Typography
         variant="h1"
         color={theme === 'dark' ? 'common.white' : 'primary.main'}>
-        {stat}
+        {formatNumber(stat)}
       </Typography>
     </Box>
   );

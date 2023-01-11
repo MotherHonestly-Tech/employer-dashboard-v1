@@ -48,74 +48,74 @@ const AuthNavigator: FnComponent = () => {
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }} bgcolor="#FAFAFA">
-        <Grid container spacing={0} sx={{ minHeight: '100vh' }} justifyContent="center">
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          spacing={0}
+          sx={{ minHeight: '100vh' }}>
           <Grid
             item
             xs={6}
             sx={{
               // backgroundColor: backgroundColor.current,
-              position: 'relative'
+              position: 'relative',
+              px: 6
             }}>
-            <Stack
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ minHeight: '100vh', px: 6 }}>
-              <Box position="relative" top={-25}>
-                {/* <MHLogoIcon /> */}
-                {/* <OrgLogo /> */}
-                <MHLogo style={{ width: '3.4rem' }} />
-              </Box>
-              <TransitionGroup style={{ width: '100%' }}>
-                <CSSTransition
-                  unmountOnExit
-                  key={location.pathname}
-                  classNames="fade"
-                  timeout={400}>
-                  <Switch location={location}>
-                    <Route path={`${path}/sign-in`}>
-                      <SignIn
-                        onRouteChange={changeImageHandler}
-                        title="Sign in to your account"
-                      />
-                    </Route>
-                    <Route path={`${path}/forgot-password`} exact>
-                      <ForgotPassword
-                        onRouteChange={changeImageHandler}
-                        title="Forgot Password"
-                      />
-                    </Route>
-                    <Route path={`${path}/forgot-password/reset-link`} exact>
-                      <ResetLinkSuccess onRouteChange={changeImageHandler} />
-                    </Route>
-                    <Route path={`${path}/reset-password`} exact>
-                      <PasswordReset onRouteChange={changeImageHandler} />
-                    </Route>
-                    <Route path={`${path}/reset-password/jdd/success`} exact>
-                      <ResetSuccess onRouteChange={changeImageHandler} />
-                    </Route>
+            <Box position="relative" mb={2} pt={3}>
+              {/* <MHLogoIcon /> */}
+              {/* <OrgLogo /> */}
+              <MHLogo style={{ width: '3.4rem', margin: 'auto' }} />
+            </Box>
+            <TransitionGroup style={{ width: '100%' }}>
+              <CSSTransition
+                unmountOnExit
+                key={location.pathname}
+                classNames="fade"
+                timeout={400}>
+                <Switch location={location}>
+                  <Route path={`${path}/sign-in`}>
+                    <SignIn
+                      onRouteChange={changeImageHandler}
+                      title="Sign in to your account"
+                    />
+                  </Route>
+                  <Route path={`${path}/forgot-password`} exact>
+                    <ForgotPassword
+                      onRouteChange={changeImageHandler}
+                      title="Forgot Password"
+                    />
+                  </Route>
+                  <Route path={`${path}/forgot-password/reset-link`} exact>
+                    <ResetLinkSuccess onRouteChange={changeImageHandler} />
+                  </Route>
+                  <Route path={`${path}/reset-password`} exact>
+                    <PasswordReset onRouteChange={changeImageHandler} />
+                  </Route>
+                  <Route path={`${path}/reset-password/:id/success`} exact>
+                    <ResetSuccess onRouteChange={changeImageHandler} />
+                  </Route>
 
-                    <Route path={`${path}`} exact>
-                      <Redirect to={`${path}/sign-in`} />
-                    </Route>
-                    <Route path="*">
-                      <Redirect to={`${path}/sign-in`} />
-                    </Route>
-                  </Switch>
-                </CSSTransition>
-              </TransitionGroup>
+                  <Route path={`${path}`} exact>
+                    <Redirect to={`${path}/sign-in`} />
+                  </Route>
+                  <Route path="*">
+                    <Redirect to={`${path}/sign-in`} />
+                  </Route>
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
 
-              <Typography variant="body2" color="#194049" align="center" mt={4}>
-                Powered by &nbsp;{' '}
-                <MHLogo
-                  style={{
-                    width: '2rem',
-                    display: 'inline',
-                    verticalAlign: 'middle'
-                  }}
-                />
-              </Typography>
-            </Stack>
+            <Typography variant="body2" color="#194049" align="center" mt={4}>
+              Powered by &nbsp;{' '}
+              <MHLogo
+                style={{
+                  width: '2rem',
+                  display: 'inline',
+                  verticalAlign: 'middle'
+                }}
+              />
+            </Typography>
           </Grid>
         </Grid>
       </Box>

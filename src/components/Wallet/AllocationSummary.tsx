@@ -8,12 +8,18 @@ import { styled } from '@mui/material/styles';
 import StackedContainer from './StackedContainerStyled';
 import { ReactComponent as DollarIcon } from '../../static/svg/dollar.svg';
 import { ALLOCATION_FIELDS } from '../../utils/constants';
+import { Category } from '../../models/wallet.model';
+import { formatNumber } from '../../utils/utils';
 
 const Item = styled(Box)(({ theme }) => ({
   backgroundColor: '#F4F4F4',
   paddingInline: 5,
   paddingBlock: 8,
-  ...theme.typography.body2
+  ...theme.typography.body2,
+  fontSize: '.75rem',
+  '&:nth-of-type(1)': {
+    paddingInline: 15
+  }
 }));
 
 const SummaryGridItem = (props: { title: string; amount: number }) => {
@@ -22,23 +28,31 @@ const SummaryGridItem = (props: { title: string; amount: number }) => {
       direction="row"
       spacing={0.5}
       width="100%"
-      py={.2}
+      py={0.2}
       sx={{
         marginTop: '0 !important'
-      }}
-      >
+      }}>
       <Item flexGrow={2}>{props.title}</Item>
       <Item width={20}>
         <DollarIcon />
       </Item>
-      <Item minWidth={100}>{props.amount}</Item>
+      <Item minWidth={150}>
+        {props.amount ? formatNumber(props.amount, 2) : 0}
+      </Item>
     </Stack>
   );
 };
 
-const SUMMARY_ITEMS = ['Anything', ...ALLOCATION_FIELDS, 'Total'];
+const AllocationSummary = ({
+  allocationFields
+}: {
+  allocationFields: readonly Category[];
+}) => {
+  const TOTAL = allocationFields.reduce(
+    (prev, current, index) => prev + current.allocation,
+    0
+  );
 
-const AllocationSummary = () => {
   return (
     <StackedContainer direction="column" alignItems="flex-start">
       <Box p={2}>
@@ -47,9 +61,14 @@ const AllocationSummary = () => {
         </Typography>
       </Box>
 
-      {SUMMARY_ITEMS.map((item) => (
-        <SummaryGridItem key={item} title={item} amount={0} />
+      {allocationFields.map((field) => (
+        <SummaryGridItem
+          key={field.id}
+          title={field.categoryName}
+          amount={field.allocation}
+        />
       ))}
+      <SummaryGridItem key="total" title="Total" amount={TOTAL} />
     </StackedContainer>
   );
 };

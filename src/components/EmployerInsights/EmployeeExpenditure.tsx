@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import { PieChart as DonutChart } from 'react-minimal-pie-chart';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -196,7 +196,7 @@ const EmployeeExpenditure = () => {
           justifyContent="center"
           alignItems="center"
           position="relative">
-          <PieChart lineWidth={20} data={EXPENSE_CATEGORIES} animate />
+          <DonutChart lineWidth={20} data={EXPENSE_CATEGORIES} animate />
 
           <AbsolutePositionedContainer>
             <Typography variant="h1" fontSize="2.4rem" align="center">

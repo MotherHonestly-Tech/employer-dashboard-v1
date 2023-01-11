@@ -1,4 +1,4 @@
-import { ReactComponent as MHIcon } from '../../static/svg/brand/mhatwork.svg';
+import { ReactComponent as MHIcon } from '../../static/svg/brand/MH-Logo.svg';
 
 export default function MHLogo({ style }: { style?: object }) {
   return (

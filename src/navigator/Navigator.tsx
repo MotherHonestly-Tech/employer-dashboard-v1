@@ -18,21 +18,21 @@ const AppNavigator: FnComponent<{}> = (props) => {
         <Route
           path="/"
           render={(routeProps) =>
-            authCtx.isAuthenticated ? (
+            // authCtx.isAuthenticated ? (
               <Redirect
                 to={{
                   pathname: "/organization/dashboard",
                   state: { from: routeProps.location },
                 }}
               />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/auth/sign-in",
-                  state: { from: routeProps.location },
-                }}
-              />
-            )
+            // ) : (
+            //   <Redirect
+            //     to={{
+            //       pathname: "/auth/sign-in",
+            //       state: { from: routeProps.location },
+            //     }}
+            //   />
+            // )
           }
           exact
         />
@@ -41,20 +41,20 @@ const AppNavigator: FnComponent<{}> = (props) => {
           <AuthNavigator />
         </Route>
 
-        <Route path="/onboarding">
+        {/* <Route path="/onboarding">
           {authCtx.isAuthenticated ? (
             <OnboardingNavigator />
           ) : (
             <Redirect to="/auth" />
           )}
-        </Route>
+        </Route> */}
 
         <Route path="/organization">
-          {authCtx.isAuthenticated ? (
+          {/* {authCtx.isAuthenticated ? ( */}
             <DashboardNavigator />
-          ) : (
+          {/* ) : (
             <Redirect to="/auth" />
-          )}
+          )} */}
         </Route>
 
         <Route path="*">

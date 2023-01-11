@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
@@ -86,7 +87,6 @@ const SignIn: FnComponent<{
   });
 
   React.useEffect(() => {
-    // console.log(process.env)
     onRouteChange({
       imageSrc:
         'https://res.cloudinary.com/mother-honestly/image/upload/v1657835660/juliane-liebermann-O-RKu3Aqnsw-unsplash_1_zv7sov.png',
@@ -119,7 +119,6 @@ const SignIn: FnComponent<{
         })
       },
       (response: HttpResponse<any>) => {
-        // console.log(response.data);
         authCtx.login(response.data.token, response.data.uuid);
         history.push('/organization/dashboard');
       }
@@ -149,12 +148,10 @@ const SignIn: FnComponent<{
 
   return (
     <React.Fragment>
-      <Box
-        bgcolor="common.white"
-        px={8}
-        py={4}
-        width='100%'
+      <Paper
         sx={{
+          px: 8,
+          py: 4,
           boxShadow: '0px 10px 16px rgba(154, 154, 154, 0.13)'
         }}>
         <Box
@@ -231,16 +228,16 @@ const SignIn: FnComponent<{
             }}
             mb={3}
             onClick={preventDefault}>
-            {/* <MuiLink component={Link} href="" to="/auth/forgot-password">
+            <MuiLink component={Link} href="" to="/auth/forgot-password">
               Forgot password?
-            </MuiLink> */}
+            </MuiLink>
           </Box>
 
           <MHButton sx={{}} type="submit" loading={loading} fullWidth>
             Sign in
           </MHButton>
         </Box>
-      </Box>
+      </Paper>
     </React.Fragment>
   );
 };

@@ -1,10 +1,11 @@
 import React from 'react';
 
+import Box from '@mui/material/Box';
 import { SelectOption } from '@mui/base';
 
+import BackdropLoader from '../../components/Loading/BackdropLoader';
 import useHttp from '../../hooks/use-http';
 
-import AuthContext from './auth-context';
 import { HttpResponse } from '../../models/api.interface';
 import {
   Category,
@@ -12,22 +13,29 @@ import {
   ExpensePerCategory,
   Merchant
 } from '../../models/wallet.model';
-import { sortListByIdAsc } from '../../utils/utils';
+import { Organization } from '../../models/employer.model';
+import { getURLWithQueryParams } from '../../utils/utils';
+import AuthContext from './auth-context';
 
 type DashboardCtxType = {
   staticDataCacheMap: Map<string, any[]>;
+  organization: Organization | null;
   computeCategoryExpenses: (
     expensePerCategory: ExpensePerCategory,
     totalExpenses: number
   ) => void;
+  fetchOrganizationData: (employerRefId: number) => void;
+  // updateEmployerData: (emp: EmployerOnboarding) => void;
 };
 
 const DashboardContext = React.createContext<DashboardCtxType>({
   staticDataCacheMap: new Map<string, any[]>(),
+  organization: null,
   computeCategoryExpenses: (
     expensePerCat: ExpensePerCategory,
     totalExpenses: number
-  ) => {}
+  ) => {},
+  fetchOrganizationData: (employerRefId: number) => {}
 });
 
 export const DashboardContextProvider = ({
@@ -39,7 +47,13 @@ export const DashboardContextProvider = ({
     Map<string, Record<string, any>[]>
   >(new Map());
 
+  const [organization, setOrganization] = React.useState<Organization | null>(
+    null
+  );
+
   const authCtx = React.useContext(AuthContext);
+  const { user, token } = authCtx;
+
   const { sendHttpRequest: fetchCategories } = useHttp();
   const { sendHttpRequest: fetchMerchants } = useHttp();
 
@@ -47,7 +61,7 @@ export const DashboardContextProvider = ({
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authCtx.token}`
+      'Authorization': `Bearer ${token}`
     }
   };
 
@@ -103,7 +117,7 @@ export const DashboardContextProvider = ({
         .map((merchant) => ({
           ...merchant,
           value: merchant.id + '',
-          label: merchant.merchantName,
+          label: merchant.merchantName
           // categoryList: sortListByIdAsc(merchant.categoryList) // causes error when list is undefined
         }));
       newState.set('merchants', mappedMerchants);
@@ -139,12 +153,64 @@ export const DashboardContextProvider = ({
         return newState;
       });
     },
-    []
+    [dataCacheMap]
   );
+
+  const {
+    loading: fetchingOrg,
+    error: errorGettingOrg,
+    sendHttpRequest: getOrganization
+  } = useHttp();
+  
+  const fetchOrganizationData = React.useCallback(
+    (employerRefId: number) => {
+      getOrganization(
+        getURLWithQueryParams(
+          process.env.REACT_APP_API_BASE_URL + 'employer/dashboard/employer',
+          {
+            employerRefId: employerRefId.toString()
+          }
+        ),
+        {
+          method: 'GET'
+        },
+        (response: HttpResponse<Organization>) => {
+          setOrganization(response.data);
+        }
+      );
+    },
+    [getOrganization]
+  );
+
+  // React.useEffect(() => {
+  //   if (errorGettingOrg) {
+  //     setCompleted(false);
+  //     pushNotification({
+  //       type: 'error',
+  //       message: errorGettingOrg.message
+  //     });
+  //   }
+  // }, [errorGettingOrg]);
+
+  // if (errorGettingOrg) {
+    // return (
+    //   <Box
+    //     display="flex"
+    //     justifyContent="center"
+    //     alignItems="center"
+    //     minHeight="80vh">
+    //     <Typography variant="body1" align="center" fontSize="1.5rem">
+    //       An unexpected error occured
+    //     </Typography>
+    //   </Box>
+    // );
+  // }
 
   const contextValue: DashboardCtxType = {
     staticDataCacheMap: dataCacheMap,
-    computeCategoryExpenses
+    computeCategoryExpenses,
+    organization,
+    fetchOrganizationData
   };
 
   return (

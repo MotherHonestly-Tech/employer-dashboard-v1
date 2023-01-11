@@ -11,11 +11,12 @@ import Divider from '@mui/material/Divider';
 import MuiLink from '@mui/material/Link';
 
 import MHButton from '../Button/MHButton';
-import MHDataTable, { GridColDef } from '../DataTable/MHDataTable';
+import MHInvoiceTable, { GridColDef } from '../DataTable/MHInvoiceTable';
 
 import { ReactComponent as OverlayIcon } from '../../static/svg/overlay.svg';
 import { formatAmount } from '../../utils/utils';
 import OverlayContainer from '../UI/OverlayContainer';
+import { Category } from '../../models/wallet.model';
 
 type Subscription = {
   id: number;
@@ -37,14 +38,15 @@ const TextWidget = ({
   includeColon?: boolean;
 }) => {
   return (
-    <Box mb={0}>
+    <Box mb={0.6}>
       {title && (
         <Typography
           variant="body2"
           fontFamily="Area-Normal-Black"
           color="primary.main"
-          display="inline-block">
-          {title}
+          display="inline-block"
+          mr={0.5}>
+          {title}{' '}
         </Typography>
       )}
       {includeColon ? ': ' : ''}
@@ -57,7 +59,7 @@ const TextWidget = ({
   );
 };
 
-const Pricing = ({ title, amount }: { title: string; amount: number }) => (
+const PricingGrid = ({ title, amount }: { title: string; amount: number }) => (
   <Grid container mb={1}>
     <Grid item xs={6}>
       <Typography>{title}</Typography>
@@ -73,9 +75,9 @@ const Pricing = ({ title, amount }: { title: string; amount: number }) => (
   </Grid>
 );
 
-const PricingGrid = ({ total }: { total: number }) => {
+const Pricing = ({ total }: { total: number }) => {
   return (
-    <Box width={200}>
+    <Box width={250}>
       <Typography
         variant="body1"
         fontFamily="Area-Normal-Black"
@@ -83,34 +85,38 @@ const PricingGrid = ({ total }: { total: number }) => {
         gutterBottom>
         Sub Total
       </Typography>
-      <Pricing title="Discount" amount={0.0} />
-      <Pricing title="Tax" amount={0.0} />
+      <PricingGrid title="Discount" amount={0.0} />
+      <PricingGrid title="Tax" amount={0.0} />
 
       <Divider light sx={{ mb: 1 }} />
 
-      <Pricing title="Total" amount={total} />
+      <PricingGrid title="Monthly Total" amount={total} />
+
+      <Divider light sx={{ mb: 1 }} />
+
+      <PricingGrid title="Quarterly Total" amount={total * 3} />
     </Box>
   );
 };
 
-const Invoice = () => {
+const Invoice = ({ allocationBuckets }: { allocationBuckets: readonly Category[] }) => {
   const columns: Array<GridColDef<Subscription>> = [
     {
       type: 'text',
       field: 'item',
       headerName: 'Item Description',
-      width: 150
+      width: 130
     },
     {
       type: 'text',
       field: 'employeeSize',
       headerName: 'No of Employees',
-      width: 150
+      width: 100
     },
     {
       type: 'text',
       field: 'walletAllocation',
-      headerName: 'Quaterly Allocation',
+      headerName: 'Monthly Allocation',
       width: 150,
       valueGetter: (row: Subscription) => formatAmount(row.walletAllocation)
     },
@@ -118,7 +124,7 @@ const Invoice = () => {
       type: 'text',
       field: 'serviceCharge',
       headerName: 'Service Charge',
-      width: 150,
+      width: 100,
       valueGetter: (row: Subscription) => formatAmount(row.serviceCharge)
     },
     {
@@ -137,17 +143,19 @@ const Invoice = () => {
     }
   ];
 
-  const rows: Subscription[] = [
-    {
-      id: 1,
-      item: 'MH Work-Life Wallet Allocation',
-      employeeSize: 15000,
-      walletAllocation: 5479000,
-      serviceCharge: 200,
-      tax: 150,
-      total: 9096858
-    }
-  ];
+  let rows = allocationBuckets
+    .map((bucket, index) => {
+      return {
+        id: ++index,
+        item: bucket.categoryName,
+        employeeSize: 116,
+        walletAllocation: bucket.allocation,
+        serviceCharge: 0,
+        tax: 0,
+        total: bucket.allocation * 116
+      };
+    })
+    .filter((row) => row.walletAllocation);
 
   return (
     <Box maxWidth={'md'} mx="auto">
@@ -157,30 +165,31 @@ const Invoice = () => {
         justifyContent="space-between"
         bgcolor="secondary.main"
         borderRadius={2}
-        p={3}
-        position="relative">
-        <OverlayContainer
-          element={<OverlayIcon />}
-          sx={{
-            top: -30,
-            left: -20
-          }}
-        />
-
-        <Box alignSelf="flex-start">
+        p={3}>
+        <Box>
+          <TextWidget title="MH Work-Life Wallet" />
           <TextWidget title="Invoice Number" />
           <TextWidget title="INV-2022-010" />
-          {/* <TextWidget title="Issued Date: " description="19 Sept 2022" />
-          <TextWidget title="Due Date: " description="27 Dec 2022" /> */}
+          <TextWidget
+            title="Issued Date: "
+            description={
+              ' ' +
+              new Date().toLocaleDateString('en-US', {
+                day: 'numeric',
+                year: 'numeric',
+                month: 'short'
+              })
+            }
+          />
+          {/* <TextWidget title="Due Date: " description="27 Dec 2022" /> */}
         </Box>
-        <Box alignSelf="flex-end" width={150}>
+        <Box>
           <TextWidget title="Billed to" />
-          <TextWidget description="Mother Honestly" />
-          <TextWidget description="Detroit, Michigan, USA" />
-          {/* <TextWidget description="Moonlight Sunlight" /> */}
+          {/* <TextWidget description={employer?.companyName} />
+          <TextWidget description={`${employer?.city}, ${employer?.state}`} />
+          <TextWidget description={employer?.zipCode} /> */}
         </Box>
       </Stack>
-
       <Box my={6}>
         {/* <Typography
           variant="body1"
@@ -190,19 +199,13 @@ const Invoice = () => {
           my={2}>
           Item Details
         </Typography> */}
-        <MHDataTable
-          title="Item Details"
-          rows={rows}
-          columns={columns}
-          frontEndPagination
-          hidePagination
-        />
+        <MHInvoiceTable rows={rows} columns={columns} />
       </Box>
 
       <Stack direction="row" justifyContent="space-between">
         <Box>
           <TextWidget title="Payment to" />
-          <TextWidget title="Account" description='MH Work-Life' includeColon />
+          <TextWidget title="Account" description="MH Work-Life" includeColon />
           {/* <TextWidget title="Payment to" /> */}
 
           <Box aria-label="org" sx={{ mt: 3 }}>
@@ -219,8 +222,9 @@ const Invoice = () => {
         </Box>
 
         <Box>
-          <PricingGrid total={9048658} />
+          <Pricing total={56475} />
         </Box>
+
       </Stack>
     </Box>
   );

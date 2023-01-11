@@ -1,9 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import MuiLink from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
@@ -135,9 +136,19 @@ const ForgotPassword: FnComponent<{
               required
             />
 
-            <MHButton sx={{}} type="submit" loading={loading} fullWidth>
+            <MHButton sx={{ mb: 2 }} type="submit" loading={loading} fullWidth>
               Send reset link
             </MHButton>
+            
+            <MuiLink
+              component={Link}
+              color="primary"
+              underline="always"
+              to="/auth/sign-in"
+              display="block"
+              align="center">
+              Back to login
+            </MuiLink>
           </Box>
 
           <ListItem

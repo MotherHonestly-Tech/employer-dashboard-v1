@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import { ReactComponent as InsightsIcon } from '../../static/svg/insights.svg';
 import { ReactComponent as CloudUploadIcon } from '../../static/svg/cloud-upload.svg';
 import { ReactComponent as WalletIcon } from '../../static/svg/wallet.svg';
+import { ReactComponent as AccountingIcon } from '../../static/svg/accounting.svg';
 import { ReactComponent as MemberIcon } from '../../static/svg/member.svg';
 import { ReactComponent as ResourcesIcon } from '../../static/svg/resources.svg';
 import { DRAWER_WIDTH } from '../../utils/constants';
@@ -175,6 +176,11 @@ const MainSidebar: FnComponent<{ sx?: object }> = ({ sx }) => {
           icon={<WalletIcon />}
           primary="Wallet"
           to="/organization/wallet"
+        />
+        <RouterLink
+          icon={<AccountingIcon />}
+          primary="Accounting"
+          to="/organization/accounting"
         />
         <RouterLink
           icon={<MemberIcon />}

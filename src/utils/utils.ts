@@ -27,6 +27,19 @@ export const isHexColorBright = (color: string) => {
   return brightness > 155;
 };
 
+export const generateRandomString = (options: { length: number }) => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  let result = '';
+
+  for (let i = 0; i < options.length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  return result;
+};
+
 export const isValidDate = (date: Date | string) => {
   date = new Date(date);
   return (
@@ -63,7 +76,7 @@ export const formatAmount = (amount: number, precision: number = 2) => {
   return new Intl.NumberFormat('en-US', options).format(amount);
 };
 
-export const formatNumber = (figure: number, precision: number = 2) => {
+export const formatNumber = (figure: number, precision?: number) => {
   if (typeof figure === 'string') {
     figure = parseFloat(figure);
   }
@@ -72,7 +85,12 @@ export const formatNumber = (figure: number, precision: number = 2) => {
     return '0.00';
   }
 
-  return new Intl.NumberFormat('en-US').format(figure);
+  return new Intl.NumberFormat('en-US', precision ?  { minimumFractionDigits: precision } : {} ).format(figure);
+};
+
+export const parseAmount = (amount: string): string => {
+  amount = amount.replace(/,/g, '').trim();
+  return amount;
 };
 
 export const constructHyphenatedDateFormat = (date: Date) => {
@@ -173,11 +191,6 @@ export function getBrowserDocumentHiddenProp() {
 export function getIsDocumentHidden() {
   return !(document as any)[getBrowserDocumentHiddenProp()];
 }
-
-export const parseAmount = (amount: string) => {
-  amount = amount.replace(/,/g, '').trim();
-  return amount;
-};
 
 export const sortListByIdAsc = (list: any[]): any[] => {
   const sortedList = list.sort((a, b) => {

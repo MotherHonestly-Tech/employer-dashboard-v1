@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Link, Redirect } from 'react-router-dom';
+import { useLocation, Link, Redirect, useHistory } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -25,6 +25,7 @@ const ResetLinkSuccess: FnComponent<{
   const location = useLocation<{ email: string }>();
 
   const toastCtx = React.useContext(NotificationContext);
+  const history = useHistory();
 
   const { loading, error, sendHttpRequest: sendResetLink } = useHttp();
 
@@ -75,14 +76,16 @@ const ResetLinkSuccess: FnComponent<{
       <Paper
         sx={{
           p: 8,
-          width: '100%',
-          maxWidth: 'sm'
+          width: '100%'
         }}>
         <Box
           sx={{
             textAlign: 'center'
           }}>
-          <RoundedLogoIcon>
+          <RoundedLogoIcon
+            sx={{
+              mx: 'auto'
+            }}>
             <MailIcon width="1rem" />
           </RoundedLogoIcon>
 
@@ -95,16 +98,16 @@ const ResetLinkSuccess: FnComponent<{
             <Typography
               component={'span'}
               color={(theme) => theme.palette.grey[500]}>
-              {location.state.email}
+              {/* {location.state.email} */}
             </Typography>
           </Typography>
 
           {/* <h1 className="text-center my-4">Check your email</h1>
           <p className="mb-5">We sent a password reset link to{' '}
             <span className="text-gray-200">{email}</span></p> */}
-
-          <MHButton onClick={() => window.open('mailto:')} fullWidth>
-            Open email app
+          {/* window.open('mailto:') */}
+          <MHButton onClick={() => history.push('/auth/sign-in')} fullWidth>
+            Back to login
           </MHButton>
 
           <MuiLink
@@ -114,10 +117,10 @@ const ResetLinkSuccess: FnComponent<{
               my: 2
             }}
             onClick={resendLinkHandler}>
-            Didn't recieve the email? Click to resend
+            Didn't recieve the email? Click here to resend
           </MuiLink>
 
-          <MuiLink
+          {/* <MuiLink
             component={Link}
             sx={{
               display: 'block',
@@ -126,7 +129,7 @@ const ResetLinkSuccess: FnComponent<{
             }}
             to="/auth/sign-in">
             Return to login
-          </MuiLink>
+          </MuiLink> */}
         </Box>
       </Paper>
     </React.Fragment>
